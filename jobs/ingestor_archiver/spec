@@ -20,6 +20,11 @@ properties:
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"
+  logstash.plugins:
+    description: "Array of hashes describing logstash plugins to install"
+    example:
+    - {name: logstash-output-cloudwatchlogs, version: 2.0.0}
+    default: []
 
   logstash_ingestor.filters:
     description: Filters to execute on the ingestors

@@ -1,6 +1,6 @@
 ---
 name: ingestor_relp
-packages: 
+packages:
 - logstash
 - java8
 templates:
@@ -14,6 +14,11 @@ properties:
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"
+  logstash.plugins:
+    description: "Array of hashes describing logstash plugins to install"
+    example:
+    - {name: logstash-output-cloudwatchlogs, version: 2.0.0}
+    default: []
 
   logstash_ingestor.filters:
     description: Filters to execute on the ingestors
@@ -34,16 +39,16 @@ properties:
             exchange_type: "direct"
     default: [ { plugin: "redis", options : {} } ]
 
-  logstash_ingestor.relp.port: 
+  logstash_ingestor.relp.port:
     description: Port to listen for RELP messages
     default: 2514
 
-  redis.host: 
+  redis.host:
     description: Redis host of queue
-  redis.port: 
+  redis.port:
     description: Redis port of queue
     default: 6379
-  redis.key: 
+  redis.key:
     description: Name of queue to pull messages from
     default: logstash
 
