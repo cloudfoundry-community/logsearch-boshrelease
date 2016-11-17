@@ -50,6 +50,10 @@ frontend kibana-in
     http-request auth realm "Logs UI" if !logged_in
     <% end %>
 
+    <% p("haproxy.kibana.frontend.custom_config").each do |entry| %>
+      <%= entry %>
+    <% end %>
+
     default_backend kibana
 
 backend kibana

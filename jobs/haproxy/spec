@@ -63,6 +63,12 @@ properties:
   haproxy.kibana.auth.password:
     description: "Basic auth password for kibana. Optional"
     default: ""
+  haproxy.kibana.frontend.custom_config:
+    description: "Custom haproxy configuration. Optional."
+    example:
+    - http-response set-header X-Content-Type-Options nosniff
+    - http-response set-header X-XSS-Protection 1;\ mode=block
+    default: []
 
   haproxy.elastic.inbound_port:
     description: "The public port for Elasticsearch interface. IMPORTANT: Do not set this value unless you understand what are you doing! External access to Elasticsearch allows to do everything with it, including index deletion. Once enabled this feature, it is strictly recommended to set the password below."
