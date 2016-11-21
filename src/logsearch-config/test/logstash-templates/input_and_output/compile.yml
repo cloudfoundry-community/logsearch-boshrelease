@@ -1,0 +1,10 @@
+template: 
+  path: "jobs/parser/templates/config/input_and_output.conf.erb"
+  testcase:
+    - name: "default"
+      config: "input_and_output/test_default-config.yml"
+      destination: "target/input_and_output-default.conf"
+
+    - name: "enabled debug"
+      config: "input_and_output/test_enabled_debug-config.yml"
+      destination: "target/input_and_output-enabled_debug.conf"
