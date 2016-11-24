@@ -168,7 +168,6 @@ jobs:
   instances: 1
   templates:
   - {name: ingestor_syslog, release: logsearch}
-  - {name: ingestor_relp, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: ingestor
   networks:
