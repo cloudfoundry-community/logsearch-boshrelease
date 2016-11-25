@@ -1,0 +1,17 @@
+---
+properties:
+  logstash_parser:
+    debug: true
+    inputs: [ { plugin: "redis", options : {} } ]
+    elasticsearch_document_id: ~
+    elasticsearch_index: "logs-%{[@metadata][index]}-%{+YYYY.MM.dd}"
+    elasticsearch_index_type: "%{@type}"
+  logstash:
+    output:
+      elasticsearch:
+        data_hosts: [127.0.0.1]
+        flush_size: 500
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    key: logstash
