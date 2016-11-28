@@ -3,8 +3,8 @@ require 'yaml'
 require 'json'
 
 task :clean do
-  mkdir_p "target"
-  rm_rf "target/*"
+  FileUtils.mkdir_p('target')
+  FileUtils.rm_rf(Dir.glob('target/*'))
 end
 
 desc "Builds filters & dashboards"
@@ -18,7 +18,7 @@ task :build => :clean do
 end
 
 desc "Runs all tests"
-task test: [
+task default: [
   :test_filters,
   :test_templates
 ]
@@ -48,8 +48,8 @@ task :test_templates, [:rspec_files] => :compile_templates do |t, args|
 end
 
 task :clean_templates do
-  mkdir_p 'test/logstash-templates/target'
-  rm_rf 'test/logstash-templates/target/*'
+  FileUtils.mkdir_p('test/logstash-templates/target')
+  FileUtils.rm_rf(Dir.glob('test/logstash-templates/target/*'))
 end
 
 desc "Compile bosh templates for tests"
