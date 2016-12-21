@@ -22,28 +22,60 @@ Most users will want to combine Logsearch Core with a Logsearch Addon to customi
 particular type of logs.  Its likely you want to be following an Addon installation guides - see below
 for a list of the common Addons:
 
-  * [Logsearch for CloudFoundry](https://github.com/logsearch/logsearch-for-cloudfoundry)
+  * [Logsearch for CloudFoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
 
 If you are sure you want install just Logsearch Core, read on...
 
 ## Installing Logsearch Core
 
-0. Upload the latest logsearch release from [bosh.io](https://bosh.io)...
+0. Upload the latest logserach release
 
-        $ bosh upload release https://bosh.io/d/github.com/logsearch/logsearch-boshrelease
+   * Download the latest logsearch release
+   
+     NOTE: At the moment you can get working logsearch release by cloning Git repository and creating bosh release from it.
 
+      Example:
+   
+      ```sh
+      $ git pull https://github.com/cloudfoundry-community/logsearch-boshrelease.git
+      $ cd logsearch-boshrelease
+      $ bosh create release
+      ```
+   
+   * Upload bosh release
+   
+      Example:
+
+      ```sh
+      $ bosh upload release
+      ```
+   
 0. Customise your deployment stub:
 
    * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `logsearch-stub.yml`
-   * Edit to match your IAAS settings
+   
+      Example: 
+      ```sh
+      $ cp logsearch-boshrelease/templates/stub.openstack.example.yml logsearch-stub.yml
+      ```
+     
+   * Edit `logsearch-stub.yml` to match your IAAS settings
 
-0. Generate a manifest
+0. Generate a manifest with `scripts/generate_deployment_manifest $INFRASTRUCTURE logsearch-stub.yml > logsearch.yml`
 
-        $ scripts/generate_deployment_manifest $INFRASTRUCTURE logsearch-stub.yml > logsearch.yml
+   Example: 
+   
+   ```sh
+   $ logsearch-boshrelease/scripts/generate_deployment_manifest openstack logsearch-stub.yml > logsearch.yml
+   ```
+   
+   Notice `logsearch.yml` generated.
 
 0. Deploy!
 
-    $ bosh -d logsearch.yml deploy
+   ```sh
+   $ bosh -d logsearch.yml deploy
+   ```
 
 ## Common customisations:
 
@@ -60,7 +92,7 @@ If you are sure you want install just Logsearch Core, read on...
 
 ### Release Channels
 
- * The latest stable, final release is available on [bosh.io](http://bosh.io/releases/github.com/logsearch/logsearch-boshrelease)
+ * The latest stable, final release will be soon available on [bosh.io](http://bosh.io/releases)
  * **develop** - The develop branch in this repo is deployed to our test environments.  It is occasionally broken - use with care!
 
 ## Known issues

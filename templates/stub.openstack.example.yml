@@ -38,13 +38,6 @@ jobs:
   - name: default
     static_ips: (( static_ips(2) ))
   resource_pool: cluster_monitor
-  properties:
-    nats_to_syslog:
-      nats:
-        user: nats
-        password: nats-password
-        port: 4222
-        machines: [10.0.0.6]
 
 - name: queue
   instances: 1
@@ -105,8 +98,17 @@ jobs:
     static_ips: (( static_ips(5) ))
   - name: elastic
     static_ips:
-    - SOME-ELASTIC-IP
+    - MY-ELASTIC-IP  # Specify an elastic IP for the router. Resources, proxied by the router, will be available through this IP. They include: kibana, elasticsearch, cluster_monitor, ingestor and syslog_server.
   resource_pool: haproxy
+
+properties:
+  nats_to_syslog:
+    # Specify the NATS settings of the Bosh Director
+    nats:
+      user: MY-NATS-USER  # Specify NATS user
+      password: MY-NATS-PASSWORD  # Specify NATS password
+      port: 4222  # Default value
+      machines: [10.0.0.6]  # Specify your NATS IPs
 
 networks:
 - name: default
@@ -115,7 +117,7 @@ networks:
   - range: 10.0.1.0/24
     gateway: 10.0.1.1
     cloud_properties:
-      net_id: NET-ID
+      net_id: MY-NET-ID  # Specify your network ID
       security_groups: [bosh]
     dns:
     - 8.8.8.8
@@ -126,3 +128,7 @@ networks:
 
 - name: elastic
   type: vip
+  cloud_properties:
+    security_groups:  # Specify your security groups used for 'elastic' network
+    - MY-GROUP1
+    - MY-GROUP2
