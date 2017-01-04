@@ -8,7 +8,7 @@ source /var/vcap/jobs/parser/helpers/ctl_setup.sh 'parser'
 
 function wait_for_template {
   local template_name="$1"
-  local MASTER_URL="<%= p("logstash.output.elasticsearch.data_hosts").first %>:9200"
+  local MASTER_URL="<%= p("logstash_parser.elasticsearch.data_hosts").first %>:9200"
 
   set +e
   while true;  do
