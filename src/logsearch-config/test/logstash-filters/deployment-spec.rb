@@ -26,4 +26,20 @@ describe "@source.deployment lookup" do
       end
     end
   end
+
+  context "when there is [@source][deployment] set" do
+    when_parsing_log(
+        "@source" => { "deployment" => "deployment123", 
+                       "job" => "kibana-123123123" }
+    ) do
+
+      it "no deployment tag" do
+        expect(subject["tags"]).to be_nil
+      end
+
+      it "keeps @source.deployment" do
+        expect(subject["@source"]["deployment"]).to eq "deployment123"
+      end
+    end
+  end
 end

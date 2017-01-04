@@ -31,4 +31,16 @@ describe "Rules for parsing haproxy messages" do
       end
     end
   end
+
+  context 'when [@source][deployment] is set' do
+    when_parsing_log(
+        "@source" => { "deployment" => "deployment123" }
+    ) do
+
+      it "drops event" do
+        expect(subject).to be_cancelled
+      end
+
+    end
+  end
 end
