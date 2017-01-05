@@ -70,10 +70,10 @@ properties:
     default: "%{@type}"
   logstash_parser.elasticsearch.routing:
     description: "The routing to be used when indexing a document."
-  logstash.elasticsearch.data_hosts:
+  logstash_parser.elasticsearch.data_hosts:
     description: The list of elasticsearch data node IPs
     default: [127.0.0.1]
-  logstash.elasticsearch.flush_size:
+  logstash_parser.elasticsearch.flush_size:
     description: Controls how many logs will be buffered and sent to Elasticsearch for bulk indexing
     default: 500  
   logstash_parser.timecop.reject_greater_than_hours:

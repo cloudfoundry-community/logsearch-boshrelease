@@ -55,3 +55,19 @@ nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
   sha: d27c56da9cdf214ed39a471f0ca5c970abbd510d
   size: 2094679
+ruby2.3/bundler-1.11.2.gem:
+  object_id: ce2c212f-c2ff-440e-9f4b-c2c214a010f9
+  sha: 8eb956dec72da753d3d2a2126c78508b17af434e
+  size: 263168
+ruby2.3/rake-11.2.2.gem:
+  object_id: 757c960e-1536-4be2-b0d9-d4f587e4c6ab
+  sha: 879e7c02b1a0b37333a91f11621f798deb874b6e
+  size: 102400
+ruby2.3/rubygems-2.6.4.tgz:
+  object_id: 4f90feb0-d0cf-41d8-a191-9b63e6f08f27
+  sha: 8ef39e536af2ecd20b0e7a95765fa6a485087ac8
+  size: 478582
+ruby2.3/ruby-2.3.1.tar.gz:
+  object_id: 0ab54e2b-3919-4e52-b157-50c8a7704cad
+  sha: c39b4001f7acb4e334cb60a0f4df72d434bef711
+  size: 17797997
