@@ -37,7 +37,7 @@ If you are sure you want install just Logsearch Core, read on...
       Example:
    
       ```sh
-      $ git pull https://github.com/cloudfoundry-community/logsearch-boshrelease.git
+      $ git clone https://github.com/cloudfoundry-community/logsearch-boshrelease.git
       $ cd logsearch-boshrelease
       $ bosh create release
       ```
@@ -52,24 +52,30 @@ If you are sure you want install just Logsearch Core, read on...
    
 0. Customise your deployment stub:
 
-   * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `logsearch-stub.yml`
+   * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `stub-logsearch.yml`
    
       Example: 
       ```sh
-      $ cp logsearch-boshrelease/templates/stub.openstack.example.yml logsearch-stub.yml
+      $ cp logsearch-boshrelease/templates/stub.openstack.example.yml stub-logsearch.yml
       ```
      
-   * Edit `logsearch-stub.yml` to match your IAAS settings
+   * Edit `stub-logsearch.yml` to match your IAAS settings
 
-0. Generate a manifest with `scripts/generate_deployment_manifest $INFRASTRUCTURE logsearch-stub.yml > logsearch.yml`
+0. Generate a manifest with `scripts/generate_deployment_manifest $INFRASTRUCTURE stub-logsearch.yml > logsearch.yml`
 
    Example: 
    
    ```sh
-   $ logsearch-boshrelease/scripts/generate_deployment_manifest openstack logsearch-stub.yml > logsearch.yml
+   $ logsearch-boshrelease/scripts/generate_deployment_manifest openstack stub-logsearch.yml > logsearch.yml
    ```
    
    Notice `logsearch.yml` generated.
+
+0. Make sure you have these 2 security groups configured:
+
+   * `bosh` which allow access from this group itself
+
+   * `logsearch` which allow access to ports 80, 8080, 8888
 
 0. Deploy!
 
