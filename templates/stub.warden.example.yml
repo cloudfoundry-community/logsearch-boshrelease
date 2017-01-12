@@ -1,6 +1,6 @@
 ---
 name: logsearch
-director_uuid: <%= `bosh status --uuid` %>
+director_uuid: VAR_UUID # BOSH UUID
 
 jobs:
 - name: elasticsearch_master
@@ -34,7 +34,7 @@ properties:
   nats_to_syslog:
     # Specify the NATS settings of the Bosh Director
     nats:
-      user: MY-NATS-USER  # Specify NATS user
-      password: MY-NATS-PASSWORD  # Specify NATS password
+      user: VAR_NATS_USER  # Specify NATS user
+      password: VAR_NATS_PASS  # Specify NATS password
       port: 4222  # Default value
-      machines: [10.0.0.6]  # Specify your NATS IPs
+      machines: [VAR_NATS_IP]  # Specify your NATS IPs
