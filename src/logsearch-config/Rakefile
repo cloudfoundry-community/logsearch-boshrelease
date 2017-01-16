@@ -1,8 +1,10 @@
 require 'erb'
+require 'yaml'
+require 'json'
 
 task :clean do
-  mkdir_p "target"
-  rm_rf "target/*"
+  FileUtils.mkdir_p('target')
+  FileUtils.rm_rf(Dir.glob('target/*'))
 end
 
 desc "Builds filters & dashboards"
@@ -15,10 +17,16 @@ task :build => :clean do
   puts `find target`
 end
 
-desc "Runs unit tests against filters & dashboards"
-task :test, [:rspec_files] => :build do |t, args|
-  args.with_defaults(:rspec_files => "$(find test -name '*spec.rb')")
-  puts "===> Testing ..."
+desc "Runs all tests"
+task default: [
+  :test_filters,
+  :test_templates
+]
+
+desc "Run unit tests against logstash filters"
+task :test_filters, [:rspec_files] => :build do |t, args|
+  args.with_defaults(:rspec_files => "$(find test/logstash-filters -name '*spec.rb')")
+  puts "===> Testing logstash filters ..."
   sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" vendor/logstash/bin/rspec #{args[:rspec_files]} --colour --format progress --format html --out target/parsing_rules.html]
 end
 
@@ -29,4 +37,41 @@ def compile_erb(source_file, dest_file)
   else
     cp source_file, dest_file
   end
+end
+
+# -------- Templates tests ------------
+desc "Run unit tests against logstash templates"
+task :test_templates, [:rspec_files] => :compile_templates do |t, args|
+  args.with_defaults(:rspec_files => "$(find test/logstash-templates -name '*spec.rb')")
+  puts "===> Testing logstash templates ..."
+  sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" vendor/logstash/bin/rspec #{args[:rspec_files]} --colour --format progress --format html --out target/templates.html]
+end
+
+task :clean_templates do
+  FileUtils.mkdir_p('test/logstash-templates/target')
+  FileUtils.rm_rf(Dir.glob('test/logstash-templates/target/*'))
+end
+
+desc "Compile bosh templates for tests"
+task :compile_templates => :clean_templates do
+  puts "===> Compiling Bosh templates for tests ..."
+
+  FileList.new("test/logstash-templates/*/compile.yml").each do |compile_file|
+    template = YAML.load_file(compile_file)['template'];
+    
+    template['testcase'].each do |template_testcase|
+      compile_bosh_template '../../' + template['path'], 'test/logstash-templates/' + template_testcase['config'], 'test/logstash-templates/' + template_testcase['destination']
+    end
+  end
+
+  puts "===> Compiled Templates:"
+  puts `find test/logstash-templates/target`
+end
+
+
+def compile_bosh_template(template_file, config_file, dest_file)
+
+  config = YAML.load(File.read(config_file)).to_json
+  `bosh-template #{template_file} --context '#{config}' > #{dest_file}`
+
 end

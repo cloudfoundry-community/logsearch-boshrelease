@@ -1,0 +1,18 @@
+# --
+# Default values + additional inputs.
+# --
+properties:
+  logstash_parser:
+    debug: false
+    inputs: [ { plugin: "redis", options : {} }, { plugin: "file", options: { path: "my/path/to/file" } }, { plugin: "syslog", options: { host: "127.0.0.1", port: 123} } ]
+    outputs: [ { plugin: "elasticsearch", options: {} } ]
+    elasticsearch:
+      document_id: ~
+      index: "logs-%{[@metadata][index]}-%{+YYYY.MM.dd}"
+      index_type: "%{@type}"
+      data_hosts: [127.0.0.1]
+      flush_size: 500
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    key: logstash

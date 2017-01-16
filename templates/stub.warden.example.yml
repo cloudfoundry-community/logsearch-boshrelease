@@ -1,6 +1,6 @@
 ---
 name: logsearch
-director_uuid: <%= `bosh status --uuid` %>
+director_uuid: VAR_UUID # BOSH UUID
 
 jobs:
 - name: elasticsearch_master
@@ -14,13 +14,6 @@ jobs:
 
 - name: ingestor-bosh-nats
   instances: 1
-  properties:
-    nats_to_syslog:
-      nats:
-        user: nats
-        password: nats-password
-        port: 4222
-        machines: [10.254.50.4]
 
 - name: queue
   instances: 1
@@ -36,10 +29,12 @@ jobs:
 
 - name: cluster_monitor
   instances: 1
-  properties:
-    nats_to_syslog:
-      nats:
-        user: nats
-        password: nats-password
-        port: 4222
-        machines: [10.254.50.4]
+
+properties:
+  nats_to_syslog:
+    # Specify the NATS settings of the Bosh Director
+    nats:
+      user: VAR_NATS_USER  # Specify NATS user
+      password: VAR_NATS_PASS  # Specify NATS password
+      port: 4222  # Default value
+      machines: [VAR_NATS_IP]  # Specify your NATS IPs

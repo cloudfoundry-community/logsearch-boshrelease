@@ -1,0 +1,22 @@
+language: ruby
+sudo: false
+
+rvm:
+  - 2.3.3
+
+jdk:
+  - oraclejdk7
+
+before_install:
+  - gem update --system
+  - gem --version
+
+install:
+  - cd $TRAVIS_BUILD_DIR/src/logsearch-config
+  - bin/install-dependencies
+
+script:
+  - bin/test
+
+notifications:
+  email: false

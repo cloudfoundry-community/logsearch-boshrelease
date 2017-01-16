@@ -78,16 +78,7 @@ jobs:
       filters:
       - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
     nats_to_syslog:
-      nats:
-        subject: ">"
-        user: nats
-        password: nats-password
-        port: 4222
-        machines: []
-      debug: true
-      syslog:
-        host: 127.0.0.1
-        port: 514
+      debug: true      
     logstash_ingestor:
       syslog:
         port: 514
@@ -168,7 +159,6 @@ jobs:
   instances: 1
   templates:
   - {name: ingestor_syslog, release: logsearch}
-  - {name: ingestor_relp, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: ingestor
   networks:
@@ -197,14 +187,6 @@ jobs:
   properties:
     logstash_ingestor:
       syslog:
-        port: 514
-    nats_to_syslog:
-      nats:
-        user: nats
-        password: nats-password
-        machines: [10.0.16.5]
-      syslog:
-        host: 127.0.0.1
         port: 514
     syslog_forwarder:
       config:
@@ -313,3 +295,14 @@ properties:
   syslog_forwarder:
     host: (( grab jobs.cluster_monitor.networks.default.static_ips.[0] ))
     port: (( grab jobs.cluster_monitor.properties.logstash_ingestor.syslog.port ))
+  nats_to_syslog:
+    # NATS settings of the Bosh Director
+    nats:
+      subject: ">"
+      user: nats
+      password: nats-password
+      port: 4222
+      machines: [10.0.16.5]
+    syslog:
+        host: 127.0.0.1
+        port: 514

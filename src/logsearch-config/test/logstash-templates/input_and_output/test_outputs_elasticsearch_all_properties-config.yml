@@ -1,0 +1,20 @@
+# --
+# All "elasticsearch" properties are set with non-null values.
+# --
+properties:
+  logstash_parser:
+    debug: false
+    inputs: [ { plugin: "redis", options : {} } ]
+    outputs: [ { plugin: "elasticsearch", options: {} } ]
+    elasticsearch:
+      document_id: "abc"
+      index: "logs-%{[@metadata][index]}-%{+YYYY.MM.dd}"
+      index_type: "%{@type}"    
+      routing: "%{some_field}"
+      idle_flush_time: 100
+      data_hosts: [127.0.0.1]
+      flush_size: 500
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    key: logstash

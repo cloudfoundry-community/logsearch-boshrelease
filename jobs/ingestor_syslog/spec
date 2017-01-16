@@ -33,12 +33,12 @@ properties:
       A list of output plugins, with a hash of options for each of them. Please refer to example below.
     example:
       outputs:
-        - plugin: rabbitmq
-          options:
-            host: 192.168.1.1
-            user: logsearch
-            password: c1oudbunny
-            exchange_type: "direct"
+      - plugin: rabbitmq
+        options:
+          host: 192.168.1.1
+          user: logsearch
+          password: c1oudbunny
+          exchange_type: "direct"
     default: [ { plugin: "redis", options : {} } ]
 
   logstash_ingestor.syslog.port:
@@ -51,6 +51,10 @@ properties:
     description: Syslog-TLS SSL certificate (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
   logstash_ingestor.syslog_tls.ssl_key:
     description: Syslog-TLS SSL key (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
+
+  logstash_ingestor.relp.port:
+    description: Port to listen for RELP messages
+    default: 2514
 
   redis.host:
     description: Redis host of queue

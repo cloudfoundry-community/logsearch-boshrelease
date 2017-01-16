@@ -22,28 +22,66 @@ Most users will want to combine Logsearch Core with a Logsearch Addon to customi
 particular type of logs.  Its likely you want to be following an Addon installation guides - see below
 for a list of the common Addons:
 
-  * [Logsearch for CloudFoundry](https://github.com/logsearch/logsearch-for-cloudfoundry)
+  * [Logsearch for CloudFoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
 
 If you are sure you want install just Logsearch Core, read on...
 
 ## Installing Logsearch Core
 
-0. Upload the latest logsearch release from [bosh.io](https://bosh.io)...
+0. Upload the latest logserach release
 
-        $ bosh upload release https://bosh.io/d/github.com/logsearch/logsearch-boshrelease
+   * Download the latest logsearch release
+   
+     NOTE: At the moment you can get working logsearch release by cloning Git repository and creating bosh release from it.
 
+      Example:
+   
+      ```sh
+      $ git clone https://github.com/cloudfoundry-community/logsearch-boshrelease.git
+      $ cd logsearch-boshrelease
+      $ bosh create release
+      ```
+   
+   * Upload bosh release
+   
+      Example:
+
+      ```sh
+      $ bosh upload release
+      ```
+   
 0. Customise your deployment stub:
 
-   * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `logsearch-stub.yml`
-   * Edit to match your IAAS settings
+   * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `stub-logsearch.yml`
+   
+      Example: 
+      ```sh
+      $ cp logsearch-boshrelease/templates/stub.openstack.example.yml stub-logsearch.yml
+      ```
+     
+   * Edit `stub-logsearch.yml` to match your IAAS settings
 
-0. Generate a manifest
+0. Generate a manifest with `scripts/generate_deployment_manifest $INFRASTRUCTURE stub-logsearch.yml > logsearch.yml`
 
-        $ scripts/generate_deployment_manifest $INFRASTRUCTURE logsearch-stub.yml > logsearch.yml
+   Example: 
+   
+   ```sh
+   $ logsearch-boshrelease/scripts/generate_deployment_manifest openstack stub-logsearch.yml > logsearch.yml
+   ```
+   
+   Notice `logsearch.yml` generated.
+
+0. Make sure you have these 2 security groups configured:
+
+   * `bosh` which allow access from this group itself
+
+   * `logsearch` which allow access to ports 80, 8080, 8888
 
 0. Deploy!
 
-    $ bosh -d logsearch.yml deploy
+   ```sh
+   $ bosh -d logsearch.yml deploy
+   ```
 
 ## Common customisations:
 
@@ -60,7 +98,7 @@ If you are sure you want install just Logsearch Core, read on...
 
 ### Release Channels
 
- * The latest stable, final release is available on [bosh.io](http://bosh.io/releases/github.com/logsearch/logsearch-boshrelease)
+ * The latest stable, final release will be soon available on [bosh.io](http://bosh.io/releases)
  * **develop** - The develop branch in this repo is deployed to our test environments.  It is occasionally broken - use with care!
 
 ## Known issues
@@ -71,7 +109,7 @@ While this issue is not specific to this boshrelease, it is worth noting.
 
 On certain IAAS'es, (AWS confirmed), the bosh-agent fails to flush the ARP cache of the VMs in the deployment which, in rare cases, results in VMs not being able to communicate with each other after some of them has been recreated. The symptoms of when this happens are varied depending on the affected VMs. It could be anything from HAproxy reporting it couldn't find any backends (eg. Kibana) or the parsers failing to connect to the queue.
 
-A [pull request](https://github.com/cloudfoundry/bosh/pull/1190) has been merged into BOSH develop so an official fix for this issue is coming.
+To prevent stale ARP entries, set the `director.flush_arp` property of your BOSH deployment to `true`.
 
 The issue, if occurs, should fix itself as the kernel updates incomplete ARP entries, which **should** happen within minutes
 

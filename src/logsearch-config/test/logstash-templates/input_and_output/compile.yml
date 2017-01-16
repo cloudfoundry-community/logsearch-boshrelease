@@ -1,0 +1,34 @@
+template: 
+  path: "jobs/parser/templates/config/input_and_output.conf.erb"
+  testcase:
+    - name: "default"
+      config: "input_and_output/test_default-config.yml"
+      destination: "target/input_and_output-test_default.conf"
+
+    - name: "enabled debug"
+      config: "input_and_output/test_enabled_debug-config.yml"
+      destination: "target/input_and_output-test_enabled_debug.conf"
+
+    - name: "inputs"
+      config: "input_and_output/test_inputs-config.yml"
+      destination: "target/input_and_output-test_inputs.conf"
+
+    - name: "inputs - no redis"
+      config: "input_and_output/test_inputs_no_redis-config.yml"
+      destination: "target/input_and_output-test_inputs_no_redis.conf"
+    
+    - name: "outputs"
+      config: "input_and_output/test_outputs-config.yml"
+      destination: "target/input_and_output-test_outputs.conf"
+
+    - name: "outputs - no elasticsearch"
+      config: "input_and_output/test_outputs_no_elasticsearch-config.yml"
+      destination: "target/input_and_output-test_outputs_no_elasticsearch.conf"
+
+    - name: "outputs - elasticsearch properties"
+      config: "input_and_output/test_outputs_elasticsearch_all_properties-config.yml"
+      destination: "target/input_and_output-test_outputs_elasticsearch_all_properties.conf"
+
+    - name: "outputs - elasticsearch properties"
+      config: "input_and_output/test_outputs_elasticsearch_required_properties-config.yml"
+      destination: "target/input_and_output-test_outputs_elasticsearch_required_properties.conf"

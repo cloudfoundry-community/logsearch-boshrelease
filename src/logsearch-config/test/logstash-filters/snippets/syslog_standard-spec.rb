@@ -227,7 +227,8 @@ describe LogStash::Filters::Grok do
     end
 
     when_parsing_log(
-      '@message' => "<46>Dec 16 15:24:05 haproxy[9252]: 52.62.56.30:45940 [16/Dec/2015:15:24:02.638] syslog-in~ ingestors/node1 328/-1/3332 0 SC 8/8/8/0/3 0/0",
+      # NOTE: Do not use Jan or Dec here - they are special cases in 'parseAndGuessYear' (see https://github.com/logstash-plugins/logstash-filter-date/blob/master/src/main/java/org/logstash/filters/parser/JodaParser.java#L107-L109)
+      '@message' => "<46>Apr 16 15:24:05 haproxy[9252]: 52.62.56.30:45940 [16/Apr/2015:15:24:02.638] syslog-in~ ingestors/node1 328/-1/3332 0 SC 8/8/8/0/3 0/0",
       '@type' => 'syslog'
     ) do
 
@@ -236,7 +237,7 @@ describe LogStash::Filters::Grok do
       end
 
       it "extracts the timestamp" do
-        expect(subject['@timestamp']).to eq Time.parse("#{Time.now.year}-12-16T15:24:05Z")
+        expect(subject['@timestamp']).to eq Time.iso8601("#{Time.now.year}-04-16T15:24:05.000Z")
       end
 
       it "drops the syslog_timestamp field (since it has been captured in @timestamp)" do
@@ -252,7 +253,7 @@ describe LogStash::Filters::Grok do
       end
 
       it "extracts the syslog_message to @message" do
-        expect(subject['@message']).to eq("52.62.56.30:45940 [16/Dec/2015:15:24:02.638] syslog-in~ ingestors/node1 328/-1/3332 0 SC 8/8/8/0/3 0/0")
+        expect(subject['@message']).to eq("52.62.56.30:45940 [16/Apr/2015:15:24:02.638] syslog-in~ ingestors/node1 328/-1/3332 0 SC 8/8/8/0/3 0/0")
       end
     end
   end

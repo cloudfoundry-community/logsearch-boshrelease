@@ -5,6 +5,13 @@ set -u # report the usage of uninitialized variables
 # $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
 # $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
 
+export PATH=/var/vcap/packages/ruby2.3/bin:$PATH
+
+logsearch-config/bin/build
+
 cp logsearch-config/target/* $BOSH_INSTALL_TARGET
 cp logsearch-config/mappings/* $BOSH_INSTALL_TARGET
-cp logsearch-config/src/logstash-filters/* $BOSH_INSTALL_TARGET
+cp logsearch-config/src/logstash-filters/if_it_looks_like_json.conf $BOSH_INSTALL_TARGET
+cp logsearch-config/src/logstash-filters/timecop.conf $BOSH_INSTALL_TARGET
+cp logsearch-config/src/logstash-filters/deployment.conf $BOSH_INSTALL_TARGET
+cp logsearch-config/src/logstash-filters/deployment_lookup.yml $BOSH_INSTALL_TARGET

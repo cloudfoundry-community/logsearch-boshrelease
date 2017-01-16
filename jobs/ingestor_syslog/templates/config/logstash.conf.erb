@@ -22,7 +22,15 @@ input {
 		ssl_key => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.key"
 	}
 	<% end %>
-}
+
+	<% if_p("logstash_ingestor.relp.port") do | port | %>
+	relp {
+		add_field => { "_logstash_input" => "relp" }
+		host => "0.0.0.0"
+		port => "<%= port %>"
+	}
+	<% end %>
+	}
 
 filter {
   # drop empty logs (eg: monit connection healthcheck)

@@ -30,7 +30,7 @@ def load_filters(filters)
 end
 
 def replace_lookup_dictionary(filters)
-  filters.gsub(/\/var\/vcap\/.*(?=")/, "#{Dir.pwd}/target/deployment_lookup.yml")
+  filters.gsub(/\/var\/vcap\/.*(?=")/, "#{Dir.pwd}/src/logstash-filters/deployment_lookup.yml")
 end
 
 def when_parsing_log(sample_event, &block)

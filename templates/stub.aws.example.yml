@@ -8,7 +8,7 @@ releases:
   version: latest
 
 name: logsearch
-director_uuid: <%= `bosh status --uuid`%>
+director_uuid: VAR_UUID # BOSH UUID
 
 jobs:
 # Deploy group 1
@@ -17,13 +17,6 @@ jobs:
 
 - name: cluster_monitor
   instances: 1
-  properties:
-    nats_to_syslog:
-      nats:
-        user: nats
-        password: nats-password
-        port: 4222
-        machines: [10.0.0.6]
 
 - name: queue
   instances: 1
@@ -54,7 +47,17 @@ jobs:
   - (( merge ))
   - name: elastic
     static_ips:
-    - SOME-ELASTIC-IP
+    - VAR_ELK_IP  # Specify an elastic IP for the router. Resources, proxied by the router, will be available through this IP. They include: kibana, elasticsearch, cluster_monitor, ingestor and syslog_server.
+
+properties:
+  nats_to_syslog:
+    # Specify the NATS settings of the Bosh Director
+    nats:
+      user: VAR_NATS_USER  # Specify NATS user
+      password: VAR_NATS_PASS  # Specify NATS password
+      port: 4222  # Default value
+      machines: [VAR_NATS_IP]  # Specify your NATS IPs
+
 
 disk_pools:
 - name: elasticsearch_master
@@ -70,16 +73,21 @@ networks:
 - name: default
   type: manual
   subnets:
-  - range: 10.0.1.0/24
-    gateway: 10.0.1.1
+  - range: VAR_CF1_NET_RANGE
+    gateway: VAR_CF1_NET_GW
     cloud_properties:
-      subnet: SUBNET-ID
+      subnet: VAR_CF1_SUBNET  # Specify your subnetwork ID
       security_groups: [bosh]
     dns:
-    - 10.10.0.2
+    - VAR_CF1_DNS_1
+    - VAR_CF1_DNS_2
     reserved:
-    - 10.0.1.2 - 10.0.1.6
+    - 192.168.1.2 - 192.168.1.95
     static:
-    - 10.0.1.10 - 10.0.1.40
+    - 192.168.1.96 - 192.168.1.120
 - name: elastic
   type: vip
+  cloud_properties:
+    security_groups:  # Specify your security groups used for 'elastic' network
+    - bosh
+    - logsearch
