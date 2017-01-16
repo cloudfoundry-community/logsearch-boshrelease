@@ -109,7 +109,7 @@ While this issue is not specific to this boshrelease, it is worth noting.
 
 On certain IAAS'es, (AWS confirmed), the bosh-agent fails to flush the ARP cache of the VMs in the deployment which, in rare cases, results in VMs not being able to communicate with each other after some of them has been recreated. The symptoms of when this happens are varied depending on the affected VMs. It could be anything from HAproxy reporting it couldn't find any backends (eg. Kibana) or the parsers failing to connect to the queue.
 
-A [pull request](https://github.com/cloudfoundry/bosh/pull/1190) has been merged into BOSH develop so an official fix for this issue is coming.
+To prevent stale ARP entries, set the `director.flush_arp` property of your BOSH deployment to `true`.
 
 The issue, if occurs, should fix itself as the kernel updates incomplete ARP entries, which **should** happen within minutes
 
