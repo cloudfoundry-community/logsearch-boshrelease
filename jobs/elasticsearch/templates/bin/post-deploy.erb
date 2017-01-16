@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+curl -s \
+    -X PUT \
+    -d '{"transient":{"cluster.routing.allocation.enable":"all"}}' \
+    '<%= p('elasticsearch.master_hosts').first %>:9200/_cluster/settings' \
+    > /dev/null
