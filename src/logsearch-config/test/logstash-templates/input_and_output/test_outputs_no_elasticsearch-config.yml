@@ -4,7 +4,7 @@
 properties:
   logstash_parser:
     debug: false
-    inputs: [ { plugin: "redis", options : {} } ]
+    inputs: [ { plugin: "redis", options : { threads: 8 } } ]
     outputs: [ { plugin: "mongodb", options: { uri: "192.168.1.1", database: "logsearch", collection: "logs" } }, { plugin: "syslog", options: { host: "127.0.0.1", port: 123} } ]
     elasticsearch:
       document_id: ~
