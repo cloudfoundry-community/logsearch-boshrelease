@@ -21,10 +21,16 @@ case $1 in
     # store this processes pid in $PIDFILE, since the exec below doesn't daemonize
     echo $$ > $PIDFILE
 
+    <% p("logstash.plugins").each do |plugin| %>
+    /var/vcap/packages/logstash/bin/logstash-plugin install \
+      <%= plugin.except("name").map { |key, value| "--#{key}=#{value}" }.join(" ") %> \
+      <%= plugin["name"] %>
+    <% end %>
+
     exec /var/vcap/packages/logstash/bin/logstash agent \
-         -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
-         >>$LOG_DIR/$JOB_NAME.stdout.log \
-         2>>$LOG_DIR/$JOB_NAME.stderr.log
+        -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
+        >>$LOG_DIR/$JOB_NAME.stdout.log \
+        2>>$LOG_DIR/$JOB_NAME.stderr.log
 
     ;;
 
