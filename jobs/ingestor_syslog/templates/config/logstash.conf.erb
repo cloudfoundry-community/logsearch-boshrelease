@@ -85,7 +85,7 @@ output {
             if_p('redis.congestion_threshold') do |threshold|
               options['congestion_threshold'] = threshold
             end
-            output['options'] = output.merge(output['options'])
+            output['options'] = options.merge(output['options'])
           end
         %>
         <% output['options'].each do | k, v | %>
