@@ -4,7 +4,7 @@
 properties:
   logstash_parser:
     debug: true
-    inputs: [ { plugin: "redis", options : {} } ]
+    inputs: [ { plugin: "redis", options : { threads: 8 } } ]
     outputs: [ { plugin: "elasticsearch", options: {} } ]
     elasticsearch:
       document_id: ~

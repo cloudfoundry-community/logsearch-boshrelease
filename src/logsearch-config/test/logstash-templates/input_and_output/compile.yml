@@ -1,4 +1,4 @@
-template: 
+template:
   path: "jobs/parser/templates/config/input_and_output.conf.erb"
   testcase:
     - name: "default"
@@ -16,7 +16,7 @@ template:
     - name: "inputs - no redis"
       config: "input_and_output/test_inputs_no_redis-config.yml"
       destination: "target/input_and_output-test_inputs_no_redis.conf"
-    
+
     - name: "outputs"
       config: "input_and_output/test_outputs-config.yml"
       destination: "target/input_and_output-test_outputs.conf"
