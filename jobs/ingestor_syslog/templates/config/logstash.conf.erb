@@ -71,7 +71,7 @@ output {
       <%= output['plugin'] %> {
         <%
           if 'redis' == output['plugin']
-            output['options'] = {
+            options = {
               "host" => p('redis.host'),
               "port" => p('redis.port'),
               "data_type" => "list",
@@ -80,11 +80,12 @@ output {
               "batch_events" => 50,
             }
             if_p('redis.congestion_interval') do |interval|
-              output['options']['congestion_interval'] = interval
+              options['congestion_interval'] = interval
             end
             if_p('redis.congestion_threshold') do |threshold|
-              output['options']['congestion_threshold'] = threshold
+              options['congestion_threshold'] = threshold
             end
+            output['options'] = output.merge(output['options'])
           end
         %>
         <% output['options'].each do | k, v | %>

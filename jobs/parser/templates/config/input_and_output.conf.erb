@@ -3,14 +3,16 @@ input {
 <% p('logstash_parser.inputs').each do | input | %>
     <%= input['plugin'] %> {
       <% if 'redis' == input['plugin'] %>
-        <% input['options'] = {
-           "host" => p('redis.host'),
-           "port" => p('redis.port'),
-           "type" => "redis-input",
-           "data_type" => "list",
-           "key" => p('redis.key'),
-           "threads" => 8
-         } %>
+        <%
+          options = {
+            "host" => p('redis.host'),
+            "port" => p('redis.port'),
+            "type" => "redis-input",
+            "data_type" => "list",
+            "key" => p('redis.key'),
+          }
+          input['options'] = options.merge(input['options'])
+        %>
       <% end %>
       <% input['options'].each do | k, v | %>
         <%= k %> => <%= v.inspect %>
@@ -31,22 +33,24 @@ output {
     <% p('logstash_parser.outputs').each do | output | %>
         <%= output['plugin'] %> {
         <% if 'elasticsearch' == output['plugin'] %>
-            <% output['options'] = {
+            <%
+              options = {
                 "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
-                "flush_size" => p('logstash_parser.elasticsearch.flush_size'),               
+                "flush_size" => p('logstash_parser.elasticsearch.flush_size'),
                 "index" => p('logstash_parser.elasticsearch.index'),
                 "document_type" => p('logstash_parser.elasticsearch.index_type'),
-                "manage_template" => false              
-            } 
-            if p('logstash_parser.elasticsearch.idle_flush_time', nil)
-                output['options']['idle_flush_time'] = p('logstash_parser.elasticsearch.idle_flush_time')
-            end
-            if p('logstash_parser.elasticsearch.document_id', nil)
-                output['options']['document_id'] = p('logstash_parser.elasticsearch.document_id')
-            end
-            if p('logstash_parser.elasticsearch.routing', nil)
-                output['options']['routing'] = p('logstash_parser.elasticsearch.routing')
-            end
+                "manage_template" => false
+              }
+              if p('logstash_parser.elasticsearch.idle_flush_time', nil)
+                options['idle_flush_time'] = p('logstash_parser.elasticsearch.idle_flush_time')
+              end
+              if p('logstash_parser.elasticsearch.document_id', nil)
+                options['document_id'] = p('logstash_parser.elasticsearch.document_id')
+              end
+              if p('logstash_parser.elasticsearch.routing', nil)
+                options['routing'] = p('logstash_parser.elasticsearch.routing')
+              end
+              output['options'] = options.merge(output['options'])
             %>
         <% end %>
         <% output['options'].each do | k, v | %>
