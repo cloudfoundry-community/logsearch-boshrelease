@@ -36,7 +36,6 @@ jobs:
   - { release: logsearch, name: ingestor_syslog }
   - { release: logsearch, name: elasticsearch }
   - { release: logsearch, name: elasticsearch_config }
-  - { release: logsearch, name: curator }
   - { release: logsearch, name: kibana }
   - { release: logsearch, name: nats_to_syslog }
   resource_pool: cluster_monitor
@@ -61,12 +60,6 @@ jobs:
     redis:
       host: 127.0.0.1
       maxmemory: 10
-    curator:
-      elasticsearch:
-        host: 127.0.0.1
-        port: 9200
-      purge_logs:
-        retention_period: 7
     elasticsearch_config:
       elasticsearch:
         host: 127.0.0.1
@@ -110,6 +103,12 @@ jobs:
   update:
     serial: true # Block on this job to create deploy group 1
   properties:
+    curator:
+      elasticsearch:
+        host: 127.0.0.1
+        port: 9200
+      purge_logs:
+        retention_period: 7
     syslog_forwarder:
       config:
       - {service: curator, file: /var/vcap/sys/log/curator/curator.log}
@@ -268,10 +267,6 @@ jobs:
 
 # Global properties
 properties:
-  curator:
-    elasticsearch:
-      host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
-      port: 9200
   logstash_parser:
     debug: false
   logstash_ingestor:
@@ -304,5 +299,5 @@ properties:
       port: 4222
       machines: [10.0.16.5]
     syslog:
-        host: 127.0.0.1
-        port: 514
+      host: 127.0.0.1
+      port: 514
