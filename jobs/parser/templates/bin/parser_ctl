@@ -47,7 +47,10 @@ case $1 in
     # construct a complete config file from all the fragments
     cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
 
-    cp "<%= p("logstash_parser.deployment_dictionary") %>" "${JOB_DIR}/config"
+    # append deployment dictionary files
+    <% p('logstash_parser.deployment_dictionary').each do |dictionary_path| %>
+      cat "<%= dictionary_path %>" >> ${JOB_DIR}/config/deployment_lookup.yml
+    <% end %>
 
     echo "filter {" >> ${JOB_DIR}/config/logstash.conf
 
