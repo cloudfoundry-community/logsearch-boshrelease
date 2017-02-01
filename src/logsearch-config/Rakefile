@@ -7,7 +7,7 @@ task :clean do
   FileUtils.rm_rf(Dir.glob('target/*'))
 end
 
-desc "Builds filters & dashboards"
+desc "Builds logstash filters"
 task :build => :clean do
   puts "===> Building ..."
   compile_erb 'src/logstash-filters/default.conf.erb', 'target/logstash-filters-default.conf'

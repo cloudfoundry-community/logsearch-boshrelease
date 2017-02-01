@@ -1,18 +1,29 @@
 ---
 name: "elasticsearch_config"
+
 packages:
   - "elasticsearch"
   - "java8"
-  - "logsearch-config"
+
 templates:
-  bin/run.erb: "bin/run"
-  bin/job.process: "bin/job.process"
+  bin/run.erb:                          bin/run
+  bin/job.process:                      bin/job.process
+  index-templates/shards-and-replicas.json.erb:  index-templates/shards-and-replicas.json
+  index-templates/index-settings.json.erb:  index-templates/index-settings.json
+  index-templates/index-mappings.json.erb:  index-templates/index-mappings.json
+
 properties:
   elasticsearch_config.elasticsearch.host:
     description: "The elasticsearch master node hostname"
   elasticsearch_config.elasticsearch.port:
     description: "the elasticsearch master node port"
     default: 9200
+  elasticsearch_config.index_prefix:
+    description: |
+      Name prefix of your log indices that can uniquely distinguish them among other ES indices if apply pattern '*' to it, e.g. 'logs-*'. 
+      It is used in the index templates predefined in the job to specify index pattern.
+      Make sure the prefix matches `logstash_parser.elasticsearch.index` property set for your parser.
+    default: "logstash-"
   elasticsearch_config.templates:
     description: "An array with key-value hashes; keys being template name, value being template content"
     default: []
@@ -20,5 +31,4 @@ properties:
     description: "An array with key-value hashes; keys being doc path, value being doc source"
     default: []
   elasticsearch_config.license:
-    description: The ElasticSearch License string
-
+    description: "The ElasticSearch License string"

@@ -71,10 +71,13 @@ jobs:
       elasticsearch:
         host: 127.0.0.1
         port: 9200
+      index_prefix: "logstash-"
       templates:
-      - shards-and-replicas: "{ \"template\" : \"*\", \"order\" : 99, \"settings\" : { \"number_of_shards\" : 1, \"number_of_replicas\" : 0 } }"
-      - index_template: /var/vcap/packages/logsearch-config/default-mappings.json
+        - shards-and-replicas: "{ \"template\" : \"logstash-*\", \"order\" : 100, \"settings\" : { \"number_of_shards\" : 1, \"number_of_replicas\" : 0 } }"
+        - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
+        - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
     logstash_parser:
+      logstash_parser.elasticsearch.index: "logstash-%{+YYYY.MM.dd}"
       filters:
       - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
     nats_to_syslog:
@@ -214,7 +217,7 @@ jobs:
       - {service: parser, file: /var/vcap/sys/log/parser/parser.stderr.log}
 
 ####################################################
-#3nd deploy group - ls-router (haproxy), and errands
+#3rd deploy group - ls-router (haproxy), and errands
 ####################################################
 
 - name: ls-router
@@ -290,8 +293,9 @@ properties:
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
     templates:
-      - index_template: /var/vcap/packages/logsearch-config/default-mappings.json
-      - shards-and-replicas: "{ \"template\" : \"*\", \"order\" : 99, \"settings\" : { \"number_of_shards\" : 5, \"number_of_replicas\" : 1 } }"
+      - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
+      - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
+      - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
   syslog_forwarder:
     host: (( grab jobs.cluster_monitor.networks.default.static_ips.[0] ))
     port: (( grab jobs.cluster_monitor.properties.logstash_ingestor.syslog.port ))
