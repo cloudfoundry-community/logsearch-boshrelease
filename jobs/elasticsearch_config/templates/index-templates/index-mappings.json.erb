@@ -1,25 +1,12 @@
 {
-  "template": "logstash-*",
-  "order": 50,
-  "settings": {
+  "template": "<%= p('elasticsearch_config.index_prefix') %>*",
+  "order": 102,
+  "settings": { 
     "index": {
-      "codec": "best_compression",
-      "search": {
-        "slowlog": {
-          "threshold": {
-            "query": {
-              "warn": "30s",
-              "info": "15s",
-              "debug": "10s",
-              "trace": "5s"
-            }
-          }
-        }
-      },
       "query": {
         "default_field": "@raw"
       }
-    }
+    }    
   },
   "mappings": {
     "_default_": {
