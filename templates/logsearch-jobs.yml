@@ -72,10 +72,6 @@ jobs:
         host: 127.0.0.1
         port: 9200
       index_prefix: "logstash-"
-      templates:
-        - shards-and-replicas: "{ \"template\" : \"logstash-*\", \"order\" : 100, \"settings\" : { \"number_of_shards\" : 1, \"number_of_replicas\" : 0 } }"
-        - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
-        - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
     logstash_parser:
       logstash_parser.elasticsearch.index: "logstash-%{+YYYY.MM.dd}"
       filters:
@@ -293,9 +289,9 @@ properties:
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
     templates:
-      - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
-      - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
-      - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
+    - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
+    - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
+    - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
   syslog_forwarder:
     host: (( grab jobs.cluster_monitor.networks.default.static_ips.[0] ))
     port: (( grab jobs.cluster_monitor.properties.logstash_ingestor.syslog.port ))
@@ -308,5 +304,5 @@ properties:
       port: 4222
       machines: [10.0.16.5]
     syslog:
-        host: 127.0.0.1
-        port: 514
+      host: 127.0.0.1
+      port: 514
