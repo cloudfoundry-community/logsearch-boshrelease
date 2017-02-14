@@ -47,7 +47,7 @@ case $1 in
     <% end %>
 
 
-    ulimit -n 64000
+    ulimit -n <%= p("elasticsearch.limits.fd") %>
     ulimit -l unlimited  # required to enable elasticsearch's mlockall setting
 
     mkdir -p $PLUGIN_SCRIPTS_DIR
