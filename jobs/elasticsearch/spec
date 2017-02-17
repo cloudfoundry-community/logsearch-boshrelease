@@ -42,7 +42,7 @@ properties:
     default: 65536
   elasticsearch.discovery.minimum_master_nodes:
     description: The minimum number of master eligible nodes a node should "see" in order to operate within the cluster. Recommended to set it to a higher value than 1 when running more than 2 nodes in the cluster.
-    default: 1
+    default: "auto"
   elasticsearch.config_options:
     description: "Additional options to append to elasticsearch's config.yml (YAML format)."
     default: ~

@@ -20,7 +20,18 @@ node.<%= k %>: "<%= v %>"
 network.host: "0.0.0.0"
 http.host: <%= p("elasticsearch.http_host") %>
 
-discovery.zen.minimum_master_nodes: <%= p("elasticsearch.discovery.minimum_master_nodes") %>
+<%
+  minimum_master_nodes = p("elasticsearch.discovery.minimum_master_nodes")
+  if minimum_master_nodes == "auto"
+    masters = p("elasticsearch.master_hosts").length
+    if masters % 2 == 0
+      raise "Expected an odd number of masters; got #{masters}"
+    end
+    minimum_master_nodes = masters / 2 + 1
+  end
+%>
+
+discovery.zen.minimum_master_nodes: <%= minimum_master_nodes %>
 discovery.zen.ping.multicast.enabled: false
 discovery.zen.ping.unicast.hosts: "<%= p("elasticsearch.master_hosts").join(',') %>"
 
