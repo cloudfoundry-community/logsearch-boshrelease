@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-curl -s -X PUT localhost:9200/_all/_settings \
-  -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'

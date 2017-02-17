@@ -30,3 +30,6 @@ if [ -z "${remaining}" ]; then
   echo "Node failed to join the cluster"
   exit 1
 fi
+
+curl -s -X PUT localhost:9200/_all/_settings \
+  -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
