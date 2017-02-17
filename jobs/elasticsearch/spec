@@ -6,6 +6,7 @@ packages:
 - java8
 templates:
   bin/drain.erb: bin/drain
+  bin/post-start.erb: bin/post-start
   bin/post-deploy.erb: bin/post-deploy
   bin/elasticsearch_ctl: bin/elasticsearch_ctl
   bin/monit_debugger: bin/monit_debugger
@@ -30,6 +31,12 @@ properties:
   elasticsearch.node.allow_data:
     description: Allow node to store data? (true / false)
     default: false
+  elasticsearch.health.timeout:
+    description: Post-start timeout for node to join cluster
+    default: 300
+  elasticsearch.health.interval:
+    description: Post-start interval for node to join cluster
+    default: 15
   elasticsearch.node.tags:
     description: A hash of additional tags for the node
   elasticsearch.exec.environment:

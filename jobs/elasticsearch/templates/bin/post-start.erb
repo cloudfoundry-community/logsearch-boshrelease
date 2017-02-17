@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+out=$(mktemp health-XXXXXX)
+remaining=<%= p("elasticsearch.health.timeout") %>
+
+until [ "${remaining}" -le 0 ]; do
+  curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
+  body=$(cat ${out} | head -n -1)
+  status=$(cat ${out} | tail -n 1)
+  echo "body: ${body}"
+  echo "status: ${status}"
+  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+  if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
+    break
+  fi
+  <% else %>
+  if [ ${status} = "200" ]; then
+    break
+  fi
+  <% end %>
+  let remaining-=<%= p("elasticsearch.health.interval") %>
+  sleep <%= p("elasticsearch.health.interval") %>
+done
+
+rm ${out}
+
+if [ -z "${remaining}" ]; then
+  echo "Node failed to join the cluster"
+  exit 1
+fi
