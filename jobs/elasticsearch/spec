@@ -40,6 +40,12 @@ properties:
   elasticsearch.limits.fd:
     description: Maximum file descriptors
     default: 65536
+  elasticsearch.recovery.delay_allocation:
+    description: Delay allocation interval
+    default: "1m"
+  elasticsearch.recovery.delay_allocation_restart:
+    description: Delay allocation interval during restart
+    default: "5m"
   elasticsearch.discovery.minimum_master_nodes:
     description: The minimum number of master eligible nodes a node should "see" in order to operate within the cluster. Recommended to set it to a higher value than 1 when running more than 2 nodes in the cluster.
     default: 1
