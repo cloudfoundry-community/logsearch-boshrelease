@@ -6,7 +6,11 @@ out=$(mktemp health-XXXXXX)
 remaining=<%= p("elasticsearch.health.timeout") %>
 
 until [ "${remaining}" -le 0 ]; do
+  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
   curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
+  <% else %>
+  curl -sw '\n%{http_code}' localhost:9200/_cluster/health?local=true > ${out}
+  <% end %>
   body=$(cat ${out} | head -n -1)
   status=$(cat ${out} | tail -n 1)
   echo "body: ${body}"
