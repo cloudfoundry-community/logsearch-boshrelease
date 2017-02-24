@@ -21,7 +21,7 @@ defaults
 frontend syslog-in
     mode tcp
 
-    <% if properties.haproxy.ssl_pem %>
+    <% if properties.haproxy.ssl_pem and properties.haproxy.ingestor.enable_ssl == true %>
     bind :<%= p("haproxy.ingestor.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
     <% else %>
     bind :<%= p("haproxy.ingestor.inbound_port") %>
@@ -39,7 +39,7 @@ backend ingestors
 frontend kibana-in
     mode http
 
-    <% if properties.haproxy.ssl_pem %>
+    <% if properties.haproxy.ssl_pem and properties.haproxy.kibana.enable_ssl == true %>
     bind :<%= p("haproxy.kibana.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
     <% else %>
     bind :<%= p("haproxy.kibana.inbound_port") %>
@@ -86,14 +86,17 @@ backend cluster_monitor
 frontend elastic-in
     mode http
 
-    <% if properties.haproxy.ssl_pem %>
+    <% if properties.haproxy.ssl_pem and properties.haproxy.elastic.enable_ssl == true %>
     bind :<%= p("haproxy.elastic.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
     <% else %>
     bind :<%= p("haproxy.elastic.inbound_port") %>
     <% end %>
 
+    <% if properties.haproxy.elastic.auth.username %>
     acl logged_in http_auth(elastic-user)
     http-request auth realm "Elasticsearch" if !logged_in
+    <% end %>
+
 
     default_backend elastic
 
@@ -104,8 +107,11 @@ backend elastic
     server elastic<%= index %> <%= ip %>:9200 check inter 1000
     <% end %>
 
+
+<% if p('haproxy.elastic.auth.username') != "" %>
 userlist elastic-user
     user <%= p('haproxy.elastic.auth.username') %> insecure-password <%= p('haproxy.elastic.auth.password') %>
+<% end %>
 
 <% end # elastic proxy %>
 
