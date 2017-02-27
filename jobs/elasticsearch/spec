@@ -40,6 +40,15 @@ properties:
   elasticsearch.limits.fd:
     description: Maximum file descriptors
     default: 65536
+  elasticsearch.monitor.type:
+    description: Monit check type; must be "process" or "host"
+    default: process
+  elasticsearch.monitor.host_timeout:
+    description: Host check timeout, in seconds
+    default: 15
+  elasticsearch.monitor.host_cycles:
+    description: Host check cycles
+    default: 5
   elasticsearch.discovery.minimum_master_nodes:
     description: The minimum number of master eligible nodes a node should "see" in order to operate within the cluster. Recommended to set it to a higher value than 1 when running more than 2 nodes in the cluster.
     default: "auto"

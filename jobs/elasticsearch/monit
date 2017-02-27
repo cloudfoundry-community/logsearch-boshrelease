@@ -1,8 +1,20 @@
+<% if p("elasticsearch.monitor.type") == "process" %>
 check process elasticsearch
   with pidfile /var/vcap/sys/run/elasticsearch/elasticsearch.pid
   start program "/var/vcap/jobs/elasticsearch/bin/monit_debugger elasticsearch_ctl '/var/vcap/jobs/elasticsearch/bin/elasticsearch_ctl start'" with timeout 120 seconds
   stop program "/var/vcap/jobs/elasticsearch/bin/monit_debugger elasticsearch_ctl '/var/vcap/jobs/elasticsearch/bin/elasticsearch_ctl stop'"
   group vcap
+<% elsif p("elasticsearch.monitor.type") == "host" %>
+check host elasticsearch with address 127.0.0.1
+  start program "/var/vcap/jobs/elasticsearch/bin/monit_debugger elasticsearch_ctl '/var/vcap/jobs/elasticsearch/bin/elasticsearch_ctl start'" with timeout 120 seconds
+  stop program "/var/vcap/jobs/elasticsearch/bin/monit_debugger elasticsearch_ctl '/var/vcap/jobs/elasticsearch/bin/elasticsearch_ctl stop'"
+  if failed url http://127.0.0.1:9200/_cluster/health
+    <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>and content = '"status":"green"'<% end %>
+    timeout <%= p("elasticsearch.monitor.host_timeout") %> seconds
+    for <%= p("elasticsearch.monitor.host_cycles") %> cycles
+  then stop
+  group vcap
+<% end %>
 
 check device elasticsearch-ephemeral_disk with path /var/vcap/data
   if SPACE usage > 80% then alert
