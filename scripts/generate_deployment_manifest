@@ -1,6 +1,10 @@
 #!/bin/sh
 
-spruce="$(dirname "$0")/../bin/spruce-$(uname -s)"
+# Check for spruce installation
+which spruce > /dev/null 2>&1 || {
+  echo "Aborted. Please install spruce by following https://github.com/geofffranks/spruce#installation" 1>&2
+  exit 1
+}
 
 templates=$(dirname "$0")/../templates
 
@@ -17,7 +21,7 @@ if [ "$infrastructure" != "aws" ] && \
   exit 1
 fi
 
-$spruce merge --prune meta \
+spruce merge --prune meta \
   "$templates/logsearch-deployment.yml" \
   "$templates/logsearch-jobs.yml" \
   "$templates/logsearch-infrastructure-${infrastructure}.yml" \
