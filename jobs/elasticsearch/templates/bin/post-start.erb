@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+
+out=$(mktemp health-XXXXXX)
+remaining=<%= p("elasticsearch.health.timeout") %>
+
+# Ensure shard allocation is enabled for updates from previous release
+# TODO: Deprecate on next release
+curl -X PUT -s <%= p('elasticsearch.master_hosts').first %>:9200/_cluster/settings \
+  -d '{"transient": {"cluster.routing.allocation.enable": "all"}}'
+
+until [ "${remaining}" -le 0 ]; do
+  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+  curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
+  <% else %>
+  curl -sw '\n%{http_code}' localhost:9200/_cluster/health?local=true > ${out}
+  <% end %>
+  body=$(cat ${out} | head -n -1)
+  status=$(cat ${out} | tail -n 1)
+  echo "body: ${body}"
+  echo "status: ${status}"
+  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+  if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
+    break
+  fi
+  <% else %>
+  if [ ${status} = "200" ]; then
+    break
+  fi
+  <% end %>
+  let remaining-=<%= p("elasticsearch.health.interval") %>
+  sleep <%= p("elasticsearch.health.interval") %>
+done
+
+rm ${out}
+
+if [ -z "${remaining}" ]; then
+  echo "Node failed to join the cluster"
+  exit 1
+fi
+
+curl -X PUT -s localhost:9200/_all/_settings \
+  -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
