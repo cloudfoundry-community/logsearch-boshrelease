@@ -50,7 +50,7 @@ properties:
     default: 5514
   haproxy.ingestor.enable_ssl:
     description: "Enable or Disable SSL for for syslog/ingestor traffic on haproxy"
-    default: false
+    default: true 
 
   haproxy.kibana.inbound_port:
     description: "The public port of the kibana service"
@@ -62,7 +62,7 @@ properties:
     default: 5601
   haproxy.kibana.enable_ssl:
     description: "Enable or Disable SSL for Kibana traffic on haproxy"
-    default: false
+    default: true 
   haproxy.kibana.auth.username:
     description: "Basic auth username for kibana. Optional"
     default: ""
@@ -75,6 +75,9 @@ properties:
   haproxy.elastic.backend_servers:
     description: "Lish of Elasticsearch nodes"
     default: []
+  haproxy.elastic.enable_ssl:
+    description: "Enable or Disable SSL for for syslog/ingestor traffic on haproxy"
+    default: true
   haproxy.elastic.auth.username:
     description: "Basic auth username for Elasticsearch. Optional"
   haproxy.elastic.auth.password:
