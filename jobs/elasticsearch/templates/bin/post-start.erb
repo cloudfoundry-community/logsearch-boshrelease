@@ -40,5 +40,7 @@ if [ -z "${remaining}" ]; then
   exit 1
 fi
 
+<% if p("elasticsearch.node.allow_data") %>
 curl -X PUT -s localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
+<% end %>
