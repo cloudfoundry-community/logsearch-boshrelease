@@ -24,10 +24,11 @@ case $1 in
       <%= plugin["name"] %>
     <% end %>
 
-    exec /var/vcap/packages/logstash/bin/logstash agent \
-        -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
-        >>$LOG_DIR/$JOB_NAME.stdout.log \
-        2>>$LOG_DIR/$JOB_NAME.stderr.log
+
+    exec /var/vcap/packages/logstash/bin/logstash \
+         -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
+         >>$LOG_DIR/$JOB_NAME.stdout.log \
+         2>>$LOG_DIR/$JOB_NAME.stderr.log
 
     ;;
 
