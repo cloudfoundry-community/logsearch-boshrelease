@@ -47,7 +47,8 @@ export RUN_DIR=/var/vcap/sys/run/$JOB_NAME
 export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 export TMP_DIR=/var/vcap/sys/tmp/$JOB_NAME
 export STORE_DIR=/var/vcap/store/$JOB_NAME
-for dir in $RUN_DIR $LOG_DIR $TMP_DIR $STORE_DIR
+export DATA_DIR=/var/vcap/data/$JOB_NAME
+for dir in $RUN_DIR $LOG_DIR $TMP_DIR $STORE_DIR $DATA_DIR
 do
   mkdir -p ${dir}
   chown vcap:vcap ${dir}

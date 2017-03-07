@@ -76,8 +76,11 @@ case $1 in
 
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
-    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash agent \
-         -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
+    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash \
+        --path.data ${DATA_DIR} \
+        --path.config ${JOB_DIR}/config/logstash.conf \
+        --path.logs ${LOG_DIR} \
+        --pipeline.workers ${LOGSTASH_WORKERS} \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 
