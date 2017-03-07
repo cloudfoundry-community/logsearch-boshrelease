@@ -9,14 +9,22 @@ source /var/vcap/jobs/elasticsearch/helpers/ctl_setup.sh 'elasticsearch'
 export PORT=${PORT:-5000}
 export LANG=en_US.UTF-8
 
-<% p("elasticsearch.exec.environment", {}).each do | k, v | %>
+<% p("elasticsearch.exec.environment", {}).each do |k, v| %>
 export <%= k %>=<%= v %>
 <% end %>
 
-<% if not p('elasticsearch.exec.environment', {}).has_key? 'ES_HEAP_SIZE' then %>
-export ES_HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+
+<% if_p('elasticsearch.heap_size') do |heap_size| %>
+  HEAP_SIZE=<%= heap_size %>
 <% end %>
 
+export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE"
+# encountered environment variables that are no longer suppor; thentted
+
+export MAX_OPEN_FILES=65536
+export MAX_LOCKED_MEMORY=unlimited  # required to enable elasticsearch's mlockall setting
+export MAX_MAP_COUNT=262144
 
 PLUGIN_SCRIPTS_DIR=/var/vcap/data/elasticsearch/plugin-scripts
 
@@ -34,21 +42,20 @@ case $1 in
     # install plugins
     rm -rf /var/vcap/packages/elasticsearch/plugins/*
 
-    # install kopf as it is always packaged with the elasticsearch job
-    /var/vcap/packages/elasticsearch/bin/plugin install file:///var/vcap/packages/elasticsearch-plugins-kopf/elasticsearch-kopf.zip
+    if [ -n "$MAX_OPEN_FILES" ]; then
+      ulimit -n $MAX_OPEN_FILES
+    fi
 
-    # install user defined plugins
-    <% p("elasticsearch.plugins").each do |plugin| _, path = plugin.first %>
-      <% if path.start_with? '/var/vcap' %>
-        /var/vcap/packages/elasticsearch/bin/plugin install "file://<%= path %>"
-      <% else %>
-        /var/vcap/packages/elasticsearch/bin/plugin install "<%= path %>"
-      <% end %>
-    <% end %>
-
+    if [ -n "$MAX_LOCKED_MEMORY" ]; then
+      ulimit -l $MAX_LOCKED_MEMORY
+    fi
 
     ulimit -n <%= p("elasticsearch.limits.fd") %>
     ulimit -l unlimited  # required to enable elasticsearch's mlockall setting
+
+    if [ -n "$MAX_MAP_COUNT" ]; then
+      sysctl -q -w vm.max_map_count=$MAX_MAP_COUNT
+    fi
 
     mkdir -p $PLUGIN_SCRIPTS_DIR
 
@@ -60,7 +67,6 @@ case $1 in
 
     chpst -u vcap:vcap /var/vcap/packages/elasticsearch/bin/elasticsearch \
          -p ${PIDFILE} \
-         --XX:HeapDumpPath=${TMPDIR}/heap-dump/ \
          <%= p("elasticsearch.exec.options", []).join(' ') %> \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
