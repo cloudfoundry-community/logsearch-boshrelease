@@ -3,11 +3,12 @@
         ruby {
             code => "
                 n = Time.now
-                event['@parser[duration]'] = (1000 * (n - Time.parse(event['@parser[timestamp]']))).to_i
-                event['@timer[ingested_to_parsed]'] = (1000 * (n - Time.parse(event['@ingestor[timestamp]']))).to_i if event['@ingestor[timestamp]']
-                if event['@timestamp'].instance_of? Time
-                    event['@timer[emit_to_ingested]'] = (1000 * (Time.parse(event['@ingestor[timestamp]']) - event['@timestamp'])).to_i if event['@ingestor[timestamp]']
-                    event['@timer[emit_to_parsed]'] = (1000 * (n - event['@timestamp'])).to_i
+                event.set('@parser[duration]', (1000 * (n - Time.parse(event.get('@parser[timestamp]')))).to_i
+                event.set('@timer[ingested_to_parsed]', (1000 * (n - Time.parse(event.get('@ingestor[timestamp]')))).to_i if event.get('@ingestor[timestamp]'))
+                timestamp = event.get('@timestamp')
+                if timestamp.instance_of? Time
+                    event.set('@timer[emit_to_ingested]', (1000 * (Time.parse(event.get('@ingestor[timestamp]')) - timestamp)).to_i) if event.get('@ingestor[timestamp]')
+                    event.set('@timer[emit_to_parsed]', (1000 * (n - timestamp)).to_i
                 end
             "
         }

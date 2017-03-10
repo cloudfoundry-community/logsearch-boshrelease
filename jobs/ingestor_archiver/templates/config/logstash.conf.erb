@@ -12,7 +12,7 @@ input {
 filter {
     <% if 'DEBUG' == p('logstash.metadata_level') %>
         ruby {
-            code => "event['@ingestor[timestamp]'] = Time.now.iso8601(3)"
+            code => "event.set('@ingestor[timestamp]', Time.now.iso8601(3))"
             add_field => [ "@ingestor[service]", "archiver" ]
             add_field => [ "@ingestor[job]", "<%= name %>/<%= index %>" ]
         }
@@ -40,7 +40,7 @@ output {
                   "batch" => true,
                   "batch_events" => 50
                 } %>
-              <% end %> 
+              <% end %>
 	      <% output['options'].each do | k, v | %>
 	        <%= k %> => <%= v.inspect %>
 	      <% end %>
