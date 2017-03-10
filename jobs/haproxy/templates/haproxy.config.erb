@@ -7,6 +7,9 @@ global
     maxconn 64000
     spread-checks 4
     tune.ssl.default-dh-param 2048
+    <% if p("haproxy.enable_stats_socket") %>
+    stats socket /var/vcap/sys/run/haproxy/stats
+    <% end %>
 
 defaults
     log global

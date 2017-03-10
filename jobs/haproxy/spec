@@ -90,3 +90,6 @@ properties:
     description: "Basic auth password for cluster monitor kibana. Optional"
     default: ""
 
+  haproxy.enable_stats_socket:
+    description: "Whether to enable a socket that can be used to query errors and status"
+    default: false
