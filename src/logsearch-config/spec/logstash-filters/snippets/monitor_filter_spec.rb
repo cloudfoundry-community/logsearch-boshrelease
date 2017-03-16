@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'test/filter_test_helpers'
+require 'spec_helper'
 
 describe "Rules for parsing haproxy messages" do
 
@@ -19,15 +19,15 @@ describe "Rules for parsing haproxy messages" do
     ) do
 
       it "sets @source.job" do
-        expect(subject["@source"]["job"]).to eq "elasticsearch_master"
+        expect(parsed_result.get("@source")["job"]).to eq "elasticsearch_master"
       end
 
       it "sets @source.index" do
-        expect(subject["@source"]["index"]).to eq 1
+        expect(parsed_result.get("@source")["index"]).to eq 1
       end
 
       it "sets @source.program" do
-        expect(subject["@source"]["program"]).to eq "elasticsearch"
+        expect(parsed_result.get("@source")["program"]).to eq "elasticsearch"
       end
     end
   end
@@ -38,7 +38,7 @@ describe "Rules for parsing haproxy messages" do
     ) do
 
       it "drops event" do
-        expect(subject).to be_cancelled
+        expect(parsed_result).to be_cancelled
       end
 
     end

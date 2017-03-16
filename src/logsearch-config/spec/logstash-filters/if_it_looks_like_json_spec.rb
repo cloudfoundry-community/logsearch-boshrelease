@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "test/filter_test_helpers"
+require 'spec_helper'
 
 describe 'Log type autodetection' do
 
@@ -12,17 +12,17 @@ describe 'Log type autodetection' do
     CONFIG
   end
 
-  context "when parsing messages with no explicit type that look like JSON log messages" do
+  describe 'when parsing messages with no explicit type that look like JSON log messages' do
     when_parsing_log(
       '@type' => "syslog",
       '@message' => '287 <14>1 2016-01-08T15:52:56.74351+00:00 loggregator a4baede3-cb2a-4e1d-b6d4-8e34e4633149 [App/0] - - { "timestamp":"2016-01-08T15:52:56Z", "response_time":"0.110", "tls_time":"0.011", "tcp_time":"0.005", "url":"https://test-api.platform.cloudcredo.io/status", "app":"ccp-response-times" }'
     ) do
 
-      it "it gets parsed as JSON" do
-        expect(subject['tags']).to include("json/auto_detect")
+      it 'should gets parsed as JSON' do
+        expect(parsed_result.get('tags')).to include("json/auto_detect")
       end
-      it "it parses the JSON into a key named syslog_program" do
-        expect(subject['a4baede3_cb2a_4e1d_b6d4_8e34e4633149']).to eq( {
+      it "should parses the JSON into a key named syslog_program" do
+        expect(parsed_result.get('a4baede3_cb2a_4e1d_b6d4_8e34e4633149')).to eq( {
             "timestamp" => "2016-01-08T15:52:56Z",
         "response_time" => "0.110",
              "tls_time" => "0.011",
@@ -33,17 +33,17 @@ describe 'Log type autodetection' do
       end
     end
 
-    context "when parsing messages with @source.program set" do
+    context 'when parsing messages with @source.program set' do
       when_parsing_log(
         '@source' => { 'program' => 'program_name' },
         '@message' => '{ "timestamp":"2016-01-08T15:52:56Z", "response_time":"0.110", "tls_time":"0.011", "tcp_time":"0.005", "url":"https://test-api.platform.cloudcredo.io/status", "app":"ccp-response-times" }'
       ) do
 
         it "it gets parsed as JSON" do
-          expect(subject['tags']).to include("json/auto_detect")
+          expect(parsed_result.get('tags')).to include("json/auto_detect")
         end
         it "it parses the JSON into a key named @source.program" do
-          expect(subject['program_name']).to eq( {
+          expect(parsed_result.get('program_name')).to eq( {
               "timestamp" => "2016-01-08T15:52:56Z",
           "response_time" => "0.110",
                "tls_time" => "0.011",
@@ -63,16 +63,16 @@ describe 'Log type autodetection' do
         ) do
 
           it "it gets parsed as JSON" do
-            expect(subject['tags']).to include("json/auto_detect")
+            expect(parsed_result.get('tags')).to include("json/auto_detect")
           end
           it "it extracts the timestamp" do
-            expect(subject['tags']).to include("json/hoist_@timestamp")
+            expect(parsed_result.get('tags')).to include("json/hoist_@timestamp")
           end
           it "it extracts the millisecond portion of the timestamp into @timestamp" do
-            expect(subject['@timestamp']).to eq Time.parse('2016-03-22T14:03:07.327Z')
+            expect(parsed_result.get('@timestamp').time).to eq Time.parse('2016-03-22T14:03:07.327Z')
           end
           it "it extracts the nanoseconds into @timestamp_ns" do
-            expect(subject['@timestamp_ns']).to eq 9622
+            expect(parsed_result.get('@timestamp_ns')).to eq 9622
           end
         end
       end
@@ -83,16 +83,16 @@ describe 'Log type autodetection' do
         ) do
 
           it "it gets parsed as JSON" do
-            expect(subject['tags']).to include("json/auto_detect")
+            expect(parsed_result.get('tags')).to include("json/auto_detect")
           end
           it "it extracts the timestamp" do
-            expect(subject['tags']).to include("json/hoist_@timestamp")
+            expect(parsed_result.get('tags')).to include("json/hoist_@timestamp")
           end
           it "it extracts the millisecond portion of the timestamp into @timestamp" do
-            expect(subject['@timestamp']).to eq Time.parse('2016-03-22T14:03:07.327Z')
+            expect(parsed_result.get('@timestamp').time).to eq Time.parse('2016-03-22T14:03:07.327Z')
           end
           it "it extracts the nanoseconds into @timestamp_ns" do
-            expect(subject['@timestamp_ns']).to eq 9622
+            expect(parsed_result.get('@timestamp_ns')).to eq 9622
           end
         end
       end
@@ -105,9 +105,9 @@ describe 'Log type autodetection' do
       ) do
 
         it "it does not get parsed as JSON" do
-          expect(subject['tags']).to_not include("json/auto_detect")
-          expect(subject['tags']).to_not include("_jsonparsefailure")
-          expect(subject['tags']).to_not include("_grokparsefailure")
+          expect(parsed_result.get('tags')).to_not include("json/auto_detect")
+          expect(parsed_result.get('tags')).to_not include("_jsonparsefailure")
+          expect(parsed_result.get('tags')).to_not include("_grokparsefailure")
         end
       end
     end
@@ -119,8 +119,8 @@ describe 'Log type autodetection' do
       ) do
 
         it "it does not get parsed as JSON" do
-          expect(subject['tags']).to_not include("json/auto_detect")
-          expect(subject['tags']).to_not include("_jsonparsefailure")
+          expect(parsed_result.get('tags')).to_not include("json/auto_detect")
+          expect(parsed_result.get('tags')).to_not include("_jsonparsefailure")
         end
       end
     end

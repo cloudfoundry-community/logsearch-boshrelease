@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'test/filter_test_helpers'
+require 'spec_helper'
 
 describe "Rules for parsing haproxy messages" do
 
@@ -19,15 +19,15 @@ describe "Rules for parsing haproxy messages" do
       ) do
 
         it "adds the syslog_standard tag" do
-          expect(subject['tags']).to include("haproxy")
+          expect(parsed_result.get('tags')).to include("haproxy")
         end
 
         it "extract the message" do
-          expect(subject['haproxy']['message']).to include("SSL handshake failure")
+          expect(parsed_result.get('haproxy')['message']).to include("SSL handshake failure")
         end
 
         it "adds @source.job" do
-          expect(subject["@source"]["job"]).to eq "router"
+          expect(parsed_result.get("@source")["job"]).to eq "router"
         end
       end
 
@@ -37,15 +37,15 @@ describe "Rules for parsing haproxy messages" do
       ) do
 
         it "adds the syslog_standard tag" do
-          expect(subject['tags']).to include("haproxy")
+          expect(parsed_result.get('tags')).to include("haproxy")
         end
 
         it "extract the message" do
-          expect(subject['haproxy']['message']).to eq('Server ingestors/node0 is DOWN, reason: Layer4 connection problem, info: "Connection refused", check duration: 0ms. 0 active and 0 backup servers left. 52 sessions active, 0 requeued, 0 remaining in queue.')
+          expect(parsed_result.get('haproxy')['message']).to eq('Server ingestors/node0 is DOWN, reason: Layer4 connection problem, info: "Connection refused", check duration: 0ms. 0 active and 0 backup servers left. 52 sessions active, 0 requeued, 0 remaining in queue.')
         end
 
         it "adds @source.job" do
-          expect(subject["@source"]["job"]).to eq "router"
+          expect(parsed_result.get("@source")["job"]).to eq "router"
         end
       end
     end
@@ -57,10 +57,10 @@ describe "Rules for parsing haproxy messages" do
       ) do
 
         it "adds the syslog_standard tag" do
-          expect(subject['tags']).to include("haproxy")
+          expect(parsed_result.get('tags')).to include("haproxy")
         end
         it "extract the message" do
-          expect(subject['haproxy']['message']).to eq("Proxy ingestors started.")
+          expect(parsed_result.get('haproxy')['message']).to eq("Proxy ingestors started.")
         end
       end
     end
@@ -72,88 +72,88 @@ describe "Rules for parsing haproxy messages" do
       ) do
 
         it "adds the syslog_standard tag" do
-          expect(subject['tags']).to include("haproxy")
+          expect(parsed_result.get('tags')).to include("haproxy")
         end
 
         it "removes the @message field after parsing successfully" do
-          expect(subject['tags']).to include("haproxy")
-          expect(subject['@message']).to be_nil
+          expect(parsed_result.get('tags')).to include("haproxy")
+          expect(parsed_result.get('@message')).to be_nil
         end
 
         it "extracts haproxy log attributes" do
-          expect(subject["haproxy"]).to_not be_nil
+          expect(parsed_result.get("haproxy")).to_not be_nil
         end
 
         it "extracts the client IP" do
-          expect(subject["haproxy"]["client_ip"]).to eq "52.62.56.30"
+          expect(parsed_result.get("haproxy")["client_ip"]).to eq "52.62.56.30"
         end
 
         it "extracts the client port" do
-          expect(subject["haproxy"]["client_port"]).to eq 45940
+          expect(parsed_result.get("haproxy")["client_port"]).to eq 45940
         end
 
         it "extracts the accept_date" do
-          expect(subject["haproxy"]["accept_date"]).to eq(Time.parse('2015-12-16T15:24:02.638Z'))
+          expect(parsed_result.get("haproxy")["accept_date"].time).to eq(Time.parse('2015-12-16T15:24:02.638'))
         end
 
         it "extracts the frontend_name" do
-          expect(subject["haproxy"]["frontend_name"]).to eq("syslog-in~")
+          expect(parsed_result.get("haproxy")["frontend_name"]).to eq("syslog-in~")
         end
 
         it "extracts the backend_name" do
-          expect(subject["haproxy"]["backend_name"]).to eq("ingestors")
+          expect(parsed_result.get("haproxy")["backend_name"]).to eq("ingestors")
         end
 
         it "extracts the time_queue in ms" do
-          expect(subject["haproxy"]["time_queue_ms"]).to eq(328)
+          expect(parsed_result.get("haproxy")["time_queue_ms"]).to eq(328)
         end
 
         it "extracts the time_backend_connect in ms" do
-          expect(subject["haproxy"]["time_backend_connect_ms"]).to eq(-1)
+          expect(parsed_result.get("haproxy")["time_backend_connect_ms"]).to eq(-1)
         end
 
         it "extracts the time_duration in ms" do
-          expect(subject["haproxy"]["time_duration_ms"]).to eq 3332
+          expect(parsed_result.get("haproxy")["time_duration_ms"]).to eq 3332
         end
 
         it "extracts the bytes_read" do
-          expect(subject["haproxy"]["bytes_read"]).to eq 0
+          expect(parsed_result.get("haproxy")["bytes_read"]).to eq 0
         end
 
         it "parses the termination state" do
-          expect(subject["haproxy"]["termination_state"]).to eq "SC"
+          expect(parsed_result.get("haproxy")["termination_state"]).to eq "SC"
         end
 
         it "parses the number of concurrent connections" do
-          expect(subject["haproxy"]["actconn"]).to eq 8
+          expect(parsed_result.get("haproxy")["actconn"]).to eq 8
         end
 
         it "parses the number of concurrent connections on the frontend" do
-          expect(subject["haproxy"]["feconn"]).to eq 8
+          expect(parsed_result.get("haproxy")["feconn"]).to eq 8
         end
 
         it "parses the number of concurrent connections on the backend" do
-          expect(subject["haproxy"]["beconn"]).to eq 8
+          expect(parsed_result.get("haproxy")["beconn"]).to eq 8
         end
 
         it "parses the number of concurrent connections on the server" do
-          expect(subject["haproxy"]["srvconn"]).to eq 0
+          expect(parsed_result.get("haproxy")["srvconn"]).to eq 0
         end
 
         it "parses the number of connection retries" do
-          expect(subject["haproxy"]["retries"]).to eq 3
+          expect(parsed_result.get("haproxy")["retries"]).to eq 3
         end
 
         it "parses the number of connections in the service queue" do
-          expect(subject["haproxy"]["srv_queue"]).to eq 0
+          expect(parsed_result.get("haproxy")["srv_queue"]).to eq 0
         end
 
         it "parses the number of connections in the backend queue" do
-          expect(subject["haproxy"]["backend_queue"]).to eq 0
+          expect(parsed_result.get("haproxy")["backend_queue"]).to eq 0
         end
 
         it "@message should be empty, all information has been extracted into specific keys" do
-          expect(subject["@message"]).to be_nil
+          expect(parsed_result.get("@message")).to be_nil
         end
       end
 
@@ -164,7 +164,7 @@ describe "Rules for parsing haproxy messages" do
         ) do
 
           it "populates the termination description" do
-            expect(subject["@message"]).to eq "Session unexpectedly aborted by client"
+            expect(parsed_result.get("@message")).to eq "Session unexpectedly aborted by client"
           end
         end
       end
@@ -176,7 +176,7 @@ describe "Rules for parsing haproxy messages" do
         ) do
 
           it "populates the termination description" do
-            expect(subject["@message"]).to eq "Client-side timeout expired"
+            expect(parsed_result.get("@message")).to eq "Client-side timeout expired"
           end
         end
       end
@@ -188,7 +188,7 @@ describe "Rules for parsing haproxy messages" do
         ) do
 
           it "populates the termination description" do
-            expect(subject["@message"]).to eq "Server-side timeout expired"
+            expect(parsed_result.get("@message")).to eq "Server-side timeout expired"
           end
         end
       end
