@@ -5,3 +5,8 @@ dependencies:
 files:
   # https://artifacts.elastic.co/downloads/logstash/logstash-5.2.2.tar.gz
   - logstash/logstash-5.2.2.tar.gz
+  # zip logstash-filter-alter-3.0.0.gem
+  - logstash/logstash-filter-alter-3.0.0.zip
+  # zip logstash-filter-translate-3.0.1.gem
+  - logstash/logstash-filter-translate-3.0.1.zip
+
