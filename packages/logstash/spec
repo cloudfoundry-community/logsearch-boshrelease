@@ -3,5 +3,5 @@ name: logstash
 dependencies:
   - java8
 files:
-  # https://artifacts.elastic.co/downloads/logstash/logstash-5.0.0.tar.gz
-  - logstash/logstash-5.0.0.tar.gz
+  # https://artifacts.elastic.co/downloads/logstash/logstash-5.2.2.tar.gz
+  - logstash/logstash-5.2.2.tar.gz
