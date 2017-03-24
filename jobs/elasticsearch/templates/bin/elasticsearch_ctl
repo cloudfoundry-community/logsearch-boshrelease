@@ -19,7 +19,7 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
   HEAP_SIZE=<%= heap_size %>
 <% end %>
 
-export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE"
+export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Djava.io.tmpdir=$TMP_DIR"
 # encountered environment variables that are no longer suppor; thentted
 
 export MAX_OPEN_FILES=65536
