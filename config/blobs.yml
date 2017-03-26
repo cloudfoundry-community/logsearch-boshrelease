@@ -27,10 +27,6 @@ haproxy/haproxy-1.6.5.tar.gz:
   object_id: 5d847e37-7216-49b7-8acf-51ee3101e842
   sha: d9f5b6cade54d958ada2f67c6c7b97c9c8ef14ac
   size: 1563272
-java8/openjdk-1.8.0_91.tar.gz:
-  object_id: 96f03608-3a60-4a84-bb67-18d92065c371
-  sha: 63ff487f3004729d33796e87919c183fa8a4e752
-  size: 45736783
 redis/redis-3.2.0.tar.gz:
   object_id: 4ecad71b-9684-446e-8b1d-5ffd89f300f2
   sha: 0c1820931094369c8cc19fc1be62f598bc5961ca
@@ -75,3 +71,7 @@ logstash/logstash-filter-translate-3.0.1.zip:
   object_id: 33680669-f431-43ac-9b83-c1b995617f47
   sha: e01978407ca5a4f4a9f48d1fd04f8ad3e721e679
   size: 9437
+java8/openjdk-1.8.0_121.tar.gz:
+  object_id: 18a9e955-f23f-455c-a8d2-3c676ece003a
+  sha: d1596c9c825cb3f5be373bd34e4f6520187b9660
+  size: 45476711
