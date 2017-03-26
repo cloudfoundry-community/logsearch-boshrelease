@@ -76,8 +76,18 @@ case $1 in
 
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
-    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash agent \
-         -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
+    # Workaround for issue https://github.com/elastic/logstash/issues/6378 still present in version 5.2.2
+    # Please remove ones logstash is in version 5.3.x or higher.
+    mkdir -p $DATA_DIR/queue
+    chmod -R 777 $DATA_DIR/queue
+    rm -f /var/vcap/packages/logstash/data/queue
+    ln -s $DATA_DIR/queue /var/vcap/packages/logstash/data/queue
+
+    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash \
+        --path.data ${DATA_DIR} \
+        --path.config ${JOB_DIR}/config/logstash.conf \
+        --path.logs ${LOG_DIR} \
+        --pipeline.workers ${LOGSTASH_WORKERS} \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 

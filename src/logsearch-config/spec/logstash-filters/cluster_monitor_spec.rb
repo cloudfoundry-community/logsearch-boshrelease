@@ -1,5 +1,7 @@
 # encoding: utf-8
-require "test/filter_test_helpers"
+
+require 'spec_helper'
+
 
 describe 'Metric filters' do
 
@@ -12,27 +14,27 @@ describe 'Metric filters' do
     CONFIG
   end
 
-  context "when parsing metrics from logsearch components" do
+  describe 'when parsing metrics from logsearch components' do
     when_parsing_log(
       "@type" => "syslog",
       "@message" => ' <13>1 2016-01-04T12:03:31.236204+00:00 4fe781f0-30ed-4961-9aca-3efb9d73121a - - - [NXLOG@14506 bosh_director="default" bosh_deployment="logsearch" bosh_job="queue/0" bosh_template="logsearch-shipper" type="metric"] logstash.queue_size 100 1451909010'
     ) do
 
-      it "applies the metric parsers successfully" do
-        expect(subject['tags']).to include 'metric'
+      it 'applies the metric parsers successfully' do
+        expect(parsed_result.get('tags')).to include 'metric'
       end
 
-      it "extracts the metric @timestamp" do
-        expect(subject['@timestamp']).to eq Time.at(1451909010)
-        expect(subject['metric']['timestamp']).to be_nil
+      it 'extracts the metric @timestamp' do
+        expect(parsed_result.get('@timestamp').time).to eq(Time.at(1451909010))
+        expect(parsed_result.get('metric')['timestamp']).to be_nil
       end
 
-      it "extracts the metric name" do
-        expect(subject['metric']['name']).to eq 'logstash.queue_size'
+      it 'extracts the metric name' do
+        expect(parsed_result.get('metric')['name']).to eq 'logstash.queue_size'
       end
 
-      it "extracts the metric value" do
-        expect(subject['metric']['value']).to eq 100.0
+      it 'extracts the metric value' do
+        expect(parsed_result.get('metric')['value']).to eq 100.0
       end
     end
   end
@@ -45,7 +47,7 @@ describe 'Metric filters' do
     ) do
 
       it "drops the message" do
-        expect(subject).to be_cancelled
+        expect(parsed_result).to be_cancelled
       end
     end
   end
@@ -56,7 +58,7 @@ describe 'Metric filters' do
   ) do
 
     it "applies the fail/metric tags for invalid logs" do
-      expect(subject['tags']).to include 'fail/metric'
+      expect(parsed_result.get('tags')).to include 'fail/metric'
     end
   end
 
@@ -67,7 +69,7 @@ describe 'Metric filters' do
     ) do
 
       it "applies the haproxy parsers successfully" do
-        expect(subject['tags']).to include("haproxy")
+        expect(parsed_result.get('tags')).to include("haproxy")
       end
     end
   end

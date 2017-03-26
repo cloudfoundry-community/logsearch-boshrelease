@@ -1,12 +1,23 @@
-require 'logstash/devutils/rspec/spec_helper'
-require 'test/templates_test_helpers'
+require 'spec_helper'
+require 'logstash-core/logstash-core'
+require 'logstash/util/loggable'
+require 'logstash/pipeline'
+
+def verify_collection(description, collectionExpected, collectionActual, methodName)
+  it "#{description}" do
+    expect(collectionActual.size).to eql(collectionExpected.size)
+    collectionExpected.each_with_index do |item, index|
+      expect(collectionActual[index].send(methodName)).to eql(item.send(methodName))
+    end
+  end
+end
 
 def verify_input_and_output(actual, expected)
-  pipelineActual = LogStash::Pipeline.new(File.read(File.join('test/logstash-templates/target', actual)))
-  pipelineExpected = LogStash::Pipeline.new(File.read(File.join('test/logstash-templates/input_and_output', expected)))
+  pipelineActual = LogStash::Pipeline.new(File.read(File.join('spec/logstash-templates/target', actual)))
+  pipelineExpected = LogStash::Pipeline.new(File.read(File.join('spec/logstash-templates/input_and_output', expected)))
 
-  verify_collection("input", pipelineExpected.inputs, pipelineActual.inputs, "config")
-  verify_collection("output", pipelineExpected.outputs, pipelineActual.outputs, "config")
+  verify_collection("input", pipelineExpected.inputs, pipelineActual.inputs, "config_name")
+  verify_collection("output", pipelineExpected.outputs, pipelineActual.outputs, "config_name")
 end
 
 describe 'Parser input_and_output.conf' do

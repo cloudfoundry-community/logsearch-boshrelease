@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'test/filter_test_helpers'
+require 'spec_helper'
 
 describe "@source.deployment lookup" do
 
@@ -18,27 +18,27 @@ describe "@source.deployment lookup" do
     ) do
 
       it "adds the deployment tagger tag" do
-        expect(subject["tags"]).to include "auto_deployment"
+        expect(parsed_result.get("tags")).to include "auto_deployment"
       end
 
       it "sets @source.deployment" do
-        expect(subject["@source"]["deployment"]).to eq "logsearch"
+        expect(parsed_result.get("@source")["deployment"]).to eq "logsearch"
       end
     end
   end
 
   context "when there is [@source][deployment] set" do
     when_parsing_log(
-        "@source" => { "deployment" => "deployment123", 
+        "@source" => { "deployment" => "deployment123",
                        "job" => "kibana-123123123" }
     ) do
 
       it "no deployment tag" do
-        expect(subject["tags"]).to be_nil
+        expect(parsed_result.get("tags")).to be_nil
       end
 
       it "keeps @source.deployment" do
-        expect(subject["@source"]["deployment"]).to eq "deployment123"
+        expect(parsed_result.get("@source")["deployment"]).to eq "deployment123"
       end
     end
   end

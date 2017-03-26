@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "test/filter_test_helpers"
+require 'spec_helper'
 
 describe 'Logstash filters' do
 
@@ -18,7 +18,7 @@ describe 'Logstash filters' do
       "@message" => '<13>1 2014-06-23T10:54:42.275897+01:00 SHIPPER-HOSTNAME - - - [NXLOG@14506 EventReceivedTime="2014-06-23 09:54:42" SourceModuleName="in1" SourceModuleType="im_file" path="\\\\SOURCE-HOSTNAME\\Logs\\my-json-log.log" host="SOURCE-HOSTNAME" service="MyService" type="json"] {"level":"WARN","timestamp":"2014-02-04T23:45:12.000Z","logger":"I.am.a.JSON.logger","method":"testMe","message":"plain message accepted here."}') do
 
         it "applies the syslog parsers successfully" do
-          expect(subject['tags']).to eq [ 'syslog_standard' ]
+          expect(parsed_result.get('tags')).to eq [ 'syslog_standard' ]
         end
       end
   end
@@ -30,11 +30,11 @@ describe 'Logstash filters' do
     ) do
 
       it "applies the haproxy parsers successfully" do
-        expect(subject['tags']).to include "auto_deployment"
+        expect(parsed_result.get('tags')).to include "auto_deployment"
       end
 
       it "sets @source.deployment" do
-        expect(subject['@source']["deployment"]).to eq "logsearch"
+        expect(parsed_result.get('@source')["deployment"]).to eq "logsearch"
       end
     end
   end
@@ -46,7 +46,7 @@ describe 'Logstash filters' do
     ) do
 
       it "adds the redacted tag" do
-        expect(subject["tags"].first).to eq "redacted"
+        expect(parsed_result.get("tags").first).to eq "redacted"
       end
     end
   end

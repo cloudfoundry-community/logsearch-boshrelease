@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'test/filter_test_helpers'
+require 'spec_helper'
 
 describe "BOSH NATS healthcheck log parsing rules" do
 
@@ -14,49 +14,49 @@ describe "BOSH NATS healthcheck log parsing rules" do
   describe "hm_agent_heartbeat logs" do
     when_parsing_log(
       '@type' => 'syslog',
-		  'syslog_program' => 'nats_to_syslog',
+      'syslog_program' => 'nats_to_syslog',
       '@message' => '{"Data":"{\"job\":\"router-partition-7c53ed3ae2e7f5543b91\",\"index\":0,\"job_state\":\"running\",\"vitals\":{\"cpu\":{\"sys\":\"0.0\",\"user\":\"0.1\",\"wait\":\"0.1\"},\"disk\":{\"ephemeral\":{\"inode_percent\":\"2.0\",\"percent\":\"5.0\"},\"persistent\":{\"inode_percent\":\"44.0\",\"percent\":\"54.0\"}, \"system\":{\"inode_percent\":\"37.0\",\"percent\":\"46.0\"}},\"load\":[\"0.00\",\"0.02\",\"0.05\"],\"mem\":{\"kb\":\"81812.0\",\"percent\":\"8.0\"},\"swap\":{\"kb\":\"0.0\",\"percent\":\"0.0\"}},\"node_id\":\"\"}","Reply":"","Subject":"hm.agent.heartbeat.192dc853-4f1a-4198-8844-d0ab8d7c2c8e"}'
     ) do
 
       it "adds bosh nats tag" do
-        expect(subject["tags"]).to include "NATS"
+        expect(parsed_result.get("tags")).to include "NATS"
       end
 
       it "adds the HM heartbeat tag" do
-        expect(subject["tags"]).to include "hm_agent_heartbeat"
+        expect(parsed_result.get("tags")).to include "hm_agent_heartbeat"
       end
 
       it "adds INFO log level" do
-        expect(subject["@level"]).to eq "INFO"
+        expect(parsed_result.get("@level")).to eq "INFO"
       end
 
       it "sets @source.job" do
-        expect(subject["@source"]["job"]).to eq "router-partition-7c53ed3ae2e7f5543b91"
+        expect(parsed_result.get("@source")["job"]).to eq "router-partition-7c53ed3ae2e7f5543b91"
       end
 
       it "sets @source.index" do
-        expect(subject["@source"]["index"]).to eq 0
+        expect(parsed_result.get("@source")["index"]).to eq 0
       end
 
       it "sets @source.vm" do
-        expect(subject["@source"]["vm"]).to eq "router-partition-7c53ed3ae2e7f5543b91/0"
+        expect(parsed_result.get("@source")["vm"]).to eq "router-partition-7c53ed3ae2e7f5543b91/0"
       end
 
 
       it "parses NATS.Subject" do
-        expect(subject["NATS"]["Subject"]).to eq "hm.agent.heartbeat.192dc853-4f1a-4198-8844-d0ab8d7c2c8e"
+        expect(parsed_result.get("NATS")["Subject"]).to eq "hm.agent.heartbeat.192dc853-4f1a-4198-8844-d0ab8d7c2c8e"
       end
 
       it "parses NATS.Reply" do
-        expect(subject["NATS"]["Reply"]).to eq ""
+        expect(parsed_result.get("NATS")["Reply"]).to eq ""
       end
 
       it "parses NATS.Data" do
-        expect(subject["NATS"]["Data"]["job_state"]).to eq "running"
+        expect(parsed_result.get("NATS")["Data"]["job_state"]).to eq "running"
       end
 
       it "parses CPU stats" do
-        expect(subject["NATS"]["Data"]["vitals"]["cpu"]).to eq(
+        expect(parsed_result.get("NATS")["Data"]["vitals"]["cpu"]).to eq(
           {
             "sys" => 0.0,
             "user" => 0.1,
@@ -66,7 +66,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
       end
 
       it "parses disk usage stats" do
-        expect(subject["NATS"]["Data"]["vitals"]["disk"]).to eq(
+        expect(parsed_result.get("NATS")["Data"]["vitals"]["disk"]).to eq(
           {
             "ephemeral" => {
               "inode_percent" => 2.0,
@@ -85,7 +85,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
       end
 
       it "parses os load" do
-        expect(subject["NATS"]["Data"]["vitals"]["load"]).to eq(
+        expect(parsed_result.get("NATS")["Data"]["vitals"]["load"]).to eq(
           {
             "avg01" => 0.0,
             "avg05" => 0.02,
@@ -95,7 +95,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
       end
 
       it "parses memory usage stats" do
-        expect(subject["NATS"]["Data"]["vitals"]["mem"]).to eq(
+        expect(parsed_result.get("NATS")["Data"]["vitals"]["mem"]).to eq(
           {
             "kb" => 81812.0,
             "percent" => 8.0
@@ -104,7 +104,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
       end
 
       it "parses swap usage stats" do
-        expect(subject["NATS"]["Data"]["vitals"]["swap"]).to eq(
+        expect(parsed_result.get("NATS")["Data"]["vitals"]["swap"]).to eq(
           {
             "kb" => 0.0,
             "percent" => 0.0
@@ -113,7 +113,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
       end
 
       it "removes @message" do
-        expect(subject["@message"]).to be_nil
+        expect(parsed_result.get("@message")).to be_nil
       end
     end
   end
@@ -127,7 +127,7 @@ describe "BOSH NATS healthcheck log parsing rules" do
     ) do
 
       it "no NATS tag (= no nats parsing applied)" do
-          expect(subject["tags"]).to be_nil
+        expect(parsed_result.get("tags")).to be_nil
       end
 
     end
@@ -141,27 +141,27 @@ describe "BOSH NATS healthcheck log parsing rules" do
     ) do
 
       it "adds bosh nats tag" do
-        expect(subject["tags"]).to include "NATS"
+        expect(parsed_result.get("tags")).to include "NATS"
       end
 
       it "adds the HM alert" do
-        expect(subject["tags"]).to include "hm_alert"
+        expect(parsed_result.get("tags")).to include "hm_alert"
       end
 
       it "sets @level" do
-        expect(subject["@level"]).to eq "WARN"
+        expect(parsed_result.get("@level")).to eq "WARN"
       end
 
       it "pares alert title" do
-        expect(subject["NATS"]["Data"]["title"]).to eq "SSH Login"
+        expect(parsed_result.get("NATS")["Data"]["title"]).to eq "SSH Login"
       end
 
       it "parses alert summary" do
-        expect(subject["NATS"]["Data"]["summary"]).to eq "Accepted publickey for vcap from 10.0.0.6 port 60528 ssh2: RSA df:e1:f7:e0:23:59:86:da:ef:a6:7f:5d:ac:68:49:83"
+        expect(parsed_result.get("NATS")["Data"]["summary"]).to eq "Accepted publickey for vcap from 10.0.0.6 port 60528 ssh2: RSA df:e1:f7:e0:23:59:86:da:ef:a6:7f:5d:ac:68:49:83"
       end
 
       it "removes @message" do
-        expect(subject["@message"]).to be_nil
+        expect(parsed_result.get("@message")).to be_nil
       end
     end
   end # describe hm_alerts

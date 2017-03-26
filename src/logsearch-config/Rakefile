@@ -25,9 +25,9 @@ task default: [
 
 desc "Run unit tests against logstash filters"
 task :test_filters, [:rspec_files] => :build do |t, args|
-  args.with_defaults(:rspec_files => "$(find test/logstash-filters -name '*spec.rb')")
+  args.with_defaults(:rspec_files => "$(find spec/logstash-filters -name '*spec.rb')")
   puts "===> Testing logstash filters ..."
-  sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" vendor/logstash/bin/rspec #{args[:rspec_files]} --colour --format progress --format html --out target/parsing_rules.html]
+  sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" bundle exec rspec #{args[:rspec_files]} --colour --format progress --format html --out target/parsing_rules.html]
 end
 
 def compile_erb(source_file, dest_file)
@@ -42,30 +42,30 @@ end
 # -------- Templates tests ------------
 desc "Run unit tests against logstash templates"
 task :test_templates, [:rspec_files] => :compile_templates do |t, args|
-  args.with_defaults(:rspec_files => "$(find test/logstash-templates -name '*spec.rb')")
+  args.with_defaults(:rspec_files => "$(find spec/logstash-templates -name '*spec.rb')")
   puts "===> Testing logstash templates ..."
-  sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" vendor/logstash/bin/rspec #{args[:rspec_files]} --colour --format progress --format html --out target/templates.html]
+  sh %Q[ LANGUAGE="C.UTF-8" LC_ALL="C.UTF-8" LANG="C.UTF-8" bundle exec rspec #{args[:rspec_files]} --colour --format progress --format html --out target/templates.html]
 end
 
 task :clean_templates do
-  FileUtils.mkdir_p('test/logstash-templates/target')
-  FileUtils.rm_rf(Dir.glob('test/logstash-templates/target/*'))
+  FileUtils.mkdir_p('spec/logstash-templates/target')
+  FileUtils.rm_rf(Dir.glob('spec/logstash-templates/target/*'))
 end
 
 desc "Compile bosh templates for tests"
 task :compile_templates => :clean_templates do
   puts "===> Compiling Bosh templates for tests ..."
 
-  FileList.new("test/logstash-templates/*/compile.yml").each do |compile_file|
+  FileList.new("spec/logstash-templates/*/compile.yml").each do |compile_file|
     template = YAML.load_file(compile_file)['template'];
     
     template['testcase'].each do |template_testcase|
-      compile_bosh_template '../../' + template['path'], 'test/logstash-templates/' + template_testcase['config'], 'test/logstash-templates/' + template_testcase['destination']
+      compile_bosh_template '../../' + template['path'], 'spec/logstash-templates/' + template_testcase['config'], 'spec/logstash-templates/' + template_testcase['destination']
     end
   end
 
   puts "===> Compiled Templates:"
-  puts `find test/logstash-templates/target`
+  puts `find spec/logstash-templates/target`
 end
 
 

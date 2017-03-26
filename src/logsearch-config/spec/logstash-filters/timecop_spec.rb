@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'test/filter_test_helpers'
+require 'spec_helper'
 
 def future_timestamp
  LogStash::Timestamp.new(Time.parse("2515-12-22T11:00:00.000Z")) # 500 years in the future
@@ -31,32 +31,32 @@ describe "Rules sanitising @timestamp" do
     ) do
 
       it "adds a timecop triggered tag" do
-        expect(subject['tags']).to include("fail/timecop")
+        expect(parsed_result.get('tags')).to include("fail/timecop")
       end
 
       it "retains the original tags" do
-        expect(subject["tags"]).to include "sometag"
+        expect(parsed_result.get("tags")).to include "sometag"
       end
 
       it "retains the source informaiton" do
-        expect(subject["@source"]).to eq({"host" => "source"})
+        expect(parsed_result.get("@source")).to eq({"host" => "source"})
       end
 
       it "retains the shipper informaiton" do
-        expect(subject["@shipper"]).to eq({"host" => "shipper"})
+        expect(parsed_result.get("@shipper")).to eq({"host" => "shipper"})
       end
 
       it "moves the invalid timestamp into invalid_fields.@timestamp" do
-        expect(subject['invalid_fields']['@timestamp']).to eq future_timestamp
+        expect(parsed_result.get('invalid_fields')['@timestamp']).to eq future_timestamp
       end
 
       it "resets the @timestamp to the current time" do
-        expect(subject['@timestamp']).to be_within(60).of Time.now
+        expect(parsed_result.get('@timestamp')).to be_within(60).of Time.now
       end
 
       it "removes all the extracted fields leaving just @raw" do
-        expect(subject['@raw']).to eq("#{future_timestamp} Hello from the future!")
-        expect(subject['extracted_field']).to be_nil
+        expect(parsed_result.get('@raw')).to eq("#{future_timestamp} Hello from the future!")
+        expect(parsed_result.get('extracted_field')).to be_nil
       end
 
     end
@@ -74,32 +74,32 @@ describe "Rules sanitising @timestamp" do
     ) do
 
       it "adds a timecop triggered tag" do
-        expect(subject['tags']).to include("fail/timecop")
+        expect(parsed_result.get('tags')).to include("fail/timecop")
       end
 
       it "retains the original tags" do
-        expect(subject["tags"]).to include "sometag"
+        expect(parsed_result.get("tags")).to include "sometag"
       end
 
       it "retains the source informaiton" do
-        expect(subject["@source"]).to eq({"host" => "source"})
+        expect(parsed_result.get("@source")).to eq({"host" => "source"})
       end
 
       it "retains the shipper informaiton" do
-        expect(subject["@shipper"]).to eq({"host" => "shipper"})
+        expect(parsed_result.get("@shipper")).to eq({"host" => "shipper"})
       end
 
       it "moves the invalid timestamp into invalid_fields.@timestamp" do
-        expect(subject['invalid_fields']['@timestamp']).to eq past_timestamp
+        expect(parsed_result.get('invalid_fields')['@timestamp']).to eq past_timestamp
       end
 
       it "resets the @timestamp to the current time" do
-        expect(subject['@timestamp']).to be_within(60).of Time.now
+        expect(parsed_result.get('@timestamp')).to be_within(60).of Time.now
       end
 
       it "removes all the extracted fields leaving just @raw" do
-        expect(subject['@raw']).to eq("#{past_timestamp} Hello from the past!")
-        expect(subject['extracted_field']).to be_nil
+        expect(parsed_result.get('@raw')).to eq("#{past_timestamp} Hello from the past!")
+        expect(parsed_result.get('extracted_field')).to be_nil
       end
 
     end
