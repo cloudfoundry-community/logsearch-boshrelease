@@ -1,8 +1,4 @@
 ---
-redis/redis-3.2.0.tar.gz:
-  object_id: 4ecad71b-9684-446e-8b1d-5ffd89f300f2
-  sha: 0c1820931094369c8cc19fc1be62f598bc5961ca
-  size: 1525900
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
   sha: d27c56da9cdf214ed39a471f0ca5c970abbd510d
@@ -75,3 +71,7 @@ cerebro/cerebro-0.6.3.tgz:
   object_id: 229f802d-38d2-4d5e-a008-d27435a4fac6
   sha: 03c7c8549badc7d3416a170973816652c204553f
   size: 51195857
+redis/redis-3.2.8.tar.gz:
+  object_id: 15e19594-4fec-44f5-9070-87e15a767f31
+  sha: 6780d1abb66f33a97aad0edbe020403d0a15b67f
+  size: 1547237
