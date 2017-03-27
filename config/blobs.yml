@@ -71,3 +71,7 @@ logstash/logstash-input-relp-3.0.0.zip:
   object_id: a37173e4-e190-4ab6-bd90-83a84ff31fdc
   sha: 98076907db434d88f14767afe54e867433453ac2
   size: 11670
+cerebro/cerebro-0.6.3.tgz:
+  object_id: 229f802d-38d2-4d5e-a008-d27435a4fac6
+  sha: 03c7c8549badc7d3416a170973816652c204553f
+  size: 51195857

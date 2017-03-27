@@ -1,0 +1,5 @@
+check process cerebro
+  with pidfile /var/vcap/sys/run/cerebro/cerebro.pid
+  start program "/var/vcap/jobs/cerebro/bin/monit_debugger cerebro_ctl '/var/vcap/jobs/cerebro/bin/ctl start'"
+  stop program "/var/vcap/jobs/cerebro/bin/monit_debugger cerebro_ctl '/var/vcap/jobs/cerebro/bin/ctl stop'"
+  group vcap
