@@ -1,15 +1,10 @@
-set -e # exit immediately if a simple command exits with a non-zero status
-set -u # report the usage of uninitialized variables
+set -e
 
-export PATH=/var/vcap/packages/python3/bin:$PATH
+export PATH=/var/vcap/packages/python3/bin:$PATH LD_LIBRARY_PATH=/var/vcap/packages/python3/lib:$LD_LIBRARY_PATH C_INCLUDE_PATH=/var/vcap/packages/python3/include:$C_INCLUDE_PATH
 
-echo "All dependancies should be in $BOSH_COMPILE_TARGET/curator"
-find $BOSH_COMPILE_TARGET/curator
+tar xzf curator/elasticsearch-curator-requirements.tar.gz
 
 # --no-index prevents contacting pypi to download packages
 # --find-links tells pip where to look for the dependancies
-pip3 install --no-index --find-links $BOSH_COMPILE_TARGET/curator --install-option="--prefix=$BOSH_INSTALL_TARGET" elasticsearch-curator
-
-echo "Installed to $BOSH_INSTALL_TARGET"
-find $BOSH_INSTALL_TARGET
-
+# --prefix installation prefix where lib, bin and other top-level folders are placed
+pip3 install --no-index --find-links ./vendor/ --prefix=${BOSH_INSTALL_TARGET} curator/elasticsearch-curator-4.2.6.tar.gz
