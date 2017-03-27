@@ -25,18 +25,36 @@ frontend syslog-in
     mode tcp
 
     <% if properties.haproxy.ssl_pem %>
-    bind :<%= p("haproxy.ingestor.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
+    bind :<%= p("haproxy.ingestor.syslog.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
     <% else %>
-    bind :<%= p("haproxy.ingestor.inbound_port") %>
+    bind :<%= p("haproxy.ingestor.syslog.inbound_port") %>
     <% end %>
 
-    default_backend ingestors
+    default_backend ingestors-syslog
 
-backend ingestors
+backend ingestors-syslog
     mode tcp
     balance roundrobin
     <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
-    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.backend_port") %> check inter 1000
+    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.syslog.backend_port") %> check inter 1000
+    <% end %>
+
+frontend relp-in
+    mode tcp
+
+    <% if properties.haproxy.ssl_pem %>
+    bind :<%= p("haproxy.ingestor.relp.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
+    <% else %>
+    bind :<%= p("haproxy.ingestor.relp.inbound_port") %>
+    <% end %>
+
+    default_backend ingestors-relp
+
+backend ingestors-relp
+    mode tcp
+    balance roundrobin
+    <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.relp.backend_port") %> check inter 1000
     <% end %>
 
 frontend kibana-in
