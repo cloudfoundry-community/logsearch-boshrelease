@@ -4,11 +4,15 @@ set -e -x
 CPUS=`grep -c ^processor /proc/cpuinfo`
 
 echo "Extracting python..."
-tar xzvf python/Python-3.4.3.tgz
+tar xzf python/Python-3.6.1.tgz
 
 echo "Building python..."
-pushd Python-3.4.3
-  ./configure --prefix=${BOSH_INSTALL_TARGET}
+pushd Python-3.6.1
+  ./configure \
+    --prefix=${BOSH_INSTALL_TARGET} \
+    --with-ensurepip \
+    --enable-shared
+
   make -j${CPUS}
   make install
 popd
