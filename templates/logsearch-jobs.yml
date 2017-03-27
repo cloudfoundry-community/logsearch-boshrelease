@@ -10,6 +10,7 @@ jobs:
   instances: 1
   templates:
   - {name: elasticsearch, release: logsearch}
+  - {name: cerebro, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: elasticsearch_master
   persistent_disk_pool: elasticsearch_master
