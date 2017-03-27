@@ -2,6 +2,21 @@
 
 set -e
 
+echo "Waiting 1m for elasticsearch to accept connections..."
+n=0
+until [ $n -ge 12 ]
+do
+  nc -4 -z -v localhost 9200 2>&1 && break
+  n=$[$n+1]
+  echo "Waiting for elasticsearch to accept connections ($n of 12)..."
+  sleep 5
+done
+
+if [ "$n" -ge "12" ]; then
+   echo "ERROR: Cannot connect to elasticsearch. Exiting..."
+   exit 1
+fi
+
 out=$(mktemp health-XXXXXX)
 remaining=<%= p("elasticsearch.health.timeout") %>
 
