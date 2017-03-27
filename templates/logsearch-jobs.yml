@@ -142,6 +142,7 @@ jobs:
       - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log}
       - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log}
   update:
+    serial: true
     max_in_flight: 1 # Only update 1 ES data node at a time or risk downtime
 
 - name: kibana
