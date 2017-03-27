@@ -1,12 +1,4 @@
 ---
-haproxy/pcre-8.38.tar.gz:
-  object_id: 9538f6cf-5cd1-4551-a5c3-1263fb32edf6
-  sha: 3ab418d0026c2a4e693ec783bd60660debc32b8f
-  size: 2053336
-haproxy/haproxy-1.6.5.tar.gz:
-  object_id: 5d847e37-7216-49b7-8acf-51ee3101e842
-  sha: d9f5b6cade54d958ada2f67c6c7b97c9c8ef14ac
-  size: 1563272
 redis/redis-3.2.0.tar.gz:
   object_id: 4ecad71b-9684-446e-8b1d-5ffd89f300f2
   sha: 0c1820931094369c8cc19fc1be62f598bc5961ca
@@ -67,3 +59,11 @@ python/Python-3.6.1.tgz:
   object_id: db2b3522-9d58-4998-81ec-237d900ad740
   sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
   size: 22540566
+haproxy/haproxy-1.6.11.tar.gz:
+  object_id: aef31767-d5e2-4937-8391-08f3c5eb2c30
+  sha: 8c1c1b2346cf18379cd798fbc6364fdab5e17d32
+  size: 1574029
+haproxy/pcre-8.40.tar.gz:
+  object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
+  sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
+  size: 2065161
