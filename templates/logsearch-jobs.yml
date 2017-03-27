@@ -272,6 +272,9 @@ jobs:
 # Global properties
 properties:
   curator:
+    purge_logs:
+      unit: days
+      retention_period: 30
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
       port: 9200

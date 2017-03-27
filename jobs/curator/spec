@@ -17,6 +17,9 @@ properties:
   curator.elasticsearch.port:
     description: Port address of elasticsearch host to proxy requests for (eg, 9200)
     default: 9200
+  curator.purge_logs.unit:
+    description: "One of the following values: seconds, minutes, hours, days, weeks, months, years"
+    default: "days"
   curator.purge_logs.retention_period:
-    description: Days that logs will be retained
+    description: The value of this setting will be used as a multiplier for unit
     default: 30
