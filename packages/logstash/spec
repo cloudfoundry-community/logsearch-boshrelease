@@ -6,3 +6,4 @@ files:
   - logstash/logstash-5.2.2.tar.gz
   - logstash/logstash-filter-alter-3.0.0.zip
   - logstash/logstash-filter-translate-3.0.1.zip
+  - logstash/logstash-input-relp-3.0.0.zip

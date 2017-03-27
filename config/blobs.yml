@@ -67,3 +67,7 @@ haproxy/pcre-8.40.tar.gz:
   object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
   size: 2065161
+logstash/logstash-input-relp-3.0.0.zip:
+  object_id: a37173e4-e190-4ab6-bd90-83a84ff31fdc
+  sha: 98076907db434d88f14767afe54e867433453ac2
+  size: 11670
