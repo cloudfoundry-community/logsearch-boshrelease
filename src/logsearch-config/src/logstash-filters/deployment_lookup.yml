@@ -2,6 +2,7 @@ elasticsearch_data.*: logsearch
 elasticsearch_master.*: logsearch
 firehose-to-syslog.*: logsearch
 ingestor.*: logsearch
+ingestor-bosh-nats.*: logsearch
 kibana.*: logsearch
 maintenance.*: logsearch
 parser.*: logsearch
