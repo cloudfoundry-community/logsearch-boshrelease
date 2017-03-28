@@ -16,5 +16,5 @@ curator_cli \
   --host $ELASTICSEARCH_HOST \
   --port $ELASTICSEARCH_PORT  \
   delete_indices \
-  --filter_list '{"filtertype":"age","source":"creation_date","direction":"older","unit":"<%= p('curator.purge_logs.unit') %>","unit_count":<%= p('curator.purge_logs.retention_period') %>}' \
+  --filter_list '[{"filtertype":"age","source":"creation_date","direction":"older","unit":"<%= p('curator.purge_logs.unit') %>","unit_count":<%= p('curator.purge_logs.retention_period') %>},{"filtertype":"pattern","kind":"regex","value":"logs*"}]' \
   --ignore_empty_list
