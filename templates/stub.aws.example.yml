@@ -1,14 +1,18 @@
-meta:
-  stemcell:
-    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
-    version: latest
+name: logsearch
+director_uuid: VAR_UUID # BOSH UUID
 
 releases:
 - name: logsearch
   version: latest
 
-name: logsearch
-director_uuid: VAR_UUID # BOSH UUID
+meta:
+  stemcell:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: latest
+  aws:
+    eip: VAR_ELK_IP
+    availability_zone: VAR_AVAILABILITY_ZONE
+    subnet_id: VAR_SUBNET_ID
 
 jobs:
 # Deploy group 1
@@ -47,7 +51,7 @@ jobs:
   - (( merge ))
   - name: elastic
     static_ips:
-    - VAR_ELK_IP  # Specify an elastic IP for the router. Resources, proxied by the router, will be available through this IP. They include: kibana, elasticsearch, cluster_monitor, ingestor and syslog_server.
+    - (( grab meta.aws.eip )) 
 
 properties:
   nats_to_syslog:
@@ -76,7 +80,7 @@ networks:
   - range: VAR_CF1_NET_RANGE
     gateway: VAR_CF1_NET_GW
     cloud_properties:
-      subnet: VAR_CF1_SUBNET  # Specify your subnetwork ID
+      subnet: (( grab meta.aws.subnet_id ))  # Specify your subnetwork ID
       security_groups: [bosh]
     dns:
     - VAR_CF1_DNS_1

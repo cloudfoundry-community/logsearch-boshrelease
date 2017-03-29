@@ -6,56 +6,57 @@ meta:
 compilation:
   cloud_properties:
     instance_type: c4.large
+    availability_zone: (( grab meta.aws.availability_zone ))
 
 resource_pools:
 - name: elasticsearch_master
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 - name: elasticsearch_data
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: m3.medium
 
 - name: queue
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.small
 
 - name: ingestor
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 - name: parser
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: m3.medium
 
 - name: kibana
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 - name: maintenance
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 - name: cluster_monitor
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: m4.large
 
 - name: haproxy
   cloud_properties:
-    availability_zone: eu-west-1a
+    availability_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 - name: errand
   cloud_properties:
-    availabtily_zone: eu-west-1a
+    availabitily_zone: (( grab meta.aws.availability_zone ))
     instance_type: t2.micro
 
 disk_pools:
