@@ -4,7 +4,7 @@ packages:
 - cerebro
 - java8
 templates:
-  bin/ctl: bin/ctl
+  bin/cerebro_ctl: bin/cerebro_ctl
   bin/monit_debugger: bin/monit_debugger
   config/application.conf.erb: config/application.conf
   data/properties.sh.erb: data/properties.sh

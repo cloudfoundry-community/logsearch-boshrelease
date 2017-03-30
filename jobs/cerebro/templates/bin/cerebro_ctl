@@ -19,7 +19,9 @@ case $1 in
 
     exec chpst -u vcap:vcap cerebro \
          -Dconfig.file=/var/vcap/jobs/cerebro/config/application.conf \
-         >>$LOG_DIR/$JOB_NAME.log 2>&1
+         -Djava.io.tmpdir=${TMP_DIR} \
+         >>$LOG_DIR/$JOB_NAME.stdout.log \
+         2>>$LOG_DIR/$JOB_NAME.stderr.log
 
     ;;
 
