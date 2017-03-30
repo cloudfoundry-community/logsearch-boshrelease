@@ -12,10 +12,14 @@ templates:
   config/syslog_tls.crt.erb: config/syslog_tls.crt
   config/syslog_tls.key.erb: config/syslog_tls.key
   config/logstash.conf.erb: config/logstash.conf
+  config/log4j2.properties.erb: config/log4j2.properties
 properties:
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"
+  logstash.log_level:
+    description: The default logging level (e.g. WARN, DEBUG, INFO)
+    default: info
   logstash.plugins:
     description: "Array of hashes describing logstash plugins to install"
     example:

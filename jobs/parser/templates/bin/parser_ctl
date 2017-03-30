@@ -31,6 +31,7 @@ export LOGSTASH_WORKERS=<%= p('logstash_parser.workers') %>
 <% end %>
 export TIMECOP_REJECT_GREATER_THAN_HOURS=<%= p('logstash_parser.timecop.reject_greater_than_hours') %>
 export TIMECOP_REJECT_LESS_THAN_HOURS=<%= p('logstash_parser.timecop.reject_less_than_hours') %>
+export LS_JAVA_OPTS="-Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
 
 case $1 in
 
@@ -83,7 +84,7 @@ case $1 in
     rm -f /var/vcap/packages/logstash/data/queue
     ln -s $DATA_DIR/queue /var/vcap/packages/logstash/data/queue
 
-    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash \
+    exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
         --path.data ${DATA_DIR} \
         --path.config ${JOB_DIR}/config/logstash.conf \
         --path.logs ${LOG_DIR} \

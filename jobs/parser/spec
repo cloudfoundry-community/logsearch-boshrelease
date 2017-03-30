@@ -14,11 +14,15 @@ templates:
   config/filters_pre.conf.erb: config/filters_pre.conf
   config/filters_post.conf.erb: config/filters_post.conf
   config/filters_override.conf.erb: config/filters_override.conf
+  config/log4j2.properties.erb: config/log4j2.properties
   logsearch/logs.yml: logsearch/logs.yml
 properties:
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"
+  logstash.log_level:
+    description: The default logging level (e.g. WARN, DEBUG, INFO)
+    default: info
 
   logstash_parser.debug:
     description: Debug level logging
