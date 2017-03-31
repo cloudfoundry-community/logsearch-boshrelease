@@ -31,7 +31,11 @@ export LOGSTASH_WORKERS=<%= p('logstash_parser.workers') %>
 <% end %>
 export TIMECOP_REJECT_GREATER_THAN_HOURS=<%= p('logstash_parser.timecop.reject_greater_than_hours') %>
 export TIMECOP_REJECT_LESS_THAN_HOURS=<%= p('logstash_parser.timecop.reject_less_than_hours') %>
-export LS_JAVA_OPTS="-Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+<% if_p('logstash.heap_size') do |heap_size| %>
+HEAP_SIZE=<%= heap_size %>
+<% end %>
+export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
 
 case $1 in
 

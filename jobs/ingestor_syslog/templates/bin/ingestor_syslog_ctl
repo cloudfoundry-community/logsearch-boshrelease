@@ -9,7 +9,11 @@ source /var/vcap/jobs/ingestor_syslog/helpers/ctl_setup.sh 'ingestor_syslog'
 export LANG=en_US.UTF-8
 # 1 logstash worker / CPU core
 export LOGSTASH_WORKERS=`grep -c ^processor /proc/cpuinfo`
-export LS_JAVA_OPTS="-Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+<% if_p('logstash.heap_size') do |heap_size| %>
+HEAP_SIZE=<%= heap_size %>
+<% end %>
+export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
 
 case $1 in
 

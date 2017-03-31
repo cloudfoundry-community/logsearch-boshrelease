@@ -27,6 +27,8 @@ properties:
   logstash_parser.debug:
     description: Debug level logging
     default: false
+  logstash.heap_size:
+    description: sets jvm heap sized
   logstash_parser.message_max_size:
     description: "Maximum log message length.  Anything larger is truncated (TODO: move this to ingestor?)"
     default: 1048576
