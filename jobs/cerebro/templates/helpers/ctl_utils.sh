@@ -7,7 +7,7 @@
 link_job_file_to_package() {
   source_job_file=$1
   target_package_file=${2:-$source_job_file}
-  full_package_file=$WEBAPP_DIR/${target_package_file}
+  full_package_file=$PKG_DIR/${target_package_file}
 
   link_job_file ${source_job_file} ${full_package_file}
 }

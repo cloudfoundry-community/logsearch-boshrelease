@@ -9,6 +9,8 @@ source /var/vcap/jobs/cerebro/helpers/ctl_setup.sh 'cerebro'
 export PORT=${PORT:-5000}
 export LANG=en_US.UTF-8
 
+link_job_file_to_package config/logback.xml conf/logback.xml
+
 case $1 in
 
   start)
