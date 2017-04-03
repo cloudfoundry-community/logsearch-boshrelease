@@ -76,7 +76,7 @@ properties:
     description: "Lish of Elasticsearch nodes"
     default: []
   haproxy.elastic.enable_ssl:
-    description: "Enable or Disable SSL for for syslog/ingestor traffic on haproxy"
+    description: "Enable or Disable SSL for for Elasticsearch traffic on haproxy"
     default: true
   haproxy.elastic.auth.username:
     description: "Basic auth username for Elasticsearch. Optional"
