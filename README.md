@@ -5,16 +5,17 @@ A scalable stack of [Elasticsearch](http://www.elasticsearch.org/overview/elasti
 [Kibana](http://www.elasticsearch.org/overview/kibana/) for your
 own [BOSH](http://docs.cloudfoundry.org/bosh/)-managed infrastructure.
 
-> Please keep in mind that the [develop](https://github.com/cloudfoundry-community/logsearch-boshrelease/tree/develop) branch is under heavy development!
-> Please stay on Logsearch v204.0.0 since upgrade procedure to ELK 5 is not currently available. 
-
 ## BREAKING CHANGES
 
 Logsearch < v23.0.0 was based on Elasticsearch 1.x and Kibana 3.
 
 Logsearch > v200 is based on Elasticsearch 2.x and Kibana 4.
 
-There is NO upgrade path.  Sorry :(
+There is NO upgrade path from Elasticsearch 1.x to 2.x.  Sorry :(
+
+Logsearch > v204.0.0 is based on Elasticsearch 5.x and Kibana 5.
+
+For upgrade procedure from Elasticsearch 2.x please refer to [v205.0.0 release notes](https://github.com/cloudfoundry-community/logsearch-boshrelease/releases/tag/v205.0.0#component-updates).
 
 ## Getting Started
 
