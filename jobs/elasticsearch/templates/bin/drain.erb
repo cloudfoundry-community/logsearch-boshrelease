@@ -6,10 +6,6 @@
 # changes to the elasticsearch nodes, so be sure elasticsearch jobs are
 # configured to deploy serially.
 #
-# When you get into fancier cluster scenarios, you'll want to disable this with
-# the `elasticsearch.drain: false` property and manage your own cluster
-# settings.
-#
 # This is invoked somewhere around here:
 # https://github.com/cloudfoundry/bosh/blob/7a7e42312a6a1dce50b578be579f17d10797e556/bosh_agent/lib/bosh_agent/message/drain.rb#L172
 #
@@ -19,11 +15,9 @@ set -u
 
 # disable allocations before bringing down data nodes
 <% if p('elasticsearch.node.allow_data') %>
-curl -s \
-    -X PUT \
-    -d '{"transient":{"cluster.routing.allocation.enable":"none"}}' \
-    'localhost:9200/_cluster/settings' \
-    > /dev/null
+curl -s -X PUT localhost:9200/_all/_settings \
+  -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation_restart") %>"}}' \
+  > /dev/null
 <% end %>
 
 echo 0

@@ -31,6 +31,11 @@ export LOGSTASH_WORKERS=<%= p('logstash_parser.workers') %>
 <% end %>
 export TIMECOP_REJECT_GREATER_THAN_HOURS=<%= p('logstash_parser.timecop.reject_greater_than_hours') %>
 export TIMECOP_REJECT_LESS_THAN_HOURS=<%= p('logstash_parser.timecop.reject_less_than_hours') %>
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+<% if_p('logstash.heap_size') do |heap_size| %>
+HEAP_SIZE=<%= heap_size %>
+<% end %>
+export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
 
 case $1 in
 
@@ -76,8 +81,18 @@ case $1 in
 
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
-    exec chpst -u vcap /var/vcap/packages/logstash/bin/logstash agent \
-         -f ${JOB_DIR}/config/logstash.conf -w ${LOGSTASH_WORKERS} \
+    # Workaround for issue https://github.com/elastic/logstash/issues/6378 still present in version 5.2.2
+    # Please remove ones logstash is in version 5.3.x or higher.
+    mkdir -p $DATA_DIR/queue
+    chmod -R 777 $DATA_DIR/queue
+    rm -f /var/vcap/packages/logstash/data/queue
+    ln -s $DATA_DIR/queue /var/vcap/packages/logstash/data/queue
+
+    exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
+        --path.data ${DATA_DIR} \
+        --path.config ${JOB_DIR}/config/logstash.conf \
+        --path.logs ${LOG_DIR} \
+        --pipeline.workers ${LOGSTASH_WORKERS} \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 

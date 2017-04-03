@@ -1,56 +1,4 @@
 ---
-java8/openjdk-1.8.0_40.tar.gz:
-  object_id: c1386f34-7585-4f92-b41e-6d9dbbb940ab
-  sha: 590be5c6337753b28acc81d4843e98e6245b5261
-  size: 39630740
-curator/click-3.3.tar.gz:
-  object_id: 5a17f7ca-b4dc-467a-b5a3-9181dfba17b6
-  sha: d716a932b930d71059e49465b6b42e833808369a
-  size: 259855
-curator/urllib3-1.8.3.tar.gz:
-  object_id: f5601b3b-e555-4ca0-b955-c01e4081d0ee
-  sha: 00c92b0c3b0756ae3c4e6262d5bc80023dfe9ca3
-  size: 85466
-python/Python-3.4.3.tgz:
-  object_id: 34ff2b80-c2ca-4075-81a7-164805059d89
-  sha: 94cae02a334c72ea6ba8c056bb2864e2838878d3
-  size: 19554643
-curator/elasticsearch-curator-3.4.0-dev1.tar.gz:
-  object_id: 508de17f-8c5b-4baf-b3e7-63bcd73247dc
-  sha: 8e75e27c24d5b05ff446e778ef9dd3b95c49c91b
-  size: 137108
-curator/elasticsearch-1.7.0.tar.gz:
-  object_id: 3bdcfe3c-1af6-4777-9a15-2d053d172a15
-  sha: 01b76bf67b47a0bcbb69a6d7d00169449f780484
-  size: 62054
-haproxy/pcre-8.38.tar.gz:
-  object_id: 9538f6cf-5cd1-4551-a5c3-1263fb32edf6
-  sha: 3ab418d0026c2a4e693ec783bd60660debc32b8f
-  size: 2053336
-haproxy/haproxy-1.6.5.tar.gz:
-  object_id: 5d847e37-7216-49b7-8acf-51ee3101e842
-  sha: d9f5b6cade54d958ada2f67c6c7b97c9c8ef14ac
-  size: 1563272
-java8/openjdk-1.8.0_91.tar.gz:
-  object_id: 96f03608-3a60-4a84-bb67-18d92065c371
-  sha: 63ff487f3004729d33796e87919c183fa8a4e752
-  size: 45736783
-redis/redis-3.2.0.tar.gz:
-  object_id: 4ecad71b-9684-446e-8b1d-5ffd89f300f2
-  sha: 0c1820931094369c8cc19fc1be62f598bc5961ca
-  size: 1525900
-logstash/logstash-all-plugins-2.3.3-patched.tar.gz:
-  object_id: bc7498b5-b00d-4be2-9fd2-7eecfdde965b
-  sha: 55347f705fa9fa67e8d56ed712090240c5186d7f
-  size: 134808288
-kibana/kibana-4.5.4-linux-x64.tar.gz:
-  object_id: 34afb45a-7887-44f0-be0e-cc57b8fba161
-  sha: dba409384fe36f1b5ad20e7dd7e6efacdc09ed11
-  size: 33265835
-elasticsearch/elasticsearch-2.3.5.tar.gz:
-  object_id: cd0654d1-c0fd-49c9-8155-045146f5a17a
-  sha: ba8842e4ff35370b9ae6a1a12b7f1d12aa9b5c66
-  size: 27547995
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
   sha: d27c56da9cdf214ed39a471f0ca5c970abbd510d
@@ -71,3 +19,59 @@ ruby2.3/ruby-2.3.1.tar.gz:
   object_id: 0ab54e2b-3919-4e52-b157-50c8a7704cad
   sha: c39b4001f7acb4e334cb60a0f4df72d434bef711
   size: 17797997
+elasticsearch/elasticsearch-5.0.0.tar.gz:
+  object_id: e5d789c8-0a98-46e3-92fe-d882813b47a3
+  sha: d25f6547bccec9f0b5ea7583815f96a6f50849e0
+  size: 32968292
+kibana/kibana-5.0.0-linux-x86_64.tar.gz:
+  object_id: f3c89967-dbb3-4b0b-b3eb-7b5a7c5bf2fd
+  sha: 370b78f1600c4dde8ac29ff9bb71a0a429d58ba9
+  size: 40124789
+logstash/logstash-5.2.2.tar.gz:
+  object_id: 63f28df3-14b2-4e0c-a3cb-2934aa9baf61
+  sha: 20528f9d97e50917b994b4c9f26d518ec7249b8d
+  size: 94049227
+logstash/logstash-filter-alter-3.0.0.zip:
+  object_id: 8b0c5aa7-4675-4659-8b0a-78ebb6cd6b0c
+  sha: f7169d5bc42e99c3a89afadd5a838c4e4e0105ab
+  size: 6642
+logstash/logstash-filter-translate-3.0.1.zip:
+  object_id: 33680669-f431-43ac-9b83-c1b995617f47
+  sha: e01978407ca5a4f4a9f48d1fd04f8ad3e721e679
+  size: 9437
+java8/openjdk-1.8.0_121.tar.gz:
+  object_id: 18a9e955-f23f-455c-a8d2-3c676ece003a
+  sha: d1596c9c825cb3f5be373bd34e4f6520187b9660
+  size: 45476711
+curator/elasticsearch-curator-4.2.6.tar.gz:
+  object_id: a65edd77-82e3-4467-bdd4-0118b983a3ee
+  sha: 3a4f620da0df6f73ed4b82a0d7b99156c35a3479
+  size: 135837
+curator/elasticsearch-curator-requirements.tar.gz:
+  object_id: 2cda467f-504f-4714-a800-0b60183d41ef
+  sha: bd938b1607174c45bb4b82d3ea983d5bc784e081
+  size: 1384284
+python/Python-3.6.1.tgz:
+  object_id: db2b3522-9d58-4998-81ec-237d900ad740
+  sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
+  size: 22540566
+haproxy/haproxy-1.6.11.tar.gz:
+  object_id: aef31767-d5e2-4937-8391-08f3c5eb2c30
+  sha: 8c1c1b2346cf18379cd798fbc6364fdab5e17d32
+  size: 1574029
+haproxy/pcre-8.40.tar.gz:
+  object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
+  sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
+  size: 2065161
+logstash/logstash-input-relp-3.0.0.zip:
+  object_id: a37173e4-e190-4ab6-bd90-83a84ff31fdc
+  sha: 98076907db434d88f14767afe54e867433453ac2
+  size: 11670
+cerebro/cerebro-0.6.3.tgz:
+  object_id: 229f802d-38d2-4d5e-a008-d27435a4fac6
+  sha: 03c7c8549badc7d3416a170973816652c204553f
+  size: 51195857
+redis/redis-3.2.8.tar.gz:
+  object_id: 15e19594-4fec-44f5-9070-87e15a767f31
+  sha: 6780d1abb66f33a97aad0edbe020403d0a15b67f
+  size: 1547237

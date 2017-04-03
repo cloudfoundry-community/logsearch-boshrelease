@@ -39,9 +39,18 @@ properties:
     description: "Timeout for requests queued waiting for free connection slots (in seconds)"
     default:     30
 
-  haproxy.ingestor.inbound_port:
+  haproxy.ingestor.syslog.inbound_port:
     description: "The public port of the ingestor service"
     default: 5514
+  haproxy.ingestor.syslog.backend_port:
+    description: "The port number the ingestor backends are listening on"
+    default: 5514
+  haproxy.ingestor.relp.inbound_port:
+    description: "The public port of the ingestor service"
+    default: 2514
+  haproxy.ingestor.relp.backend_port:
+    description: "The port number the ingestor backends are listening on"
+    default: 2514
   haproxy.ingestor.backend_servers:
     description: "Array of the ingestor backend IPs"
     default: []
@@ -99,3 +108,6 @@ properties:
     description: "Basic auth password for cluster monitor kibana. Optional"
     default: ""
 
+  haproxy.enable_stats_socket:
+    description: "Whether to enable a socket that can be used to query errors and status"
+    default: false

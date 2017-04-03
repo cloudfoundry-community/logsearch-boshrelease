@@ -2,15 +2,14 @@
 name: elasticsearch
 packages:
 - elasticsearch
-- elasticsearch-plugins-kopf
 - java8
 templates:
   bin/drain.erb: bin/drain
-  bin/post-deploy.erb: bin/post-deploy
+  bin/post-start.erb: bin/post-start
   bin/elasticsearch_ctl: bin/elasticsearch_ctl
   bin/monit_debugger: bin/monit_debugger
   config/config.yml.erb: config/elasticsearch.yml
-  config/logging.yml.erb: config/logging.yml
+  config/log4j2.properties.erb: config/log4j2.properties
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
@@ -24,12 +23,20 @@ properties:
   elasticsearch.log_level:
     description: The default logging level (e.g. WARN, DEBUG, INFO)
     default: INFO
+  elasticsearch.heap_size:
+    description: sets jvm heap sized
   elasticsearch.node.allow_master:
     description: Allow node to become master? (true / false)
     default: false
   elasticsearch.node.allow_data:
     description: Allow node to store data? (true / false)
     default: false
+  elasticsearch.health.timeout:
+    description: Post-start timeout for node to join cluster
+    default: 300
+  elasticsearch.health.interval:
+    description: Post-start interval for node to join cluster
+    default: 15
   elasticsearch.node.tags:
     description: A hash of additional tags for the node
   elasticsearch.exec.environment:
@@ -40,9 +47,15 @@ properties:
   elasticsearch.limits.fd:
     description: Maximum file descriptors
     default: 65536
+  elasticsearch.recovery.delay_allocation:
+    description: Delay allocation interval
+    default: "1m"
+  elasticsearch.recovery.delay_allocation_restart:
+    description: Delay allocation interval during restart
+    default: "5m"
   elasticsearch.discovery.minimum_master_nodes:
     description: The minimum number of master eligible nodes a node should "see" in order to operate within the cluster. Recommended to set it to a higher value than 1 when running more than 2 nodes in the cluster.
-    default: 1
+    default: "auto"
   elasticsearch.config_options:
     description: "Additional options to append to elasticsearch's config.yml (YAML format)."
     default: ~

@@ -4,12 +4,12 @@
         }
 
         ruby {
-            code => "event['@parser[timestamp]'] = Time.now.iso8601(3)"
+            code => "event.set('@parser[timestamp]', Time.now.iso8601(3))"
         }
     <% end %>
 
     #
-    # Default type to _logstash_input 
+    # Default type to _logstash_input
     #
 
     alter {
@@ -67,9 +67,12 @@
     ruby {
         code => '
             max_line_length = <%= p("logstash_parser.message_max_size") %>
-            if event["@message"] && event["@message"].length > max_line_length
-                event["@message"] = event["@message"][0, max_line_length]
-                event["tags"] ||= [] << "_groktrimmed"
+            message = event.get("@message")
+            if message && message.length > max_line_length
+                event.set("@message", message[0, max_line_length])
+                tags = event.get("tags")
+                tags ||= [] << "_groktrimmed"
+                event.set("tags", tags)
             end
         '
     }

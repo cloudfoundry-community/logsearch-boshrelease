@@ -10,6 +10,7 @@ jobs:
   instances: 1
   templates:
   - {name: elasticsearch, release: logsearch}
+  - {name: cerebro, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: elasticsearch_master
   persistent_disk_pool: elasticsearch_master
@@ -141,6 +142,7 @@ jobs:
       - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log}
       - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log}
   update:
+    serial: true
     max_in_flight: 1 # Only update 1 ES data node at a time or risk downtime
 
 - name: kibana
@@ -272,6 +274,9 @@ jobs:
 # Global properties
 properties:
   curator:
+    purge_logs:
+      unit: days
+      retention_period: 30
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
       port: 9200

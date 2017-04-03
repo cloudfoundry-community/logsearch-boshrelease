@@ -35,7 +35,7 @@ input {
 filter {
   # drop empty logs (eg: monit connection healthcheck)
   ruby {
-    code => 'event.cancel if event["message"] == "\u0000"'
+    code => 'event.cancel if event.get("message") == "\u0000"'
   }
 
   #When behind haproxy, this is always the IP of the haproxy, not the IP of the actual host sending the data.
@@ -49,7 +49,11 @@ filter {
     add_field => { "[@ingestor][job]" => "<%= name %>/<%= index %>" }
   }
   ruby {
-    code => "event['@ingestor']['timestamp'] = Time.now.iso8601(3)"
+    code => '
+      ingestor = event.get("@ingestor")
+      ingestor["timestamp"] = Time.now.iso8601(3)
+      event.set("@ingestor", ingestor)
+    '
   }
   <% end %>
 
