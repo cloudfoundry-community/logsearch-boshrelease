@@ -2,6 +2,8 @@
 
 set -e
 
+<% if !p("elasticsearch.health.disable_post_start") %>
+
 echo "Waiting 1m for elasticsearch to accept connections..."
 n=0
 until [ $n -ge 12 ]
@@ -58,4 +60,10 @@ fi
 <% if p("elasticsearch.node.allow_data") %>
 curl -X PUT -s localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
+<% end %>
+
+<% else %>
+
+echo "Disable post start script property is set to <%= p("elasticsearch.health.disable_post_start") %>. Skipping post-start..."
+
 <% end %>

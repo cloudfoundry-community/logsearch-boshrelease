@@ -68,3 +68,6 @@ properties:
   elasticsearch.http_host:
     description: "The host address to bind the elasticsearch HTTP service to and to publish for HTTP clients to connect to"
     default: 0.0.0.0
+  elasticsearch.health.disable_post_start:
+    description: Allow node to run post-start script? (true / false)
+    default: false
