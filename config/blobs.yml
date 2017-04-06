@@ -19,10 +19,6 @@ ruby2.3/ruby-2.3.1.tar.gz:
   object_id: 0ab54e2b-3919-4e52-b157-50c8a7704cad
   sha: c39b4001f7acb4e334cb60a0f4df72d434bef711
   size: 17797997
-kibana/kibana-5.0.0-linux-x86_64.tar.gz:
-  object_id: f3c89967-dbb3-4b0b-b3eb-7b5a7c5bf2fd
-  sha: 370b78f1600c4dde8ac29ff9bb71a0a429d58ba9
-  size: 40124789
 logstash/logstash-filter-alter-3.0.0.zip:
   object_id: 8b0c5aa7-4675-4659-8b0a-78ebb6cd6b0c
   sha: f7169d5bc42e99c3a89afadd5a838c4e4e0105ab
@@ -71,6 +67,10 @@ elasticsearch/elasticsearch-5.3.0.tar.gz:
   object_id: d4c5f596-b323-497a-916b-0081034ad59f
   sha: 9273fdecb2251755887f1234d6cfcc91e44a384d
   size: 33696963
+kibana/kibana-5.3.0-linux-x86_64.tar.gz:
+  object_id: 001b3f9a-7bb7-44eb-b90c-7e1d44e0056c
+  sha: 4e9daf275f8ef749fba931c1f5c35f85662efd53
+  size: 38912478
 logstash/logstash-5.3.0.tar.gz:
   object_id: dc079ef3-83e3-4487-9303-76e0eaa13c2e
   sha: ede53a40e2935768e8113b63c1a09160f849b6c4
