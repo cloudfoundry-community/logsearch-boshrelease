@@ -13,7 +13,7 @@ templates:
   cert.pem.erb:              config/cert.pem
   helpers/ctl_setup.sh:      helpers/ctl_setup.sh
   helpers/ctl_utils.sh:      helpers/ctl_utils.sh
-  properties.sh.erb:    data/properties.sh
+  properties.sh.erb:         data/properties.sh
 
 properties:
   haproxy.syslog_server:
@@ -54,6 +54,12 @@ properties:
   haproxy.ingestor.backend_servers:
     description: "Array of the ingestor backend IPs"
     default: []
+  haproxy.ingestor.backend_port:
+    description: "The port number the ingestor backends are listening on"
+    default: 5514
+  haproxy.ingestor.enable_ssl:
+    description: "Enable or Disable SSL for for syslog/ingestor traffic on haproxy"
+    default: true 
 
   haproxy.kibana.inbound_port:
     description: "The public port of the kibana service"
@@ -63,6 +69,9 @@ properties:
   haproxy.kibana.backend_port:
     description: "The port of the kibana backend server(s)"
     default: 5601
+  haproxy.kibana.enable_ssl:
+    description: "Enable or Disable SSL for Kibana traffic on haproxy"
+    default: true 
   haproxy.kibana.auth.username:
     description: "Basic auth username for kibana. Optional"
     default: ""
@@ -75,6 +84,9 @@ properties:
   haproxy.elastic.backend_servers:
     description: "Lish of Elasticsearch nodes"
     default: []
+  haproxy.elastic.enable_ssl:
+    description: "Enable or Disable SSL for for Elasticsearch traffic on haproxy"
+    default: true
   haproxy.elastic.auth.username:
     description: "Basic auth username for Elasticsearch. Optional"
   haproxy.elastic.auth.password:
