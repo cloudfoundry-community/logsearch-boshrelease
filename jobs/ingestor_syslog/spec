@@ -57,6 +57,9 @@ properties:
     description: Syslog-TLS SSL certificate (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
   logstash_ingestor.syslog_tls.ssl_key:
     description: Syslog-TLS SSL key (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
+  logstash_ingestor.syslog_tls.skip_ssl_validation:
+    description: Verify the identity of the other end of the SSL connection against the CA.
+    default: false
 
   logstash_ingestor.relp.port:
     description: Port to listen for RELP messages
