@@ -43,10 +43,6 @@ python/Python-3.6.1.tgz:
   object_id: db2b3522-9d58-4998-81ec-237d900ad740
   sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
   size: 22540566
-haproxy/haproxy-1.6.11.tar.gz:
-  object_id: aef31767-d5e2-4937-8391-08f3c5eb2c30
-  sha: 8c1c1b2346cf18379cd798fbc6364fdab5e17d32
-  size: 1574029
 haproxy/pcre-8.40.tar.gz:
   object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
@@ -75,3 +71,7 @@ logstash/logstash-5.3.0.tar.gz:
   object_id: dc079ef3-83e3-4487-9303-76e0eaa13c2e
   sha: ede53a40e2935768e8113b63c1a09160f849b6c4
   size: 94087323
+haproxy/haproxy-1.7.5.tar.gz:
+  object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
+  sha: 1b06931b9fd83ba64ef59a25b9ce6275b0f67809
+  size: 1743979
