@@ -39,6 +39,22 @@ backend ingestors-syslog
     server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.syslog.backend_port") %> check inter 1000
     <% end %>
 
+frontend syslog-tls-in
+    mode tcp
+    <% if properties.haproxy.ssl_pem and properties.haproxy.ingestor.enable_ssl == true %>
+    bind :<%= p("haproxy.ingestor.tls.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
+    <% else %>
+    bind :<%= p("haproxy.ingestor.tls.inbound_port") %>
+    <% end %>
+    default_backend ingestors-syslog-tls
+
+backend ingestors-syslog-tls
+    mode tcp
+    balance roundrobin
+    <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.tls.backend_port") %> check inter 1000
+    <% end %>
+
 frontend relp-in
     mode tcp
 
