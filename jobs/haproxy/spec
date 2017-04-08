@@ -59,11 +59,14 @@ properties:
     default: 5514
   haproxy.ingestor.enable_ssl:
     description: "Enable or Disable SSL for for syslog/ingestor traffic on haproxy"
-    default: true 
+    default: true
 
-  haproxy.kibana.inbound_port:
+  haproxy.kibana.inbound_port.http:
     description: "The public port of the kibana service"
     default: 80
+  haproxy.kibana.inbound_port.https:
+    description: "The public port of the kibana service"
+    default: 443
   haproxy.kibana.backend_servers:
     description: "The list of kibana servers"
   haproxy.kibana.backend_port:
