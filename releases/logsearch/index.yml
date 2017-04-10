@@ -80,4 +80,6 @@ builds:
     version: 205.0.0
   ab2c1c25-cc02-430e-837b-e59de35865b4:
     version: 205.0.1
+  f5e27c62-648b-4854-9b28-1223e47b59f4:
+    version: 206.0.0
 format-version: '2'
