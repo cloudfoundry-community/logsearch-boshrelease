@@ -96,9 +96,6 @@ jobs:
   networks:
   - name: default
     static_ips: (( static_ips(5) ))
-  - name: elastic
-    static_ips:
-    -  VAR_ELK_IP # Specify an elastic IP for the router. Resources, proxied by the router, will be available through this IP. They include: kibana, elasticsearch, cluster_monitor, ingestor and syslog_server.
   resource_pool: haproxy
 
 properties:
@@ -118,7 +115,7 @@ networks:
     gateway: VAR_CF1_NET_GW
     cloud_properties:
       net_id: VAR_CF1_NET_ID  # Specify your network ID
-      security_groups: [bosh]
+      security_groups: [bosh, logsearch]
     dns:
     - VAR_CF1_DNS_1
     - VAR_CF1_DNS_2
@@ -126,10 +123,3 @@ networks:
     - 192.168.1.2 - 192.168.1.95
     static:
     - 192.168.1.96 - 192.168.1.120
-
-- name: elastic
-  type: vip
-  cloud_properties:
-    security_groups:  # Specify your security groups used for 'elastic' network
-    - bosh
-    - logsearch
