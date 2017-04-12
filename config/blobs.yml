@@ -31,14 +31,6 @@ java8/openjdk-1.8.0_121.tar.gz:
   object_id: 18a9e955-f23f-455c-a8d2-3c676ece003a
   sha: d1596c9c825cb3f5be373bd34e4f6520187b9660
   size: 45476711
-curator/elasticsearch-curator-4.2.6.tar.gz:
-  object_id: a65edd77-82e3-4467-bdd4-0118b983a3ee
-  sha: 3a4f620da0df6f73ed4b82a0d7b99156c35a3479
-  size: 135837
-curator/elasticsearch-curator-requirements.tar.gz:
-  object_id: 2cda467f-504f-4714-a800-0b60183d41ef
-  sha: bd938b1607174c45bb4b82d3ea983d5bc784e081
-  size: 1384284
 python/Python-3.6.1.tgz:
   object_id: db2b3522-9d58-4998-81ec-237d900ad740
   sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
@@ -75,3 +67,51 @@ haproxy/haproxy-1.7.5.tar.gz:
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
   sha: 1b06931b9fd83ba64ef59a25b9ce6275b0f67809
   size: 1743979
+curator/elasticsearch-curator-5.0.1.tar.gz:
+  object_id: a66f8365-c0b1-41ec-bfdb-d7a6037e531d
+  sha: 183924cfc48e578f9c8f94862db3ca222bd976ba
+  size: 182112
+curator/vendor/appdirs-1.4.3-py2.py3-none-any.whl:
+  object_id: dc6228ab-aab1-457b-bb61-ea6bbab11b8c
+  sha: '092e43d970e08a67c4f8074bf7777d865f92f5fc'
+  size: 12154
+curator/vendor/certifi-2017.1.23-py2.py3-none-any.whl:
+  object_id: bcd789e3-5a1c-478e-aaae-74be9b3e84f1
+  sha: fa81df1779db594a994b21bfd478982529ca5369
+  size: 382984
+curator/vendor/click-6.7-py2.py3-none-any.whl:
+  object_id: 06f97a3a-8cc3-4d83-8c0f-6e85d15167f9
+  sha: 9490775172e63ba94233d4b201f0e8d78b0cd939
+  size: 71175
+curator/vendor/elasticsearch-5.3.0-py2.py3-none-any.whl:
+  object_id: 9b191721-a07d-4bc6-bf57-391995451264
+  sha: 9ce33ca6508c263db6e3833273089fde431e82e1
+  size: 66169
+curator/vendor/packaging-16.8-py2.py3-none-any.whl:
+  object_id: 5ae6809e-5e93-4531-aa1d-989e81dda9d6
+  sha: 6c45e475be475c385ef46f583a0214dea6a35783
+  size: 23069
+curator/vendor/pyparsing-2.2.0-py2.py3-none-any.whl:
+  object_id: a7dd692a-9de5-44ab-93e6-9095bc5c734e
+  sha: b698b51e3680761ba520149ed7b0d3a3d6a0c0ca
+  size: 56385
+curator/vendor/PyYAML-3.12.tar.gz:
+  object_id: c437dff0-e2db-4d48-9c12-626160760901
+  sha: cb7fd3e58c129494ee86e41baedfec69eb7dafbe
+  size: 253011
+curator/vendor/setuptools-34.4.1-py2.py3-none-any.whl:
+  object_id: 54d3b5da-3c8e-4e78-bf23-93b54e23e008
+  sha: 9fec5bf7062298bc901b79ab9db88fc05ddb2a3d
+  size: 390260
+curator/vendor/six-1.10.0-py2.py3-none-any.whl:
+  object_id: efb0fe0f-863b-4f27-81ad-15c46bdb8f19
+  sha: 19df5f56abce3db94d5e0e079e54bf430fddbb02
+  size: 10341
+curator/vendor/urllib3-1.20-py2.py3-none-any.whl:
+  object_id: e1067d34-40d6-41b2-8690-a550ac847c25
+  sha: f04819411c2cbbb7a2d4ba7785e344b68bfd88a6
+  size: 111946
+curator/vendor/voluptuous-0.9.3.tar.gz:
+  object_id: 2a246c17-66fb-4c0c-8095-0c5bc6e0029f
+  sha: 315dd79c372380799d0d2e21ae711aa4097efb81
+  size: 34097

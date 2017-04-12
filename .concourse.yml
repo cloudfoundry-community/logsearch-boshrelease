@@ -1,5 +1,6 @@
 jobs:
 - name: pr tests
+  public: true
   serial: true
   plan:
     - get: git-pull-requests
