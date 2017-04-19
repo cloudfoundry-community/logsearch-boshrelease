@@ -20,13 +20,12 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
 <% end %>
 
 export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Djava.io.tmpdir=$TMP_DIR"
+export ES_JVM_OPTIONS="${JOB_DIR}/config/jvm.options"
 # encountered environment variables that are no longer suppor; thentted
 
 export MAX_OPEN_FILES=<%= p("elasticsearch.limits.fd") %>
 export MAX_LOCKED_MEMORY=unlimited  # required to enable elasticsearch's mlockall setting
 export MAX_MAP_COUNT=262144
-
-PLUGIN_SCRIPTS_DIR=/var/vcap/data/elasticsearch/plugin-scripts
 
 case $1 in
 
@@ -54,16 +53,9 @@ case $1 in
       sysctl -q -w vm.max_map_count=$MAX_MAP_COUNT
     fi
 
-    mkdir -p $PLUGIN_SCRIPTS_DIR
-
-    # v21 switched to running as vcap; remove after a couple versions
-    chown -R vcap:vcap $STORE_DIR $LOG_DIR $RUN_DIR $PLUGIN_SCRIPTS_DIR
-
-    # ES2.0 deprcated -Des.config and insists on having the config file under ES_HOME/config
-    cp --remove-destination $JOB_DIR/config/elasticsearch.yml /var/vcap/packages/elasticsearch/config
-
     chpst -u vcap:vcap /var/vcap/packages/elasticsearch/bin/elasticsearch \
          -p ${PIDFILE} \
+         -Epath.conf=${JOB_DIR}/config \
          <%= p("elasticsearch.exec.options", []).join(' ') %> \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log

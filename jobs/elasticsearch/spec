@@ -9,6 +9,7 @@ templates:
   bin/elasticsearch_ctl: bin/elasticsearch_ctl
   bin/monit_debugger: bin/monit_debugger
   config/config.yml.erb: config/elasticsearch.yml
+  config/jvm.options.erb: config/jvm.options
   config/log4j2.properties.erb: config/log4j2.properties
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
@@ -23,6 +24,9 @@ properties:
   elasticsearch.log_level:
     description: The default logging level (e.g. WARN, DEBUG, INFO)
     default: INFO
+  elasticsearch.jvm_options:
+    description: Additional Java Virtual Machine options
+    default: []
   elasticsearch.heap_size:
     description: sets jvm heap sized
   elasticsearch.node.allow_master:
