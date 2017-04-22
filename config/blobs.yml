@@ -51,10 +51,6 @@ redis/redis-3.2.8.tar.gz:
   object_id: 15e19594-4fec-44f5-9070-87e15a767f31
   sha: 6780d1abb66f33a97aad0edbe020403d0a15b67f
   size: 1547237
-elasticsearch/elasticsearch-5.3.0.tar.gz:
-  object_id: d4c5f596-b323-497a-916b-0081034ad59f
-  sha: 9273fdecb2251755887f1234d6cfcc91e44a384d
-  size: 33696963
 kibana/kibana-5.3.0-linux-x86_64.tar.gz:
   object_id: 001b3f9a-7bb7-44eb-b90c-7e1d44e0056c
   sha: 4e9daf275f8ef749fba931c1f5c35f85662efd53
@@ -115,3 +111,7 @@ curator/vendor/voluptuous-0.9.3.tar.gz:
   object_id: 2a246c17-66fb-4c0c-8095-0c5bc6e0029f
   sha: 315dd79c372380799d0d2e21ae711aa4097efb81
   size: 34097
+elasticsearch/elasticsearch-5.3.1.tar.gz:
+  object_id: b0b1662d-2dca-4aee-848e-a017acd6b0d5
+  sha: 26100fb2b2c824530f29a7cc6148e2315e1a1fe3
+  size: 33702280
