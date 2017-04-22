@@ -51,10 +51,6 @@ redis/redis-3.2.8.tar.gz:
   object_id: 15e19594-4fec-44f5-9070-87e15a767f31
   sha: 6780d1abb66f33a97aad0edbe020403d0a15b67f
   size: 1547237
-kibana/kibana-5.3.0-linux-x86_64.tar.gz:
-  object_id: 001b3f9a-7bb7-44eb-b90c-7e1d44e0056c
-  sha: 4e9daf275f8ef749fba931c1f5c35f85662efd53
-  size: 38912478
 logstash/logstash-5.3.0.tar.gz:
   object_id: dc079ef3-83e3-4487-9303-76e0eaa13c2e
   sha: ede53a40e2935768e8113b63c1a09160f849b6c4
@@ -115,3 +111,7 @@ elasticsearch/elasticsearch-5.3.1.tar.gz:
   object_id: b0b1662d-2dca-4aee-848e-a017acd6b0d5
   sha: 26100fb2b2c824530f29a7cc6148e2315e1a1fe3
   size: 33702280
+kibana/kibana-5.3.1-linux-x86_64.tar.gz:
+  object_id: 6d776e63-7cf4-4594-bbca-46a3c6a68db9
+  sha: be22af00381ab49e80acde41380a37c73c14e296
+  size: 38732760
