@@ -27,10 +27,6 @@ logstash/logstash-filter-translate-3.0.1.zip:
   object_id: 33680669-f431-43ac-9b83-c1b995617f47
   sha: e01978407ca5a4f4a9f48d1fd04f8ad3e721e679
   size: 9437
-java8/openjdk-1.8.0_121.tar.gz:
-  object_id: 18a9e955-f23f-455c-a8d2-3c676ece003a
-  sha: d1596c9c825cb3f5be373bd34e4f6520187b9660
-  size: 45476711
 python/Python-3.6.1.tgz:
   object_id: db2b3522-9d58-4998-81ec-237d900ad740
   sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
@@ -115,3 +111,7 @@ logstash/logstash-5.3.1.tar.gz:
   object_id: 877ccde7-a954-4539-8634-defe2d17bcb5
   sha: 86cd570471c55e26d24cf434a50ac5aeaf554fb8
   size: 94117217
+java8/openjdk-1.8.0_131.tar.gz:
+  object_id: c0fe24d0-0385-4154-bad4-cacb11cdadf2
+  sha: ffd2bfa8fa445b5fe56737e94c0c11b6f91720b1
+  size: 45478676
