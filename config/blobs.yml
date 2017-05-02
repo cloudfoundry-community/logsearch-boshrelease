@@ -99,14 +99,14 @@ curator/vendor/voluptuous-0.9.3.tar.gz:
   object_id: 2a246c17-66fb-4c0c-8095-0c5bc6e0029f
   sha: 315dd79c372380799d0d2e21ae711aa4097efb81
   size: 34097
-elasticsearch/elasticsearch-5.3.1.tar.gz:
-  object_id: b0b1662d-2dca-4aee-848e-a017acd6b0d5
-  sha: 26100fb2b2c824530f29a7cc6148e2315e1a1fe3
-  size: 33702280
 java8/openjdk-1.8.0_131.tar.gz:
   object_id: c0fe24d0-0385-4154-bad4-cacb11cdadf2
   sha: ffd2bfa8fa445b5fe56737e94c0c11b6f91720b1
   size: 45478676
+elasticsearch/elasticsearch-5.3.2.tar.gz:
+  object_id: 824353bd-db8f-4128-a5b1-8a325bca2188
+  sha: 154e46d304c1226b52b489c9270d793c48b801ec
+  size: 33704368
 kibana/kibana-5.3.2-linux-x86_64.tar.gz:
   object_id: e7882b42-b024-49f0-aab7-7fa54d35363c
   sha: 003cec9da459cec0bb0feffd6859aa47fbe72795

@@ -2,4 +2,4 @@
 name: elasticsearch
 dependencies: [] # no compile dependencies
 files:
-  - elasticsearch/elasticsearch-5.3.1.tar.gz
+  - elasticsearch/elasticsearch-5.3.2.tar.gz
