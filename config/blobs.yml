@@ -103,10 +103,6 @@ elasticsearch/elasticsearch-5.3.1.tar.gz:
   object_id: b0b1662d-2dca-4aee-848e-a017acd6b0d5
   sha: 26100fb2b2c824530f29a7cc6148e2315e1a1fe3
   size: 33702280
-kibana/kibana-5.3.1-linux-x86_64.tar.gz:
-  object_id: 6d776e63-7cf4-4594-bbca-46a3c6a68db9
-  sha: be22af00381ab49e80acde41380a37c73c14e296
-  size: 38732760
 logstash/logstash-5.3.1.tar.gz:
   object_id: 877ccde7-a954-4539-8634-defe2d17bcb5
   sha: 86cd570471c55e26d24cf434a50ac5aeaf554fb8
@@ -115,3 +111,7 @@ java8/openjdk-1.8.0_131.tar.gz:
   object_id: c0fe24d0-0385-4154-bad4-cacb11cdadf2
   sha: ffd2bfa8fa445b5fe56737e94c0c11b6f91720b1
   size: 45478676
+kibana/kibana-5.3.2-linux-x86_64.tar.gz:
+  object_id: e7882b42-b024-49f0-aab7-7fa54d35363c
+  sha: 003cec9da459cec0bb0feffd6859aa47fbe72795
+  size: 38743345
