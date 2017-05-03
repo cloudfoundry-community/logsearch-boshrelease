@@ -24,3 +24,6 @@ properties:
   redis.maxmemory-policy:
     description: How Redis will select what to remove when maxmemory is reached. Possible values are volatile-lru, allkeys-lru, volatile-random, allkeys-random, volatile-ttl, and noeviction.
     default: volatile-lru
+  redis.appendonly:
+    description: Enable Redis Persistence through AOF file
+    default: yes
