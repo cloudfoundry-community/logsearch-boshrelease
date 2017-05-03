@@ -37,6 +37,9 @@ properties:
   kibana.env:
     description: "a list of arbitrary key-value pairs to be passed on as process environment variables. eg: FOO: 123"
     default: []
+  kibana.console_enabled:
+    description: "Enable Kibana development console; should be set to `false` in a multi-tenant deployment."
+    default: false
   kibana.config_options:
     description: "Additional options to append to kibana's config.yml (YAML format)."
     default: ~
