@@ -465,7 +465,7 @@ maxmemory-policy <%= p("redis.maxmemory-policy") %>
 #
 # Please check http://redis.io/topics/persistence for more information.
 
-appendonly yes
+appendonly <%= p("redis.appendonly") %>
 
 # The name of the append only file (default: "appendonly.aof")
 appendfilename "redis-appendonly.aof"
