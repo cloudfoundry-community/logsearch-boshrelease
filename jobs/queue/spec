@@ -27,3 +27,4 @@ properties:
   redis.appendonly:
     description: Enable Redis Persistence through AOF file
     default: "yes"
+
