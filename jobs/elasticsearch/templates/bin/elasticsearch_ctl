@@ -40,7 +40,16 @@ case $1 in
 
     # install plugins
     rm -rf /var/vcap/packages/elasticsearch/plugins/*
-
+    <% p("elasticsearch.plugins").each do |plugin| name, path = plugin.first %>
+      <% if path.start_with? '/var/vcap' %>
+        /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "file://<%= path %>"
+      <% elsif path.start_with? 'http' %>
+        /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "<%= path %>"
+      <% else %>
+        /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "<%= path %>"
+      <% end %>
+    <% end %>
+    
     if [ -n "$MAX_OPEN_FILES" ]; then
       ulimit -n $MAX_OPEN_FILES
     fi
