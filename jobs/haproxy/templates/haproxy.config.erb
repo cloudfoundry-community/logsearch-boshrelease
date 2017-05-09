@@ -140,7 +140,7 @@ backend elastic
     mode http
     balance roundrobin
     <% p("haproxy.elastic.backend_servers").each_with_index do |ip, index| %>
-    server elastic<%= index %> <%= ip %>:9000 check inter 1000
+    server elastic<%= index %> <%= ip %>:<%= p("haproxy.elastic.backend_port") %> check inter 1000
     <% end %>
 
 
