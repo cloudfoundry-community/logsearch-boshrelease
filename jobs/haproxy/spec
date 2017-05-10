@@ -80,7 +80,7 @@ properties:
     default: 5601
   haproxy.kibana.enable_ssl:
     description: "Enable or Disable SSL for Kibana traffic on haproxy"
-    default: true 
+    default: true
   haproxy.kibana.auth.username:
     description: "Basic auth username for kibana. Optional"
     default: ""
@@ -93,6 +93,9 @@ properties:
   haproxy.elastic.backend_servers:
     description: "Lish of Elasticsearch nodes"
     default: []
+  haproxy.elastic.backend_port:
+    description: "The port of the Elasticsearch backend server(s)"
+    default: 9000
   haproxy.elastic.enable_ssl:
     description: "Enable or Disable SSL for for Elasticsearch traffic on haproxy"
     default: true
