@@ -19,7 +19,7 @@ For upgrade procedure from Elasticsearch 2.x please refer to [v205.0.0 release n
 
 ## Getting Started
 
-This repo contains Logsearch Core; which deploys an ELK cluster that can recieve and parse logs via syslog
+This repo contains Logsearch Core; which deploys an ELK cluster that can receive and parse logs via syslog
 that contain JSON.
 
 Most users will want to combine Logsearch Core with a Logsearch Addon to customise their cluster for a
