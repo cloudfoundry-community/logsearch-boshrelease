@@ -43,10 +43,6 @@ cerebro/cerebro-0.6.3.tgz:
   object_id: 229f802d-38d2-4d5e-a008-d27435a4fac6
   sha: 03c7c8549badc7d3416a170973816652c204553f
   size: 51195857
-redis/redis-3.2.8.tar.gz:
-  object_id: 15e19594-4fec-44f5-9070-87e15a767f31
-  sha: 6780d1abb66f33a97aad0edbe020403d0a15b67f
-  size: 1547237
 haproxy/haproxy-1.7.5.tar.gz:
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
   sha: 1b06931b9fd83ba64ef59a25b9ce6275b0f67809
@@ -115,3 +111,7 @@ logstash/logstash-5.3.2.tar.gz:
   object_id: 6a7402f8-921d-4c6f-b37a-5e89a7c8a7aa
   sha: e144cd85eddc83f72cbad6c340a52c281f3be7e4
   size: 94148622
+redis/redis-3.2.9.tar.gz:
+  object_id: 11340b96-739f-4532-8a38-8e00661ee18a
+  sha: 8fad759f28bcb14b94254124d824f1f3ed7b6aa6
+  size: 1547695
