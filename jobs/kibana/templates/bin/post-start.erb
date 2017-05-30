@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+<% if !p("kibana.health.disable_post_start") %>
+
+echo "Waiting 2m for kibana to accept connections..."
+n=0
+until [ $n -ge 24 ]
+do
+  curl -is http://<%= p("kibana.host") %>:<%= p("kibana.port") %> 2>&1 && break
+  n=$[$n+1]
+  echo "Waiting for kibana to accept connections ($n of 24)..."
+  sleep 5
+done
+
+if [ "$n" -ge "24" ]; then
+   echo "ERROR: Cannot connect to kibana. Exiting..."
+   exit 1
+fi
+
+<% end %>
+
+exit 0
