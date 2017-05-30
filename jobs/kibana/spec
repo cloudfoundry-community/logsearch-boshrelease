@@ -9,6 +9,7 @@ templates:
   data/properties.sh.erb: "data/properties.sh"
   helpers/ctl_setup.sh: "helpers/ctl_setup.sh"
   helpers/ctl_utils.sh: "helpers/ctl_utils.sh"
+  bin/post-start.erb: bin/post-start
 properties:
   kibana.elasticsearch.host:
     description: "IP address of elasticsearch master to send elasticsearch requests to"
@@ -52,3 +53,6 @@ properties:
   kibana.wait_for_templates:
     description: "A list of index templates that need to be present in ElasticSearch before the process starts"
     default: []
+  kibana.health.disable_post_start:
+    description: Allow node to run post-start script? (true / false)
+    default: false
