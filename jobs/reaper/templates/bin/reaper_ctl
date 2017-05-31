@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+set -u
+set -x
+
+CRON_STATUS=`pgrep cron | wc -l`
+
+source /var/vcap/jobs/reaper/helpers/ctl_setup.sh 'reaper'
+
+case $1 in
+    start)
+        if [ $CRON_STATUS -eq 0 ]; then
+            /usr/sbin/cron start
+        fi
+        (crontab -l | sed /reaper/d; cat /var/vcap/job/reaper/config/reaper.cron) | sed /^$/d | crontab
+        pgrep cron > /var/vcap/sys/run/reaper/reaper.pid
+        ;;
+
+    stop)
+        if [ -z "$(crontab -l | grep -v 'reaper')" ]; then
+            crontab -r
+        else
+            (crontab -l | sed /reaper/d) | sed /^$/d | crontab
+        fi
+        rm -f /var/vcap/sys/run/reaper/reaper.pid
+        ;;
+    *)
+        echo "Usage: reaper_ctl {start|stop}"
+        ;;
+
+esac
