@@ -40,7 +40,6 @@ jobs:
   - { release: logsearch, name: curator }
   - { release: logsearch, name: kibana }
   - { release: logsearch, name: nats_to_syslog }
-  - { release: logsearch, name: reaper }
   resource_pool: cluster_monitor
   networks:
   - name: default
@@ -69,11 +68,6 @@ jobs:
         port: 9200
       purge_logs:
         retention_period: 7
-    reaper:
-      elasticsearch_host: 127.0.0.1
-      purge_logs:
-        disk_threshold: 70
-        skip_index: ".kibana,kibana-int,.kibana-vipersleeds, .kibana-onlineservice-skymobile"
     elasticsearch_config:
       elasticsearch:
         host: 127.0.0.1
@@ -112,7 +106,6 @@ jobs:
   instances: 1
   templates:
   - {name: elasticsearch_config, release: logsearch}
-  - {name: curator, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   - {name: reaper, release: logsearch}
   resource_pool: maintenance
@@ -123,7 +116,6 @@ jobs:
   properties:
     syslog_forwarder:
       config:
-      - {service: curator, file: /var/vcap/sys/log/curator/curator.log}
       - {service: elasticsearch_config, file: /var/vcap/sys/log/elasticsearch_config/job.control.log}
 
 ##################################################################
