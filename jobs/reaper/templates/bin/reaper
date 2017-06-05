@@ -11,9 +11,10 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export PATH=/var/vcap/jobs/reaper/bin:$PATH
-export PYTHONPATH=/var/vcap/packages/curator/lib/python3.4/site-packages/
+export PATH=/var/vcap/packages/curator/bin:$PATH
+export PYTHONPATH=/var/vcap/packages/curator/lib/python3.6/site-packages/
 
-reaper.py \
- $THRESHOLD
- $ELASTICSEARCH_HOST \
- $SKIP
+python3 $(dirname "$0")/reaper.py \
+ "$THRESHOLD" \
+ "$ELASTICSEARCH_HOST" \
+ "$SKIP"
