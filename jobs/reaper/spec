@@ -20,4 +20,4 @@ properties:
     default: 70
   reaper.purge_logs.skip_index:
     description: comma seperated values of indices to ignore
-    default: ".kibana,kibana-int,.kibana-vipersleeds, .kibana-onlineservice-skymobile"
+    default: ".kibana"
