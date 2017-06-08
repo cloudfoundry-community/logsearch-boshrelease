@@ -1,7 +1,7 @@
 ---
 name: "kibana"
 packages:
-  - "kibana"
+- "kibana"
 templates:
   bin/kibana_ctl: "bin/kibana_ctl"
   config/kibana.conf.erb: "config/kibana.conf"
@@ -37,6 +37,9 @@ properties:
     default: 30000
   kibana.env:
     description: "a list of arbitrary key-value pairs to be passed on as process environment variables. eg: FOO: 123"
+    default: []
+  kibana.source_files:
+    description: "List of files to source in kibana control script"
     default: []
   kibana.console_enabled:
     description: "Enable Kibana development console; should be set to `false` in a multi-tenant deployment."

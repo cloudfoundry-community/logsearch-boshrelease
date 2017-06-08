@@ -41,6 +41,10 @@ case $1 in
     export <%= env.keys[0] %>="<%= env.values[0] %>"
     <% end %>
 
+    <% p("kibana.source_files").each do |sf| %>
+    source <%= sf %>
+    <% end %>
+
     rm -rf /var/vcap/packages/kibana/plugins/*
     <% p("kibana.plugins").each do |plugin| name, path = plugin.first %>
       <% if path.start_with? '/var/vcap' %>
