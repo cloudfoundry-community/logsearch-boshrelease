@@ -36,11 +36,17 @@ properties:
     description: Allow node to store data? (true / false)
     default: false
   elasticsearch.health.timeout:
-    description: Post-start timeout for node to join cluster
+    description: Post-start timeout for node to join cluster (seconds)
     default: 300
   elasticsearch.health.interval:
-    description: Post-start interval for node to join cluster
+    description: Post-start interval for node to join cluster (seconds)
     default: 15
+  elasticsearch.health.connect_timeout:
+    description: Post-start timeout for node to become available (seconds)
+    default: 60
+  elasticsearch.health.connect_interval:
+    description: Post-start interval for node to become available (seconds)
+    default: 5
   elasticsearch.node.tags:
     description: A hash of additional tags for the node
   elasticsearch.exec.environment:

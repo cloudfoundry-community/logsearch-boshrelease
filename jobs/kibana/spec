@@ -59,3 +59,9 @@ properties:
   kibana.health.disable_post_start:
     description: Allow node to run post-start script? (true / false)
     default: false
+  kibana.health.interval:
+    description: Kibana health check interval (seconds)
+    default: 5
+  kibana.health.timeout:
+    description: Kibana health check number of attempts (seconds)
+    default: 180
