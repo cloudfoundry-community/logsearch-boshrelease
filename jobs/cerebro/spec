@@ -15,3 +15,6 @@ templates:
 properties:
   elasticsearch.cluster_name:
     description: The name of the elastic search cluster
+  cerebro.exec.options:
+    description: An array of additional options to pass when starting cerebro
+    default: []

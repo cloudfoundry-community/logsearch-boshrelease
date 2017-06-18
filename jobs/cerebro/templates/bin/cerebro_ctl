@@ -20,6 +20,7 @@ case $1 in
     echo $$ > $PIDFILE
 
     exec chpst -u vcap:vcap cerebro \
+         <%= p("cerebro.exec.options", []).join(' ') %> \
          -Dconfig.file=/var/vcap/jobs/cerebro/config/application.conf \
          -Djava.io.tmpdir=${TMP_DIR} \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
