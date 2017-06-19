@@ -12,7 +12,7 @@ node.name: "<%= name %>/<%= index %>"
 node.master: <%= p("elasticsearch.node.allow_master") %>
 node.data: <%= p("elasticsearch.node.allow_data") %>
 <% p("elasticsearch.node.tags", {}).each do | k, v | %>
-node.<%= k %>: "<%= v %>"
+node.attr.<%= k %>: "<%= v %>"
 <% end %>
 
 network.host: "0.0.0.0"
