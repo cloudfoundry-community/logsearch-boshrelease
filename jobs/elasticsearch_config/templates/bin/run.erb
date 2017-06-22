@@ -2,6 +2,12 @@
 
 set -e
 
+# Delete existing templates before uploading
+URL=http://<%= p('elasticsearch_config.elasticsearch.host') %>:<%= p('elasticsearch_config.elasticsearch.port') %>
+for template in $(curl -s ${URL}/_template?pretty | grep -e '^\s\s"' | awk -F '"' '{print $2}'); do
+  curl -XDELETE ${URL}/_template/${template}
+done
+
 <%
 # Look ma, I'm writing Chef
 require 'uri'
