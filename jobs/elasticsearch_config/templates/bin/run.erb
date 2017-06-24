@@ -1,6 +1,14 @@
-#!/bin/bash -x
+#!/bin/bash
 
-set -e
+set -ex
+
+# Delete existing templates before uploading
+URL=http://<%= p('elasticsearch_config.elasticsearch.host') %>:<%= p('elasticsearch_config.elasticsearch.port') %>
+for template in $(curl -s ${URL}/_cat/templates | awk '{print $1}'); do
+  if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.templates').map { |template| template.keys.first }.join(' ') %>"); then
+    curl -XDELETE ${URL}/_template/${template}
+  fi
+done
 
 <%
 # Look ma, I'm writing Chef
