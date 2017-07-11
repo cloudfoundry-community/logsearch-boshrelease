@@ -21,11 +21,6 @@ fi
 out=$(mktemp health-XXXXXX)
 remaining=<%= p("elasticsearch.health.timeout") %>
 
-# Ensure shard allocation is enabled for updates from previous release
-# TODO: Deprecate on next release
-curl -X PUT -s <%= p('elasticsearch.master_hosts').first %>:9200/_cluster/settings \
-  -d '{"transient": {"cluster.routing.allocation.enable": "all"}}'
-
 until [ "${remaining}" -le 0 ]; do
   <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
   curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
