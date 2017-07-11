@@ -1,24 +1,16 @@
 #!/bin/bash
 
-#
-# This script keeps the elasticsearch cluster stable when BOSH needs to manage
-# nodes during deploys. This is simplistic and only accounts for serial
-# changes to the elasticsearch nodes, so be sure elasticsearch jobs are
-# configured to deploy serially.
-#
-# This is invoked somewhere around here:
-# https://github.com/cloudfoundry/bosh/blob/7a7e42312a6a1dce50b578be579f17d10797e556/bosh_agent/lib/bosh_agent/message/drain.rb#L172
-#
-
 set -e
-set -u
 
-# disable allocations before bringing down data nodes
 <% if p('elasticsearch.node.allow_data') %>
+# disable allocations before bringing down data nodes
+
 curl -s -X PUT localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation_restart") %>"}}' \
   > /dev/null
+
 <% end %>
 
+return_code=$?
 echo 0
-exit 0
+exit ${return_code}
