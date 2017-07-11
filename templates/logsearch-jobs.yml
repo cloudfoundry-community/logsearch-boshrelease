@@ -4,7 +4,7 @@ releases:
 
 jobs:
 ###############################################################################
-#First deploy group - elasticsearch_master, cluster_monitor, queue, maintenance
+#First deploy group - elasticsearch_master, cluster_monitor, maintenance
 ###############################################################################
 - name: elasticsearch_master
   instances: 1
@@ -32,8 +32,6 @@ jobs:
 - name: cluster_monitor
   instances: 1
   templates:
-  - { release: logsearch, name: queue }
-  - { release: logsearch, name: parser }
   - { release: logsearch, name: ingestor_syslog }
   - { release: logsearch, name: elasticsearch }
   - { release: logsearch, name: elasticsearch_config }
@@ -82,25 +80,10 @@ jobs:
       filters:
       - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
     nats_to_syslog:
-      debug: true      
+      debug: true
     logstash_ingestor:
       syslog:
         port: 514
-
-- name: queue
-  instances: 1
-  templates:
-  - {name: queue, release: logsearch}
-  - {name: syslog_forwarder, release: logsearch}
-  resource_pool: queue
-  persistent_disk_pool: queue
-  networks:
-  - name: default
-    static_ips: (( static_ips(3) ))
-  properties:
-    syslog_forwarder:
-      config:
-      - {service: queue_redis, file: /var/vcap/sys/log/queue/queue.log}
 
 - name: maintenance
   instances: 1
@@ -120,7 +103,7 @@ jobs:
       - {service: elasticsearch_config, file: /var/vcap/sys/log/elasticsearch_config/job.control.log}
 
 ##################################################################
-#2nd deploy group - elasticsearch_data, kibana, ingestors, parsers
+#2nd deploy group - elasticsearch_data, kibana, ingestors
 ##################################################################
 
 - name: elasticsearch_data
@@ -163,6 +146,7 @@ jobs:
 - name: ingestor
   instances: 1
   templates:
+  - {name: elasticsearch, release: logsearch}
   - {name: ingestor_syslog, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: ingestor
@@ -176,6 +160,8 @@ jobs:
         port: ~
     syslog_forwarder:
       config:
+      - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log}
+      - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log}
       - {service: ingestor_syslog, file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stdout.log}
       - {service: ingestor_syslog, file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log}
 
@@ -197,26 +183,6 @@ jobs:
       config:
       - {service: nats_to_syslog, file: /var/vcap/sys/log/nats_to_syslog/nats_to_syslog.stdout.log}
       - {service: nats_to_syslog, file: /var/vcap/sys/log/nats_to_syslog/nats_to_syslog.stderr.log}
-
-- name: parser
-  instances: 2
-  templates:
-  - {name: parser, release: logsearch}
-  - {name: elasticsearch, release: logsearch}
-  - {name: syslog_forwarder, release: logsearch}
-  resource_pool: parser
-  networks:
-  - name: default
-  update:
-    serial: false # Block to create deploy group 2
-    max_in_flight: 4  # Its ok to update multiple parsers at a time
-  properties:
-    syslog_forwarder:
-      config:
-      - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log}
-      - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log}
-      - {service: parser, file: /var/vcap/sys/log/parser/parser.stdout.log}
-      - {service: parser, file: /var/vcap/sys/log/parser/parser.stderr.log}
 
 ####################################################
 #3rd deploy group - ls-router (haproxy), and errands
@@ -284,8 +250,6 @@ properties:
     debug: false
   logstash_ingestor:
     debug: false
-  redis:
-    host: (( grab jobs.queue.networks.default.static_ips.[0] ))
   elasticsearch:
     master_hosts: (( grab jobs.elasticsearch_master.networks.default.static_ips ))
     cluster_name: logsearch

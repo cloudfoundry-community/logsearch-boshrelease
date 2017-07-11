@@ -1,25 +1,38 @@
 input {
+  <% if p("logstash_ingestor.syslog.port") %>
+  tcp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= p("logstash_ingestor.syslog.port") %>"
+  }
+  udp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= p("logstash_ingestor.syslog.port") %>"
+  }
+  <% end %>
 
-<% p('logstash_parser.inputs').each do | input | %>
-    <%= input['plugin'] %> {
-      <% if 'redis' == input['plugin'] %>
-        <%
-          options = {
-            "host" => p('redis.host'),
-            "port" => p('redis.port'),
-            "type" => "redis-input",
-            "data_type" => "list",
-            "key" => p('redis.key'),
-          }
-          input['options'] = options.merge(input['options'])
-        %>
-      <% end %>
-      <% input['options'].each do | k, v | %>
-        <%= k %> => <%= v.inspect %>
-      <% end %>
-    }
-<% end %>
+  <% if_p("logstash_ingestor.syslog_tls.port") do | port | %>
+  tcp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= port %>"
+    ssl_enable => true
+    <% if p("logstash_ingestor.syslog_tls.skip_ssl_validation") %>
+    ssl_verify => false
+    <% end %>
+    ssl_cert => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.crt"
+    ssl_key => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.key"
+  }
+  <% end %>
 
+  <% if_p("logstash_ingestor.relp.port") do | port | %>
+  relp {
+    add_field => { "_logstash_input" => "relp" }
+    host => "0.0.0.0"
+    port => "<%= port %>"
+  }
+  <% end %>
 }
 
 output {
@@ -28,7 +41,6 @@ output {
             codec => "json"
         }
     <% end %>
-
 
     <% p('logstash_parser.outputs').each do | output | %>
         <%= output['plugin'] %> {

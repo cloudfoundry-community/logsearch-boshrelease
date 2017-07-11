@@ -32,18 +32,6 @@ resource_pools:
   env: (( grab meta.default_env ))
   cloud_properties: {}
 
-- name: queue
-  network: default
-  stemcell: (( grab meta.stemcell ))
-  env: (( grab meta.default_env ))
-  cloud_properties: {}
-
-- name: parser
-  network: default
-  stemcell: (( grab meta.stemcell ))
-  env: (( grab meta.default_env ))
-  cloud_properties: {}
-
 - name: kibana
   network: default
   stemcell: (( grab meta.stemcell ))
@@ -80,10 +68,6 @@ disk_pools:
   cloud_properties: {}
 
 - name: elasticsearch_data
-  disk_size: 102400
-  cloud_properties: {}
-
-- name: queue
   disk_size: 102400
   cloud_properties: {}
 

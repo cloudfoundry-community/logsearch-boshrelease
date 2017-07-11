@@ -15,12 +15,6 @@ jobs:
 - name: ingestor-bosh-nats
   instances: 1
 
-- name: queue
-  instances: 1
-
-- name: parser
-  instances: 1
-
 - name: kibana
   instances: 1
 

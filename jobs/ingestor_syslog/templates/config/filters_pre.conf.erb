@@ -1,3 +1,33 @@
+    # drop empty logs (eg: monit connection healthcheck)
+    ruby {
+      code => 'event.cancel if event.get("message") == "\u0000"'
+    }
+
+    #When behind haproxy, this is always the IP of the haproxy, not the IP of the actual host sending the data.
+    #Remove it to avoid confusion
+    mutate {
+      remove_field => [ "host" ]
+    }
+    <% if 'DEBUG' == p('logstash.metadata_level') %>
+    mutate {
+      add_field => { "[@ingestor][service]" => "syslog" }
+      add_field => { "[@ingestor][job]" => "<%= name %>/<%= index %>" }
+    }
+    ruby {
+      code => '
+        ingestor = event.get("@ingestor")
+        ingestor["timestamp"] = Time.now.iso8601(3)
+        event.set("@ingestor", ingestor)
+      '
+    }
+    <% end %>
+
+    #
+    # Injected custom filters below from logstash_inject.filters manifest property
+    #
+    <%= p('logstash_ingestor.filters') %>
+
+
     <% if 'DEBUG' == p('logstash.metadata_level') %>
         mutate {
             add_field => [ "@parser[job]", "<%= name %>/<%= index %>" ]

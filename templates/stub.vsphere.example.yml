@@ -14,9 +14,6 @@ jobs:
 - name: cluster_monitor
   instances: 1
 
-- name: queue
-  instances: 1
-
 - name: maintenance
   instances: 1
 
@@ -29,9 +26,6 @@ jobs:
 
 - name: ingestor
   instances: 1
-
-- name: parser
-  instances: 2
 
 # Deploy group 3
 - name: ls-router

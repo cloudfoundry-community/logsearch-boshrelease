@@ -23,21 +23,9 @@ resource_pools:
     root_disk_size_gb: 8
     root_disk_type: pd-ssd
 
-- name: queue
-  cloud_properties:
-    machine_type: n1-highmem-2
-    root_disk_size_gb: 8
-    root_disk_type: pd-ssd
-
 - name: ingestor
   cloud_properties:
     machine_type: n1-standard-1
-    root_disk_size_gb: 8
-    root_disk_type: pd-ssd
-
-- name: parser
-  cloud_properties:
-    machine_type: n1-highcpu-4
     root_disk_size_gb: 8
     root_disk_type: pd-ssd
 
@@ -77,10 +65,6 @@ disk_pools:
     type: pd-ssd
 
 - name: elasticsearch_data
-  cloud_properties:
-    type: pd-ssd
-
-- name: queue
   cloud_properties:
     type: pd-ssd
 

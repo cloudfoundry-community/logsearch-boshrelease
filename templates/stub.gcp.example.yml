@@ -21,13 +21,7 @@ resource_pools:
 - name: elasticsearch_data
   cloud_properties:
     zone: europe-west1-d
-- name: queue
-  cloud_properties:
-    zone: europe-west1-d
 - name: ingestor
-  cloud_properties:
-    zone: europe-west1-d
-- name: parser
   cloud_properties:
     zone: europe-west1-d
 - name: kibana
@@ -54,9 +48,6 @@ jobs:
 - name: cluster_monitor
   instances: 1
 
-- name: queue
-  instances: 1
-
 - name: maintenance
   instances: 1
 
@@ -72,9 +63,6 @@ jobs:
 
 - name: ingestor-bosh-nats
   instances: 1
-
-- name: parser
-  instances: 2
 
 # Deploy group 3
 - name: ls-router
@@ -102,8 +90,6 @@ disk_pools:
   disk_size: 51200
 - name: elasticsearch_data
   disk_size: 256000
-- name: queue
-  disk_size: 51200
 - name: cluster_monitor
   disk_size: 51200
 

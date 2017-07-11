@@ -18,9 +18,6 @@ jobs:
 - name: cluster_monitor
   instances: 1
 
-- name: queue
-  instances: 1
-
 - name: maintenance
   instances: 1
 
@@ -36,9 +33,6 @@ jobs:
 
 - name: ingestor-bosh-nats
   instances: 1
-
-- name: parser
-  instances: 2
 
 # Deploy group 3
 - name: ls-router
@@ -59,8 +53,6 @@ disk_pools:
   disk_size: 102400
 - name: elasticsearch_data
   disk_size: 512000
-- name: queue
-  disk_size: 102400
 - name: cluster_monitor
   disk_size: 102400
 

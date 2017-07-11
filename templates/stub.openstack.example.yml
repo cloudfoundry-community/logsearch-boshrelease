@@ -3,9 +3,7 @@ meta:
   instance_type:
     compilation: m1.medium
     elasticsearch: m1.medium
-    queue: m1.small
     ingestor: m1.small
-    parser: m1.small
     kibana: m1.small
     maintenance: m1.small
     monitor: m1.small
@@ -39,14 +37,6 @@ jobs:
     static_ips: (( static_ips(2) ))
   resource_pool: cluster_monitor
 
-- name: queue
-  instances: 1
-  networks:
-  - name: default
-    static_ips: (( static_ips(3) ))
-  resource_pool: queue
-  persistent_disk_pool: queue
-
 # Deploy group 2
 - name: elasticsearch_data
   instances: 2
@@ -76,12 +66,6 @@ jobs:
   - name: default
     static_ips: (( static_ips(4) ))
   resource_pool: ingestor
-
-- name: parser
-  instances: 1
-  networks:
-  - name: default
-  resource_pool: parser
 
 # Deploy group 3
 - name: maintenance

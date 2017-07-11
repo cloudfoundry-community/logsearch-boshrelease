@@ -13,20 +13,10 @@ resource_pools:
     availability_zone: (( grab meta.availability_zone ))
     instance_type: (( grab meta.instance_type.elasticsearch || "m1.medium" ))
 
-- name: queue
-  cloud_properties:
-    availability_zone: (( grab meta.availability_zone ))
-    instance_type: (( grab meta.instance_type.queue || "m1.small" ))
-
 - name: ingestor
   cloud_properties:
     availability_zone: (( grab meta.availability_zone ))
     instance_type: (( grab meta.instance_type.ingestor || "m1.small" ))
-
-- name: parser
-  cloud_properties:
-    availability_zone: (( grab meta.availability_zone ))
-    instance_type: (( grab meta.instance_type.parser || "m1.small" ))
 
 - name: kibana
   cloud_properties:
@@ -58,9 +48,6 @@ disk_pools:
   disk_size: 10240
 
 - name: elasticsearch_data
-  disk_size: 10240
-
-- name: queue
   disk_size: 10240
 
 - name: cluster_monitor

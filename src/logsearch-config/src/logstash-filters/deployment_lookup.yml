@@ -5,7 +5,5 @@ ingestor.*: logsearch
 ingestor-bosh-nats.*: logsearch
 kibana.*: logsearch
 maintenance.*: logsearch
-parser.*: logsearch
-queue.*: logsearch
 monitor.*: logsearch
 ls-router.*: logsearch

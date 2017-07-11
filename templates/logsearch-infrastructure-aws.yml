@@ -19,20 +19,10 @@ resource_pools:
     availability_zone: us-west-2c
     instance_type: m3.medium
 
-- name: queue
-  cloud_properties:
-    availability_zone: us-west-2c
-    instance_type: t2.small
-
 - name: ingestor
   cloud_properties:
     availability_zone: us-west-2c
     instance_type: t2.micro
-
-- name: parser
-  cloud_properties:
-    availability_zone: us-west-2c
-    instance_type: m3.medium
 
 - name: kibana
   cloud_properties:
@@ -65,10 +55,6 @@ disk_pools:
     type: gp2
 
 - name: elasticsearch_data
-  cloud_properties:
-    type: gp2
-
-- name: queue
   cloud_properties:
     type: gp2
 
