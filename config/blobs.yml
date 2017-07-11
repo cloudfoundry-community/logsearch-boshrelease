@@ -107,11 +107,11 @@ kibana/kibana-5.3.2-linux-x86_64.tar.gz:
   object_id: e7882b42-b024-49f0-aab7-7fa54d35363c
   sha: 003cec9da459cec0bb0feffd6859aa47fbe72795
   size: 38743345
-logstash/logstash-5.3.2.tar.gz:
-  object_id: 6a7402f8-921d-4c6f-b37a-5e89a7c8a7aa
-  sha: e144cd85eddc83f72cbad6c340a52c281f3be7e4
-  size: 94148622
 redis/redis-3.2.9.tar.gz:
   object_id: 11340b96-739f-4532-8a38-8e00661ee18a
   sha: 8fad759f28bcb14b94254124d824f1f3ed7b6aa6
   size: 1547695
+logstash/logstash-5.4.3.tar.gz:
+  object_id: ad482131-f5e8-4f68-8f37-757d5d7d7a62
+  sha: '0086ecf960757f28ca7f48ed70f605159f87c626'
+  size: 94254721
