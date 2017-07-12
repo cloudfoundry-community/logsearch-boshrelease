@@ -133,6 +133,7 @@ jobs:
   templates:
   - {name: kibana, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
+  - {name: elasticsearch, release: logsearch}
   resource_pool: kibana
   networks:
   - name: default
@@ -242,10 +243,6 @@ properties:
     master_hosts: (( grab jobs.elasticsearch_master.networks.default.static_ips ))
     cluster_name: logsearch
     exec: ~
-  kibana:
-    elasticsearch:
-      host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
-      port: 9200
   elasticsearch_config:
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
