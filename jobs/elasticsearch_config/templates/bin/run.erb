@@ -24,7 +24,12 @@ def put_to_es(url_stem_base, es_config, request_params = {})
       ckey = ''
       content = config
     end
-    url_stem = "#{url_stem_base}/#{ckey}".chomp('/')
+
+    if url_stem_base == ''
+      url_stem = "#{ckey}".chomp('/')
+    else
+      url_stem = "#{url_stem_base}/#{ckey}".chomp('/')
+    end
 
     if request_params.keys.any?
       params = URI.encode_www_form(request_params)
