@@ -50,5 +50,8 @@ disk_pools:
 - name: elasticsearch_data
   disk_size: 10240
 
+- name: ingestor
+  disk_size: 2048
+
 - name: cluster_monitor
   disk_size: 10240

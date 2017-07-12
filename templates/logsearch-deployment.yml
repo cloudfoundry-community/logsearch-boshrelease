@@ -71,6 +71,10 @@ disk_pools:
   disk_size: 102400
   cloud_properties: {}
 
+- name: ingestor
+  disk_size: 2048
+  cloud_properties: {}
+
 - name: cluster_monitor
   disk_size: 102400
   cloud_properties: {}

@@ -58,6 +58,10 @@ disk_pools:
   cloud_properties:
     type: gp2
 
+- name: ingestor
+  cloud_properties:
+    type: gp2
+
 - name: cluster_monitor
   cloud_properties:
     type: gp2

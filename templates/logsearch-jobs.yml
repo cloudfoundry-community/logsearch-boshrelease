@@ -150,6 +150,7 @@ jobs:
   - {name: ingestor_syslog, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
   resource_pool: ingestor
+  persistent_disk_pool: ingestor
   networks:
   - name: default
     static_ips: (( static_ips(1) ))

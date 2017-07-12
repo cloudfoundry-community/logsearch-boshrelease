@@ -68,6 +68,10 @@ disk_pools:
   cloud_properties:
     type: pd-ssd
 
+- name: ingestor
+  cloud_properties:
+    type: pd-ssd
+
 - name: cluster_monitor
   cloud_properties:
     type: pd-ssd
