@@ -52,7 +52,7 @@ BASH
       end
 
       ret << <<BASH
-HTTP_CODE=$(curl -s -w '%{http_code}' -o /tmp/elasticsearch_config-response.txt -X PUT --data-binary @$CONTENT_PATH "$URL")
+HTTP_CODE=$(curl -s -H 'Content-Type: application/json' -w '%{http_code}' -o /tmp/elasticsearch_config-response.txt -X PUT --data-binary @$CONTENT_PATH "$URL")
 
 if grep --quiet "\"errors\":true" /tmp/elasticsearch_config-response.txt ; then
   cat /tmp/elasticsearch_config-response.txt > /dev/stderr
