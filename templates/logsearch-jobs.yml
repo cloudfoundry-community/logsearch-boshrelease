@@ -208,19 +208,6 @@ jobs:
       cluster_monitor:
         backend_servers: (( grab jobs.cluster_monitor.networks.[0].static_ips ))
 
-- name: enable_shard_allocation
-  instances: 1
-  lifecycle: errand
-  templates:
-  - {name: enable_shard_allocation, release: logsearch}
-  resource_pool: errand
-  networks:
-  - name: default
-  properties:
-    enable_shard_allocation:
-      elasticsearch:
-        master_node: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
-
 - name: smoke-tests
   instances: 1
   resource_pool: errand
