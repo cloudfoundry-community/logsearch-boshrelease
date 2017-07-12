@@ -11,6 +11,7 @@ node.max_local_storage_nodes: 1
 node.name: "<%= name %>/<%= index %>"
 node.master: <%= p("elasticsearch.node.allow_master") %>
 node.data: <%= p("elasticsearch.node.allow_data") %>
+node.ingest: <%= p("elasticsearch.node.allow_ingest") %>
 <% p("elasticsearch.node.tags", {}).each do | k, v | %>
 node.<%= k %>: "<%= v %>"
 <% end %>

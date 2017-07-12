@@ -35,6 +35,9 @@ properties:
   elasticsearch.node.allow_data:
     description: Allow node to store data? (true / false)
     default: false
+  elasticsearch.node.allow_ingest:
+    description: Allow node to become ingest node? (true / false)
+    default: false
   elasticsearch.health.timeout:
     description: Post-start timeout for node to join cluster (seconds)
     default: 300
