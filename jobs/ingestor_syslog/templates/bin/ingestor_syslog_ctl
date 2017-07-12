@@ -88,7 +88,7 @@ case $1 in
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
     exec /var/vcap/packages/logstash/bin/logstash \
-        --path.data ${DATA_DIR} \
+        --path.data ${STORE_DIR} \
         --path.config ${JOB_DIR}/config/logstash.conf \
         --path.settings ${JOB_DIR}/config \
         --path.logs ${LOG_DIR} \
