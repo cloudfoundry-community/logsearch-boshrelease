@@ -7,6 +7,6 @@ CPUS=$(grep -c ^processor /proc/cpuinfo)
 # $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
 # $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
 
-CEREBRO_VERSION=0.6.3
+CEREBRO_VERSION=0.6.5
 
 tar xzf cerebro/cerebro-${CEREBRO_VERSION}.tgz -C ${BOSH_INSTALL_TARGET} --strip-components 1
