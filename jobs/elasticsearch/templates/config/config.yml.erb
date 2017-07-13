@@ -13,7 +13,7 @@ node.master: <%= p("elasticsearch.node.allow_master") %>
 node.data: <%= p("elasticsearch.node.allow_data") %>
 node.ingest: <%= p("elasticsearch.node.allow_ingest") %>
 <% p("elasticsearch.node.tags", {}).each do | k, v | %>
-node.<%= k %>: "<%= v %>"
+node.attr.<%= k %>: "<%= v %>"
 <% end %>
 
 network.host: "0.0.0.0"
