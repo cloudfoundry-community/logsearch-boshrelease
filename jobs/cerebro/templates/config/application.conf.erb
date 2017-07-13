@@ -1,12 +1,6 @@
-<%
-    def generate_secret
-      o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
-      string = (0...50).map { o[rand(o.length)] }.join
-    end
-%>
 # Secret will be used to sign session cookies, CSRF tokens and for other encryption utilities.
 # It is highly recommended to change this value before running cerebro in production.
-secret = "<%= generate_secret %>"
+secret = "<%= p("cerebro.secret") %>"
 
 # Application base path
 basePath = "/"

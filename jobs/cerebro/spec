@@ -18,3 +18,6 @@ properties:
   cerebro.exec.options:
     description: An array of additional options to pass when starting cerebro
     default: []
+  cerebro.secret:
+    description: Secret will be used to sign Cerebro session cookies and CSRF tokens.
+    default: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
