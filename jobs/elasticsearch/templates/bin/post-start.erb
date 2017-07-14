@@ -37,15 +37,9 @@ until [ "${remaining}" -le 0 ]; do
   status=$(cat ${out} | tail -n 1)
   echo "body: ${body}"
   echo "status: ${status}"
-  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
-  if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
-    break
-  fi
-  <% else %>
   if [ ${status} = "200" ]; then
     break
   fi
-  <% end %>
   let remaining-=<%= p("elasticsearch.health.interval") %>
   sleep <%= p("elasticsearch.health.interval") %>
 done
