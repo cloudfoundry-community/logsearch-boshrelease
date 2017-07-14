@@ -91,7 +91,7 @@ properties:
   haproxy.elastic.inbound_port:
     description: "The public port for Elasticsearch interface. IMPORTANT: Do not set this value unless you understand what are you doing! External access to Elasticsearch allows to do everything with it, including index deletion. Once enabled this feature, it is strictly recommended to set the password below."
   haproxy.elastic.backend_servers:
-    description: "Lish of Elasticsearch nodes"
+    description: "List of Elasticsearch nodes"
     default: []
   haproxy.elastic.enable_ssl:
     description: "Enable or Disable SSL for for Elasticsearch traffic on haproxy"
