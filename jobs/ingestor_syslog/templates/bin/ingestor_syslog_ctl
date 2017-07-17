@@ -91,8 +91,8 @@ case $1 in
         --path.data ${STORE_DIR} \
         --path.config ${JOB_DIR}/config/logstash.conf \
         --path.settings ${JOB_DIR}/config \
-        --path.logs ${LOG_DIR} \
         --pipeline.workers ${LOGSTASH_WORKERS} \
+        --log.format=json --log.level=<%= p("logstash.log_level") %> \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 
