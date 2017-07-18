@@ -70,10 +70,10 @@ kibana/kibana-5.4.3-linux-x86_64.tar.gz:
   size: 53410624
   object_id: 04bad258-6d3b-4f4f-a735-4443b238dd7b
   sha: a5892ec6fd8271d508206ee8319473a06d2a5ac6
-logstash/logstash-5.4.3.tar.gz:
-  size: 94254721
-  object_id: ad482131-f5e8-4f68-8f37-757d5d7d7a62
-  sha: 0086ecf960757f28ca7f48ed70f605159f87c626
+logstash/logstash-5.5.0.tar.gz:
+  size: 94906235
+  object_id: be68fa2d-2f93-41be-60f3-4676bfc4cf8b
+  sha: d380e8cdefb4c0d5291d0243b8ab5a9f20811826
 logstash/logstash-filter-alter-3.0.0.zip:
   size: 6642
   object_id: 8b0c5aa7-4675-4659-8b0a-78ebb6cd6b0c
