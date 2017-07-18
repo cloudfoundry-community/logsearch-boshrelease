@@ -1,0 +1,5 @@
+check process reaper with pidfile "/var/vcap/sys/run/reaper/reaper.pid"
+ start program "/var/vcap/jobs/reaper/bin/reaper_ctl start"
+ stop program "/var/vcap/jobs/reaper/bin/reaper_ctl stop"
+ group vcap
+

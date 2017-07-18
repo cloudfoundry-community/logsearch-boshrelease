@@ -1,0 +1,23 @@
+---
+name: reaper
+templates:
+  bin/reaper: bin/reaper
+  bin/reaper.py: bin/reaper.py
+  bin/reaper_ctl: bin/reaper_ctl
+  config/reaper.cron: config/reaper.cron
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  data/properties.sh.erb: data/properties.sh
+packages:
+  - curator
+  - python3
+properties:
+  reaper.elasticsearch.host:
+    description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
+    default: "127.0.0.1"
+  reaper.purge_logs.disk_threshold:
+    description: Percent of disk usage to start pruging logs
+    default: 70
+  reaper.purge_logs.skip_index:
+    description: comma seperated values of indices to ignore
+    default: ".kibana"

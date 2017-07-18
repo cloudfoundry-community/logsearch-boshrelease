@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+set -u
+
+ELASTICSEARCH_HOST=<%= p('reaper.elasticsearch.host') %>
+THRESHOLD=<%= p('reaper.purge_logs.disk_threshold') %>
+SKIP="<%= p('reaper.purge_logs.skip_index') %>"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+export PATH=/var/vcap/jobs/reaper/bin:$PATH
+export PATH=/var/vcap/packages/curator/bin:$PATH
+export PYTHONPATH=/var/vcap/packages/curator/lib/python3.6/site-packages/
+
+python3 $(dirname "$0")/reaper.py \
+ "$THRESHOLD" \
+ "$ELASTICSEARCH_HOST" \
+ "$SKIP"

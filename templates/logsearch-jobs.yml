@@ -89,8 +89,8 @@ jobs:
   instances: 1
   templates:
   - {name: elasticsearch_config, release: logsearch}
-  - {name: curator, release: logsearch}
   - {name: syslog_forwarder, release: logsearch}
+  - {name: reaper, release: logsearch}
   resource_pool: maintenance
   networks:
   - name: default
@@ -99,7 +99,6 @@ jobs:
   properties:
     syslog_forwarder:
       config:
-      - {service: curator, file: /var/vcap/sys/log/curator/curator.log}
       - {service: elasticsearch_config, file: /var/vcap/sys/log/elasticsearch_config/job.control.log}
 
 ##################################################################
@@ -235,6 +234,9 @@ properties:
     elasticsearch:
       host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
       port: 9200
+  reaper:
+    elasticsearch:
+      host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
   logstash_parser:
     debug: false
   logstash_ingestor:
