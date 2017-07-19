@@ -1,8 +1,10 @@
 ---
 name: elasticsearch
+
 packages:
-- elasticsearch
-- java8
+  - elasticsearch
+  - java8
+
 templates:
   bin/drain.erb: bin/drain
   bin/post-start.erb: bin/post-start
@@ -16,11 +18,28 @@ templates:
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   logsearch/metric-collector/elasticsearch/collector: logsearch/metric-collector/elasticsearch/collector
   logsearch/logs.yml: logsearch/logs.yml
+
+provides:
+- name: elasticsearch
+  type: elasticsearch
+  properties:
+  - elasticsearch.port
+  - elasticsearch.cluster_name
+
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+
 properties:
   elasticsearch.master_hosts:
     description: The list of elasticsearch master node IPs
+  elasticsearch.port:
+    description: Port address of elasticsearch host to proxy requests for
+    default: 9200
   elasticsearch.cluster_name:
     description: The name of the elastic search cluster
+    default: "logsearch"
   elasticsearch.log_level:
     description: The default logging level (e.g. WARN, DEBUG, INFO)
     default: INFO

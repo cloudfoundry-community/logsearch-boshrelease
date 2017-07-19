@@ -1,5 +1,60 @@
+<%
+  syslog_forwarder_host = nil
+  if_link("syslog_forwarder") { |syslog_forwarder_link| syslog_forwarder_host = syslog_forwarder_link.instances.first.address }
+  unless syslog_forwarder_host
+    syslog_forwarder_host = p("haproxy.syslog_server")
+  end
+
+  ingestor_hosts = nil
+  if_link("ingestor") { |ingestor_link| ingestor_hosts = ingestor_hosts.instances.map { |instance| instance.address } }
+  unless ingestor_hosts
+    ingestor_hosts = p("haproxy.ingestor.backend_servers")
+  end
+
+  kibana_hosts = nil
+  if_link("kibana") { |kibana_link| kibana_hosts = kibana_link.instances.map { |instance| instance.address } }
+  unless kibana_hosts
+    kibana_hosts = p("haproxy.kibana.backend_servers")
+  end
+
+  elasticsearch_hosts = nil
+  if_link("elasticsearch") { |elasticsearch_link| elasticsearch_hosts = elasticsearch_link.instances.map { |instance| instance.address } }
+  unless elasticsearch_hosts
+    elasticsearch_hosts = p("haproxy.elastic.backend_servers")
+  end
+
+  cluster_monitor_hosts = nil
+  if_link("syslog_forwarder") { |syslog_forwarder_link| cluster_monitor_hosts = syslog_forwarder_link.instances.map { |instance| instance.address } }
+  unless cluster_monitor_hosts
+    cluster_monitor_hosts = p("haproxy.cluster_monitor.backend_servers")
+  end
+
+  kibana_port = nil
+  if_link("kibana") { |kibana_link| kibana_port = kibana_link.p("kibana.port") }
+  unless kibana_port
+    kibana_port = p("haproxy.kibana.backend_port")
+  end
+
+  relp_port = nil
+  if_link("ingestor") { |ingestor_link| relp_port = ingestor_link.p("logstash_ingestor.relp.port") }
+  unless relp_port
+    relp_port = p("haproxy.ingestor.relp.backend_port")
+  end
+
+  syslog_port = nil
+  if_link("ingestor") { |ingestor_link| syslog_port = ingestor_link.p("logstash_ingestor.syslog.port") }
+  unless syslog_port
+    syslog_port = p("haproxy.ingestor.syslog.backend_port")
+  end
+
+  syslog_tls_port = nil
+  if_link("ingestor") { |ingestor_link| syslog_tls_port = ingestor_link.p("logstash_ingestor.syslog_tls.port") }
+  unless syslog_tls_port
+    syslog_tls_port = p("haproxy.ingestor.tls.backend_port")
+  end
+%>
 global
-    log <%= p('haproxy.syslog_server') %> syslog <%= p('haproxy.log_level') %>
+    log <%= syslog_forwarder_host %> syslog <%= p('haproxy.log_level') %>
     log-tag ls-router
     daemon
     user vcap
@@ -35,10 +90,11 @@ frontend syslog-in
 backend ingestors-syslog
     mode tcp
     balance roundrobin
-    <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
-    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.syslog.backend_port") %> check inter 1000
+    <% ingestor_hosts.each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= syslog_port %> check inter 1000
     <% end %>
 
+<% if syslog_tls_port %>
 frontend syslog-tls-in
     mode tcp
     <% if properties.haproxy.ssl_pem and properties.haproxy.ingestor.enable_ssl == true %>
@@ -51,9 +107,10 @@ frontend syslog-tls-in
 backend ingestors-syslog-tls
     mode tcp
     balance roundrobin
-    <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
-    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.tls.backend_port") %> check inter 1000
+    <% ingestor_hosts.each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= syslog_tls_port %> check inter 1000
     <% end %>
+<% end %>
 
 frontend relp-in
     mode tcp
@@ -69,8 +126,8 @@ frontend relp-in
 backend ingestors-relp
     mode tcp
     balance roundrobin
-    <% p("haproxy.ingestor.backend_servers").each_with_index do |ip, index| %>
-    server ingestor<%= index %> <%= ip %>:<%= p("haproxy.ingestor.relp.backend_port") %> check inter 1000
+    <% ingestor_hosts.each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= relp_port %> check inter 1000
     <% end %>
 
 frontend kibana-in
@@ -91,8 +148,8 @@ frontend kibana-in
 backend kibana
     mode http
     balance roundrobin
-    <% p("haproxy.kibana.backend_servers").each_with_index do |ip, index| %>
-    server kibana<%= index %> <%= ip %>:<%= p("haproxy.kibana.backend_port") %> check inter 1000
+    <% kibana_hosts.each_with_index do |ip, index| %>
+    server kibana<%= index %> <%= ip %>:<%= kibana_port %> check inter 1000
     <% end %>
 
 frontend cluster_monitor-in
@@ -114,8 +171,8 @@ frontend cluster_monitor-in
 backend cluster_monitor
     mode http
     balance roundrobin
-    <% p("haproxy.cluster_monitor.backend_servers").each_with_index do |ip, index| %>
-    server kibana<%= index %> <%= ip %>:<%= p("haproxy.cluster_monitor.backend_port") %> check inter 1000
+    <% cluster_monitor_hosts.each_with_index do |ip, index| %>
+    server kibana<%= index %> <%= ip %>:<%= kibana_port %> check inter 1000
     <% end %>
 
 <% if p("haproxy.elastic.inbound_port", nil) %>
@@ -139,7 +196,7 @@ frontend elastic-in
 backend elastic
     mode http
     balance roundrobin
-    <% p("haproxy.elastic.backend_servers").each_with_index do |ip, index| %>
+    <% elasticsearch_hosts.each_with_index do |ip, index| %>
     server elastic<%= index %> <%= ip %>:9000 check inter 1000
     <% end %>
 

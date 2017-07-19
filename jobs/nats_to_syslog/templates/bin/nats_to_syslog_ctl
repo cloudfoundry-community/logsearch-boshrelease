@@ -8,6 +8,14 @@ PIDFILE=/var/vcap/sys/run/nats_to_syslog.pid
 
 source /var/vcap/jobs/nats_to_syslog/helpers/utils.sh
 
+<%
+  syslog_forwarder_port = nil
+  if_link("syslog_forwarder") { |syslog_forwarder_link| syslog_forwarder_port = syslog_forwarder_link.p("logstash_ingestor.syslog.port") }
+  unless syslog_forwarder_port
+    syslog_forwarder_port = p("nats_to_syslog.syslog.port")
+  end
+%>
+
 case $1 in
 
   start)
@@ -18,12 +26,12 @@ case $1 in
 
     echo $$ > $PIDFILE
 
-    wait_for_service_on_port <%= p("nats_to_syslog.syslog.host") %> <%= p("nats_to_syslog.syslog.port") %>
+    wait_for_service_on_port <%= p("nats_to_syslog.syslog.host") %> <%= syslog_forwarder_port %>
 
     exec chpst -u vcap:vcap /var/vcap/packages/nats_to_syslog/bin/nats_to_syslog \
       -nats-uri nats://<%= p("nats_to_syslog.nats.user") %>:<%= p("nats_to_syslog.nats.password") %>@<%= p("nats_to_syslog.nats.machines").first %>:<%= p("nats_to_syslog.nats.port") %> \
       -nats-subject "<%= p("nats_to_syslog.nats.subject") %>" \
-      -syslog-endpoint <%= p("nats_to_syslog.syslog.host") %>:<%= p("nats_to_syslog.syslog.port" ) %> \
+      -syslog-endpoint <%= p("nats_to_syslog.syslog.host") %>:<%= syslog_forwarder_port %> \
       -debug <%= p("nats_to_syslog.debug") %> \
       >>$LOG_DIR/nats_to_syslog.stdout.log \
       2>>$LOG_DIR/nats_to_syslog.stderr.log

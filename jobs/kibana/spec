@@ -1,15 +1,29 @@
 ---
-name: "kibana"
+name: kibana
+
 packages:
-- "kibana"
+  - kibana
+
 templates:
-  bin/kibana_ctl: "bin/kibana_ctl"
-  config/kibana.conf.erb: "config/kibana.conf"
-  bin/monit_debugger: "bin/monit_debugger"
-  data/properties.sh.erb: "data/properties.sh"
-  helpers/ctl_setup.sh: "helpers/ctl_setup.sh"
-  helpers/ctl_utils.sh: "helpers/ctl_utils.sh"
+  bin/kibana_ctl: bin/kibana_ctl
+  config/kibana.conf.erb: config/kibana.conf
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
   bin/post-start.erb: bin/post-start
+
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+
+provides:
+- name: kibana
+  type: kibana
+  properties:
+  - kibana.port
+
 properties:
   kibana.elasticsearch.host:
     description: "IP address of elasticsearch master to send elasticsearch requests to"

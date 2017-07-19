@@ -2,8 +2,17 @@
 name: smoke-tests
 
 packages: []
+
 templates:
   run.sh: bin/run
+
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+- name: ingestor
+  type: ingestor
+  optional: true
 
 properties:
   smoke_tests.syslog_ingestor.host:

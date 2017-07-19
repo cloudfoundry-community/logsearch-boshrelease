@@ -1,9 +1,11 @@
 ---
 name: ingestor_syslog
+
 packages:
-- logstash
-- logsearch-config
-- java8
+  - logstash
+  - logsearch-config
+  - java8
+
 templates:
   bin/ingestor_syslog_ctl: bin/ingestor_syslog_ctl
   bin/monit_debugger: bin/monit_debugger
@@ -13,11 +15,23 @@ templates:
   config/filters_override.conf.erb: config/filters_override.conf
   config/syslog_tls.crt.erb: config/syslog_tls.crt
   config/syslog_tls.key.erb: config/syslog_tls.key
-  config/log4j2.properties.erb: config/log4j2.properties
   config/logstash.yml.erb: config/logstash.yml
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+provides:
+- name: ingestor
+  type: ingestor
+  properties:
+  - logstash_ingestor.syslog.port
+  - logstash_ingestor.syslog_tls.port
+  - logstash_ingestor.relp.port
+- name: syslog_forwarder
+  type: syslog_forwarder
+  properties:
+  - logstash_ingestor.syslog.port
+
 properties:
   logstash.heap_size:
     description: sets jvm heap sized

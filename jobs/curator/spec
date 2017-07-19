@@ -1,8 +1,10 @@
 ---
 name: curator
+
 packages:
   - curator
   - python3
+
 templates:
   bin/run: bin/run
   bin/curator_ctl: bin/curator_ctl
@@ -10,6 +12,12 @@ templates:
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   data/properties.sh.erb: data/properties.sh
+
+consumes:
+ - name: elasticsearch
+   type: elasticsearch
+   optional: true
+
 properties:
   curator.elasticsearch.host:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)

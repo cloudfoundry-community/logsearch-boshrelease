@@ -1,8 +1,34 @@
 #!/bin/bash
 
-MASTER_URL="http://<%= p('smoke_tests.elasticsearch_master.host')%>:<%= p('smoke_tests.elasticsearch_master.port')%>"
-INGESTOR_HOST="<%= p('smoke_tests.syslog_ingestor.host')%>"
-INGESTOR_PORT="<%= p('smoke_tests.syslog_ingestor.port')%>"
+<%
+  ingestor_host = nil
+  if_link("ingestor") { |ingestor_link| ingestor_host = ingestor_link.instances.first.address }
+  unless ingestor_host
+    ingestor_host = p("smoke_tests.syslog_ingestor.host")
+  end
+
+  ingestor_port = nil
+  if_link("ingestor") { |ingestor_link| ingestor_port = ingestor_link.p("logstash_ingestor.syslog.port") }
+  unless ingestor_port
+    ingestor_port = p("smoke_tests.syslog_ingestor.port")
+  end
+
+  elasticsearch_host = nil
+  if_link("elasticsearch") { |elasticsearch_link| elasticsearch_host = elasticsearch_link.instances.first.address }
+  unless elasticsearch_host
+    elasticsearch_host = p("smoke_tests.elasticsearch_master.host")
+  end
+
+  elasticsearch_port = nil
+  if_link("elasticsearch") { |elasticsearch_link| elasticsearch_port = elasticsearch_link.p("elasticsearch.port") }
+  unless elasticsearch_port
+    elasticsearch_port = p("smoke_tests.elasticsearch_master.port")
+  end
+%>
+
+MASTER_URL="http://<%= elasticsearch_host %>:<%= elasticsearch_port %>"
+INGESTOR_HOST="<%= ingestor_host %>"
+INGESTOR_PORT="<%= ingestor_port %>"
 
 SMOKE_ID=$(LC_ALL=C; cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 LOG="<13>$(date -u +"%Y-%m-%dT%H:%M:%SZ") 0.0.0.0 smoke-test-errand [job=smoke_tests index=0]  {\"smoke-id\":\"$SMOKE_ID\"}"

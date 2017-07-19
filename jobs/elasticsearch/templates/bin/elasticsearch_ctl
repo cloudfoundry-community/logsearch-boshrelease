@@ -49,7 +49,7 @@ case $1 in
         /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "<%= path %>"
       <% end %>
     <% end %>
-    
+
     if [ -n "$MAX_OPEN_FILES" ]; then
       ulimit -n $MAX_OPEN_FILES
     fi

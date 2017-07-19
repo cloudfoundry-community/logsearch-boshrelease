@@ -1,19 +1,31 @@
 ---
 name: haproxy
 
-description: "The HAProxy."
-
 packages:
-- haproxy
+  - haproxy
 
 templates:
-  haproxy.config.erb:        config/haproxy.config
-  haproxy_ctl:               bin/haproxy_ctl
-  monit_debugger:            bin/monit_debugger
-  cert.pem.erb:              config/cert.pem
-  helpers/ctl_setup.sh:      helpers/ctl_setup.sh
-  helpers/ctl_utils.sh:      helpers/ctl_utils.sh
-  properties.sh.erb:         data/properties.sh
+  haproxy.config.erb: config/haproxy.config
+  haproxy_ctl: bin/haproxy_ctl
+  monit_debugger: bin/monit_debugger
+  cert.pem.erb: config/cert.pem
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  properties.sh.erb: data/properties.sh
+
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+- name: ingestor
+  type: ingestor
+  optional: true
+- name: kibana
+  type: kibana
+  optional: true
+- name: syslog_forwarder
+  type: syslog_forwarder
+  optional: true
 
 properties:
   haproxy.syslog_server:

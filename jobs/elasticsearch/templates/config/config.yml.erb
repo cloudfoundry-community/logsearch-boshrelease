@@ -5,7 +5,14 @@ path.logs: "/var/vcap/sys/log/elasticsearch"
 path.data: "/var/vcap/store/elasticsearch"
 path.scripts: "/var/vcap/data/elasticsearch/plugin-scripts"
 
-cluster.name: "<%= p("elasticsearch.cluster_name") %>"
+<%
+  cluster_name = nil
+  if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }
+  unless cluster_name
+    cluster_name = p("elasticsearch.cluster_name")
+  end
+%>
+cluster.name: "<%= cluster_name %>"
 
 node.max_local_storage_nodes: 1
 node.name: "<%= name %>/<%= index %>"
@@ -22,7 +29,12 @@ http.host: <%= p("elasticsearch.http_host") %>
 <%
   minimum_master_nodes = p("elasticsearch.discovery.minimum_master_nodes")
   if minimum_master_nodes == "auto"
-    masters = p("elasticsearch.master_hosts").length
+    masters = nil
+    respond_to?(:if_link) && if_link('elasticsearch') do |elasticsearch|
+      masters = link('elasticsearch').instances.length
+    end.else do
+      masters = p("elasticsearch.master_hosts").length
+    end
     if masters % 2 == 0
       raise "Expected an odd number of masters; got #{masters}"
     end
@@ -31,7 +43,15 @@ http.host: <%= p("elasticsearch.http_host") %>
 %>
 
 discovery.zen.minimum_master_nodes: <%= minimum_master_nodes %>
-discovery.zen.ping.unicast.hosts: "<%= p("elasticsearch.master_hosts").join(',') %>"
+
+<%
+  master_hosts = nil
+  if_link("elasticsearch") { |elasticsearch_link| master_hosts = elasticsearch_link.instances.map {|e| e.address}.join(',') }
+  unless master_hosts
+    master_hosts = p("elasticsearch.master_hosts").join(',')
+  end
+%>
+discovery.zen.ping.unicast.hosts: "<%= master_hosts %>"
 
 <% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>
 

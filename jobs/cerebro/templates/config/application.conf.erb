@@ -15,9 +15,17 @@ data.path = "/var/vcap/store/cerebro/cerebro.db"
 # To avoid creating a PID file set this value to /dev/null
 pidfile.path = "/dev/null"
 
+<%
+  cluster_name = nil
+  if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }
+  unless cluster_name
+    cluster_name = p("elasticsearch.cluster_name")
+  end
+%>
+
 hosts = [
   {
     host = "http://localhost:9200"
-    name = "<%= p("elasticsearch.cluster_name") %>"
+    name = "<%= cluster_name %>"
   }
 ]

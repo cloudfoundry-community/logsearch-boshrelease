@@ -1,11 +1,17 @@
 ---
 name: nats_to_syslog
+
 templates:
   bin/nats_to_syslog_ctl: bin/nats_to_syslog_ctl
   helpers/utils.sh: helpers/utils.sh
 
 packages:
 - nats_to_syslog
+
+consumes:
+- name: syslog_forwarder
+  type: syslog_forwarder
+  optional: true
 
 properties:
   nats_to_syslog.nats.user:
@@ -28,6 +34,6 @@ properties:
 
   nats_to_syslog.syslog.host:
     description: "The host of the syslog endpoint"
+    default: 127.0.0.1
   nats_to_syslog.syslog.port:
     description: "The port of the syslog endpoint"
-
