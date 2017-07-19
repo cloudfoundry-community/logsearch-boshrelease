@@ -1,5 +1,5 @@
 ---
 name: kibana
-dependencies: []
+
 files:
-  - kibana/kibana-5.4.3-linux-x86_64.tar.gz
+  - kibana/kibana-5.5.0-linux-x86_64.tar.gz
