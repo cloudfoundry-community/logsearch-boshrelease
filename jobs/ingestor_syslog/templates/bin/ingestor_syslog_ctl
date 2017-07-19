@@ -35,7 +35,6 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
 <% if_p('logstash.heap_size') do |heap_size| %>
 HEAP_SIZE=<%= heap_size %>
 <% end %>
-export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Dlog4j.configurationFile=${JOB_DIR}/config/log4j2.properties"
 
 case $1 in
 
@@ -48,6 +47,8 @@ case $1 in
 
     # store this processes pid in $PIDFILE, since the exec below doesn't daemonize
     echo $$ > $PIDFILE
+
+    export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$"
 
     <% p("logstash.plugins").each do |plugin| %>
     /var/vcap/packages/logstash/bin/logstash-plugin install \
@@ -87,7 +88,7 @@ case $1 in
 
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
-    exec /var/vcap/packages/logstash/bin/logstash \
+    exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
         --path.data ${STORE_DIR} \
         --path.config ${JOB_DIR}/config/logstash.conf \
         --path.settings ${JOB_DIR}/config \
@@ -100,6 +101,7 @@ case $1 in
 
   stop)
     kill_and_wait $PIDFILE
+    ensure_no_more_logstash
 
     ;;
   *)
