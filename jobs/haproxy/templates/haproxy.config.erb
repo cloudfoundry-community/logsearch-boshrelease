@@ -6,7 +6,7 @@
   end
 
   ingestor_hosts = nil
-  if_link("ingestor") { |ingestor_link| ingestor_hosts = ingestor_hosts.instances.map { |instance| instance.address } }
+  if_link("ingestor") { |ingestor_link| ingestor_hosts = ingestor_link.instances.map { |instance| instance.address } }
   unless ingestor_hosts
     ingestor_hosts = p("haproxy.ingestor.backend_servers")
   end
@@ -48,10 +48,12 @@
   end
 
   syslog_tls_port = nil
-  if_link("ingestor") { |ingestor_link| syslog_tls_port = ingestor_link.p("logstash_ingestor.syslog_tls.port") }
-  unless syslog_tls_port
-    syslog_tls_port = p("haproxy.ingestor.tls.backend_port")
+  if_p('haproxy.ingestor.tls.backend_port') do |prop|
+    syslog_tls_port = prop
+  end.else do
+    syslog_tls_port = link('ingestor').p('logstash_ingestor.syslog_tls.port')
   end
+
 %>
 global
     log <%= syslog_forwarder_host %> syslog <%= p('haproxy.log_level') %>
