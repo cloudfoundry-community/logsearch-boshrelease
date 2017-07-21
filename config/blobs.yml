@@ -62,10 +62,10 @@ haproxy/pcre-8.40.tar.gz:
   size: 2065161
   object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
-java8/openjdk-1.8.0_131.tar.gz:
-  size: 45478676
-  object_id: c0fe24d0-0385-4154-bad4-cacb11cdadf2
-  sha: ffd2bfa8fa445b5fe56737e94c0c11b6f91720b1
+java8/openjdk-1.8.0_141.tar.gz:
+  size: 45927906
+  object_id: e9caffab-2961-4a26-7428-e2c03b87c3ec
+  sha: fef57709d2ca0b375a3879fe03df303afe24307f
 kibana/kibana-5.5.0-linux-x86_64.tar.gz:
   size: 51068789
   object_id: 6db7656b-47b5-4e40-6dd8-83e0929f092b
