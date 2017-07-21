@@ -78,4 +78,4 @@ properties:
     default: 5
   kibana.health.timeout:
     description: Kibana health check number of attempts (seconds)
-    default: 180
+    default: 300
