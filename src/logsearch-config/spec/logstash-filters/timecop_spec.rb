@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'time'
 
 def future_timestamp
  LogStash::Timestamp.new(Time.parse("2515-12-22T11:00:00.000Z")) # 500 years in the future

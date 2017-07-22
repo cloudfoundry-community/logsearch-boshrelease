@@ -34,10 +34,6 @@ describe 'Parser input_and_output.conf' do
     verify_input_and_output('input_and_output-test_inputs.conf', 'test_inputs-expected.conf')
   end
 
-  context "inputs - no redis" do
-    verify_input_and_output('input_and_output-test_inputs_no_redis.conf', 'test_inputs_no_redis-expected.conf')
-  end
-
   context "outputs" do
     verify_input_and_output('input_and_output-test_outputs.conf', 'test_outputs-expected.conf')
   end

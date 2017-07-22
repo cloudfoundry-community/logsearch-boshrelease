@@ -2,9 +2,11 @@
 # Required properties are set + default values (see "parser" job spec for default values).
 # --
 properties:
+  logstash_ingestor:
+    syslog:
+      port: 5514
   logstash_parser:
     debug: false
-    inputs: [ { plugin: "redis", options : { threads: 8 } } ]
     outputs: [ { plugin: "elasticsearch", options: {} } ]
     elasticsearch:
       document_id: ~
@@ -13,9 +15,3 @@ properties:
       idle_flush_time: 100
       data_hosts: [127.0.0.1]
       flush_size: 500
-  redis:
-    # required, non-default
-    host: 127.0.0.1
-
-    port: 6379
-    key: logstash

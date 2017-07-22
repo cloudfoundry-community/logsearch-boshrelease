@@ -2,9 +2,11 @@
 # Default values + additional outputs.
 # --
 properties:
+  logstash_ingestor:
+    syslog:
+      port: 5514
   logstash_parser:
     debug: true
-    inputs: [ { plugin: "redis", options : { threads: 8 } } ]
     outputs: [ { plugin: "elasticsearch", options: {} }, { plugin: "mongodb", options: { uri: "192.168.1.1", database: "logsearch", collection: "logs" } }, { plugin: "syslog", options: { host: "127.0.0.1", port: 123} } ]
     elasticsearch:
       document_id: ~
@@ -12,7 +14,3 @@ properties:
       index_type: "%{@type}"
       data_hosts: [127.0.0.1]
       flush_size: 500
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    key: logstash
