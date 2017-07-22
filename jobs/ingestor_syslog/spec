@@ -119,6 +119,16 @@ properties:
   logstash_parser.deployment_dictionary:
     description: "A list of files concatenated into one deployment dictionary file. Each file contains a hash of job name-deployment name keypairs for @source.deployment lookup."
     default: [ "/var/vcap/packages/logsearch-config/deployment_lookup.yml" ]
+  logstash_parser.inputs:
+    description: |
+      A list of input plugins, with a hash of options for each of them. Please refer to example below.
+    example:
+      inputs:
+        - plugin: rabbitmq
+          options:
+            host: 192.168.1.1
+            user: logsearch
+            password: c1oudbunny
   logstash_parser.outputs:
     description: |
       A list of output plugins, with a hash of options for each of them. Please refer to example below.
