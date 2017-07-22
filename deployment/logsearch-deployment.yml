@@ -1,0 +1,413 @@
+---
+name: logsearch
+update:
+  canaries: 1
+  canary_watch_time: 30000-1200000
+  max_in_flight: 1
+  serial: false
+  update_watch_time: 5000-1200000
+instance_groups:
+- name: smoke-tests
+  lifecycle: errand
+  azs:
+  - z1
+  instances: 1
+  vm_type: m3.medium
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: smoke-tests
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      smoke_tests:
+        admin_password: "((cf_admin_password))"
+- name: create-uaa-client
+  lifecycle: errand
+  azs:
+  - z1
+  instances: 1
+  vm_type: m3.medium
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: create-uaa-client
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+    properties:
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+        oauth2_client_secret: "((kibana_oauth2_client_secret))"
+- name: upload-kibana-objects
+  lifecycle: errand
+  azs:
+  - z1
+  instances: 1
+  vm_type: m3.medium
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: upload-kibana-objects
+    release: logsearch-for-cloudfoundry
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+- name: elasticsearch_master
+  azs:
+  - z1
+  - z2
+  - z3
+  instances: 3
+  persistent_disk_type: 5GB
+  vm_type: m3.medium
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    provides:
+      elasticsearch: {as: elasticsearch_master}
+    properties:
+      elasticsearch:
+        node:
+          allow_master: true
+  - name: cerebro
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+  - name: syslog_forwarder
+    release: logsearch
+    consumes:
+      syslog_forwarder: {from: cluster_monitor}
+    properties:
+      syslog_forwarder:
+        config:
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
+          service: cerebro
+        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
+          service: cerebro
+- name: cluster_monitor
+  azs:
+  - z1
+  instances: 1
+  persistent_disk_type: 100GB
+  vm_type: m3.large
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_cluster_monitor}
+    provides:
+      elasticsearch: {as: elasticsearch_cluster_monitor}
+    properties:
+      elasticsearch:
+        cluster_name: monitor
+        node:
+          allow_data: true
+          allow_master: true
+  - name: elasticsearch_config
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_cluster_monitor}
+    properties:
+      elasticsearch_config:
+        templates:
+        - shards-and-replicas: '{ "template" : "logstash-*", "order" : 100, "settings"
+            : { "number_of_shards" : 1, "number_of_replicas" : 0 } }'
+        - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
+        - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
+  - name: ingestor_syslog
+    release: logsearch
+    provides:
+      syslog_forwarder: {as: cluster_monitor}
+    properties:
+      logstash_parser:
+        filters:
+        - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
+  - name: curator
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_cluster_monitor}
+    properties:
+      curator:
+        purge_logs:
+          retention_period: 7
+  - name: kibana
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_cluster_monitor}
+    properties:
+      kibana:
+        memory_limit: 30
+        wait_for_templates: [shards-and-replicas]
+- name: maintenance
+  azs:
+  - z1
+  instances: 1
+  vm_type: m3.medium
+  stemcell: default
+  update:
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch_config
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch_config:
+        index_prefix: logs-
+        templates:
+          - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
+          - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
+          - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
+          - index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
+          - index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
+          - index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
+  - name: curator
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+  - name: elasticsearch-config-lfc
+    release: logsearch-for-cloudfoundry
+  - name: syslog_forwarder
+    release: logsearch
+    consumes:
+      syslog_forwarder: {from: cluster_monitor}
+    properties:
+      syslog_forwarder:
+        config:
+        - file: /var/vcap/sys/log/curator/curator.log
+          service: curator
+- name: elasticsearch_data
+  azs:
+  - z1
+  - z2
+  - z3
+  instances: 3
+  persistent_disk_type: 100GB
+  vm_type: m3.large
+  stemcell: default
+  update:
+    max_in_flight: 1
+    serial: true
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        node:
+          allow_data: true
+  - name: syslog_forwarder
+    release: logsearch
+    consumes:
+      syslog_forwarder: {from: cluster_monitor}
+    properties:
+      syslog_forwarder:
+        config:
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
+          service: cerebro
+        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
+          service: cerebro
+- name: kibana
+  azs:
+  - z1
+  instances: 1
+  persistent_disk_type: 2GB
+  vm_type: c3.large
+  stemcell: default
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+  - name: redis
+    release: logsearch-for-cloudfoundry
+    provides:
+      redis: {as: redis_link}
+  - name: kibana-auth-plugin
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      kibana: {from: kibana_link}
+      redis: {from: redis_link}
+    properties:
+      kibana-auth:
+        cloudfoundry:
+          client_secret: "((kibana_oauth2_client_secret))"
+          skip_ssl_validation: true
+  - name: kibana
+    release: logsearch
+    provides:
+      kibana: {as: kibana_link}
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      kibana:
+        health:
+          timeout: 300
+        env:
+          - NODE_ENV: production
+        plugins:
+          - auth: /var/vcap/packages/kibana-auth-plugin/kibana-auth-plugin.zip
+        source_files:
+          - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
+  - name: syslog_forwarder
+    release: logsearch
+    consumes:
+      syslog_forwarder: {from: cluster_monitor}
+    properties:
+      syslog_forwarder:
+        config:
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
+          service: cerebro
+        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
+          service: cerebro
+- name: ingestor
+  azs:
+  - z1
+  - z2
+  instances: 2
+  persistent_disk_type: 2GB
+  vm_type: c3.large
+  stemcell: default
+  networks:
+  - name: default
+  jobs:
+  - name: elasticsearch
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+  - name: parser-config-lfc
+    release: logsearch-for-cloudfoundry
+  - name: ingestor_syslog
+    release: logsearch
+    provides:
+      ingestor: {as: ingestor_link}
+    properties:
+      logstash_parser:
+        filters:
+          - logsearch-for-cf: /var/vcap/packages/logsearch-config-logstash-filters/logstash-filters-default.conf
+        elasticsearch:
+          index: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
+        deployment_dictionary:
+          - /var/vcap/packages/logsearch-config/deployment_lookup.yml
+          - /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
+  - name: ingestor_cloudfoundry-firehose
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      ingestor: {from: ingestor_link}
+    properties:
+      cloudfoundry:
+        firehose_client_id: firehose-to-syslog
+        firehose_client_secret: "((firehose_client_secret))"
+        skip_ssl_validation: true
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+  - name: syslog_forwarder
+    release: logsearch
+    consumes:
+      syslog_forwarder: {from: cluster_monitor}
+    properties:
+      syslog_forwarder:
+        config:
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
+          service: elasticsearch
+        - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stdout.log
+          service: ingestor
+        - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
+          service: ingestor
+- name: ls-router
+  azs:
+  - z1
+  instances: 1
+  vm_type: m3.medium
+  stemcell: default
+  networks:
+  - name: default
+  jobs:
+  - name: haproxy
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+      ingestor: {from: ingestor_link}
+      kibana: {from: kibana_link}
+      syslog_forwarder: {from: cluster_monitor}
+  - name: route_registrar
+    release: logsearch-for-cloudfoundry
+    consumes:
+      nats: {from: nats, deployment: cf}
+    properties:
+      route_registrar:
+        routes:
+        - name: kibana
+          port: 80
+          registration_interval: 60s
+          uris:
+          - "logs.((system_domain))"
+
+variables:
+- name: kibana_oauth2_client_secret
+  type: password
+- name: firehose_client_secret
+  type: password
+
+releases:
+- name: logsearch
+  version: "latest"
+- name: logsearch-for-cloudfoundry
+  version: "latest"
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: "3421.11"

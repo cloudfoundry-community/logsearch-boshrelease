@@ -1,0 +1,20 @@
+---
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/instances
+  value: 1
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/instances
+  value: 1
+- type: replace
+  path: /instance_groups/name=ingestor/instances
+  value: 1
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/azs
+  value: [ z1 ]
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/azs
+  value: [ z1 ]
+- type: replace
+  path: /instance_groups/name=ingestor/azs
+  value: [ z1 ]
