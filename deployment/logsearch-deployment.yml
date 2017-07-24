@@ -96,6 +96,9 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      cerebro:
+        secret: ((cerebro_secret_key))
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -400,6 +403,8 @@ variables:
 - name: kibana_oauth2_client_secret
   type: password
 - name: firehose_client_secret
+  type: password
+- name: cerebro_secret_key
   type: password
 
 releases:
