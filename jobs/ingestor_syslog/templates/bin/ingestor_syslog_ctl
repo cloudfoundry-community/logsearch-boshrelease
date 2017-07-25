@@ -35,6 +35,9 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
 <% if_p('logstash.heap_size') do |heap_size| %>
 HEAP_SIZE=<%= heap_size %>
 <% end %>
+<% p("logstash.env").each do |env| %>
+export <%= env.keys[0] %>="<%= env.values[0] %>"
+<% end %>
 
 case $1 in
 

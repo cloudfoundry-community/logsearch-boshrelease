@@ -47,6 +47,9 @@ properties:
     example:
     - {name: logstash-output-cloudwatchlogs, version: 2.0.0}
     default: []
+  logstash.env:
+    description: "a list of arbitrary key-value pairs to be passed on as process environment variables. eg: FOO: 123"
+    default: []
 
   logstash.queue.type:
     description: Internal queuing model, "memory" for legacy in-memory based queuing and "persisted" for disk-based acked queueing.
