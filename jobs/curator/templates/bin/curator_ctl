@@ -14,7 +14,7 @@ case $1 in
       /usr/sbin/cron start
     fi
 
-    (crontab -l | sed /run/d; cat /var/vcap/jobs/curator/config/purge_logs.cron) | sed /^$/d | crontab 
+    (crontab -l | sed /run/d; cat /var/vcap/jobs/curator/config/purge_logs.cron) | sed /^$/d | crontab
 
     pgrep cron > /var/vcap/sys/run/curator/curator.pid
     ;;
@@ -23,7 +23,7 @@ case $1 in
     if [ -z "$(crontab -l | grep -v 'run')" ]; then
       crontab -r
     else
-      (crontab -l | sed /run/d) | sed /^$/d | crontab 
+      (crontab -l | sed /run/d) | sed /^$/d | crontab
     fi
 
 
