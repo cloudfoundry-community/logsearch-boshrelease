@@ -29,6 +29,39 @@ output {
         }
     <% end %>
 
+    <% if p("logstash_parser.elasticsearch.dedicated_index") %>
+      if [index_tag] {
+      <% p('logstash_parser.dedicated_outputs').each do | output | %>
+        <%= output['plugin'] %> {
+          <% if 'elasticsearch' == output['plugin'] %>
+            <%
+              options = {
+                "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
+                "flush_size" => p('logstash_parser.elasticsearch.flush_size'),
+                "index" => p('logstash_parser.elasticsearch.dedicated_index_name'),
+                "document_type" => p('logstash_parser.elasticsearch.index_type'),
+                "manage_template" => false
+              }
+              if p('logstash_parser.elasticsearch.idle_flush_time', nil)
+                options['idle_flush_time'] = p('logstash_parser.elasticsearch.idle_flush_time')
+              end
+              if p('logstash_parser.elasticsearch.document_id', nil)
+                options['document_id'] = p('logstash_parser.elasticsearch.document_id')
+              end
+              if p('logstash_parser.elasticsearch.routing', nil)
+                options['routing'] = p('logstash_parser.elasticsearch.routing')
+              end
+              output['options'] = options.merge(output['options'])
+            %>
+          <% end %>
+          <% output['options'].each do | k, v | %>
+            <%= k %> => <%= v.inspect %>
+          <% end %>
+        }
+      <% end %>
+      } else {
+    <% end %>
+    
 
     <% p('logstash_parser.outputs').each do | output | %>
         <%= output['plugin'] %> {
@@ -57,5 +90,8 @@ output {
           <%= k %> => <%= v.inspect %>
         <% end %>
         }
+    <% end %>
+    <% if p("logstash_parser.elasticsearch.dedicated_index") %>
+    }
     <% end %>
 }

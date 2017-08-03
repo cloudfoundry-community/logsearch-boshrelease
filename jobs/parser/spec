@@ -60,6 +60,17 @@ properties:
             database: logsearch
             collection: logs                      
     default: [ { plugin: "elasticsearch", options: {} } ]
+  logstash_parser.dedicated_outputs:
+    description: |
+      A list of output plugins, with a hash of options for each of them. Please refer to example below.
+    example:
+      inputs:
+        - plugin: mongodb
+          options:
+            uri: 192.168.1.1
+            database: logsearch
+            collection: logs                      
+    default: [ { plugin: "elasticsearch", options: {} } ]
   logstash_parser.workers:
     description: "The number of worker threads that logstash should use (default: auto = one per CPU)"
     default: auto
@@ -82,6 +93,12 @@ properties:
   logstash_parser.elasticsearch.flush_size:
     description: Controls how many logs will be buffered and sent to Elasticsearch for bulk indexing
     default: 500  
+  logstash_parser.elasticsearch.dedicated_index:
+    description: "Enable dedicated indices support based on if [index_tag] field is present in event"
+    default: false
+  logstash_parser.elasticsearch.dedicated_index_name:
+    description: "The specific, dynamic index name to write events to."
+    default: "logstash-%{index_tag}-%{+YYYY.MM.dd}"
   logstash_parser.timecop.reject_greater_than_hours:
     description: "Logs with timestamps greater than this many hours in the future won't be parsed and will get tagged with fail/timecop"
     default: 1
