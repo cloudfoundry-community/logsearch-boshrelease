@@ -9,6 +9,7 @@ templates:
   bin/run: bin/run
   bin/curator_ctl: bin/curator_ctl
   config/actions.yml.erb: config/actions.yml
+  config/config.yml.erb: config/config.yml
   config/purge_logs.cron: config/purge_logs.cron
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
@@ -32,5 +33,11 @@ properties:
   curator.purge_logs.retention_period:
     description: The value of this setting will be used as a multiplier for unit
     default: 30
+  curator.loglevel:
+    description: Set the minimum acceptable log severity to display.
+    default: INFO
+  curator.logformat:
+    description: This should default, json, logstash.
+    default: default
   curator.actions:
     description: List of Elasticsearch Curator actions in YAML format
