@@ -2,34 +2,12 @@
 
 set -e
 
-<%
-  elasticsearch_host = nil
-  elasticsearch_port = nil
-  if_link("elasticsearch") { |elasticsearch_link|
-    elasticsearch_host = elasticsearch_link.instances.first.address
-    elasticsearch_port = elasticsearch_link.p("elasticsearch.port")
-  }
-  unless elasticsearch_host
-    elasticsearch_host = p("curator.elasticsearch.host")
-  end
-  unless elasticsearch_port
-    elasticsearch_port = p("curator.elasticsearch.port")
-  end
-%>
-
-ELASTICSEARCH_HOST=<%= elasticsearch_host %>
-ELASTICSEARCH_PORT=<%= elasticsearch_port %>
-
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export PATH=/var/vcap/packages/curator/bin:$PATH
+export CONFIG_DIR=/var/vcap/jobs/curator/config
 export PYTHONPATH=/var/vcap/packages/curator/lib/python3.6/site-packages/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/vcap/packages/python3/lib
 
-curator_cli \
-  --host $ELASTICSEARCH_HOST \
-  --port $ELASTICSEARCH_PORT  \
-  delete_indices \
-  --filter_list '[{"filtertype":"age","source":"creation_date","direction":"older","unit":"<%= p('curator.purge_logs.unit') %>","unit_count":<%= p('curator.purge_logs.retention_period') %>},{"filtertype":"pattern","kind":"regex","value":"logs*"}]' \
-  --ignore_empty_list
+curator --config $CONFIG_DIR/config.yml $CONFIG_DIR/actions.yml
