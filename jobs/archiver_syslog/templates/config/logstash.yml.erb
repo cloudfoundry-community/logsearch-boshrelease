@@ -1,0 +1,9 @@
+# ------------ Queuing Settings --------------
+
+queue.type: <%= p("logstash.queue.type") %>
+queue.page_capacity: <%= p("logstash.queue.page_capacity") %>
+queue.max_events: <%= p("logstash.queue.max_events") %>
+queue.max_bytes: <%= p("logstash.queue.max_bytes") %>
+queue.checkpoint.acks: <%= p("logstash.queue.checkpoint.acks") %>
+queue.checkpoint.writes: <%= p("logstash.queue.checkpoint.writes") %>
+queue.checkpoint.interval: <%= p("logstash.queue.checkpoint.interval") %>
