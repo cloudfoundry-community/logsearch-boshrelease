@@ -2,9 +2,9 @@
 name: ingestor_syslog
 
 packages:
-  - logstash
-  - logsearch-config
-  - java8
+- logstash
+- logsearch-config
+- java8
 
 templates:
   bin/ingestor_syslog_ctl: bin/ingestor_syslog_ctl
@@ -72,18 +72,6 @@ properties:
   logstash_ingestor.filters:
     description: Filters to execute on the ingestors
     default: ""
-  logstash_ingestor.outputs:
-    description: |
-      A list of output plugins, with a hash of options for each of them. Please refer to example below.
-    example:
-      outputs:
-      - plugin: rabbitmq
-        options:
-          host: 192.168.1.1
-          user: logsearch
-          password: c1oudbunny
-          exchange_type: "direct"
-    default: [ { plugin: "redis", options : {} } ]
 
   logstash_ingestor.syslog.port:
     description: Port to listen for syslog messages
@@ -102,10 +90,6 @@ properties:
   logstash_ingestor.relp.port:
     description: Port to listen for RELP messages
     default: 2514
-
-  archiver.enabled:
-    default: false
-    description: Additional queue for archive (Redis only)
 
   logstash_parser.debug:
     description: Debug level logging
