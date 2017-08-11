@@ -103,3 +103,16 @@ properties:
   elasticsearch.health.disable_post_start:
     description: Allow node to run post-start script? (true / false)
     default: false
+
+  elasticsearch.cloud.aws.access_key:
+    description: Access key ID for AWS account
+  elasticsearch.cloud.aws.secret_key:
+    description: Secret access key for AWS account
+  elasticsearch.cloud.aws.region:
+    description: Specify the AWS region to use
+  elasticsearch.cloud.aws.protocol:
+    description: Protocol to use for all API calls to AWS endpoints
+    default: "https"
+  elasticsearch.cloud.aws.read_timeout:
+    description: The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out
+    default: 50s

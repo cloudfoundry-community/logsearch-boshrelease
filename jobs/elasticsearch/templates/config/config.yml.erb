@@ -53,5 +53,14 @@ discovery.zen.minimum_master_nodes: <%= minimum_master_nodes %>
 %>
 discovery.zen.ping.unicast.hosts: "<%= master_hosts %>"
 
-<% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>
+<% if_p('elasticsearch.cloud.aws.access_key', 'elasticsearch.cloud.aws.secret_key') do %>
+cloud:
+  aws:
+    protocol: <%= p('elasticsearch.cloud.aws.protocol') %>
+    read_timeout: <%= p('elasticsearch.cloud.aws.read_timeout') %>
+    access_key: <%= p('elasticsearch.cloud.aws.access_key') %>
+    secret_key: <%= p('elasticsearch.cloud.aws.secret_key') %>
+    <% if_p('elasticsearch.cloud.aws.region') do |region| %>region: <%= region %><% end %>
+<% end %>
 
+<% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>
