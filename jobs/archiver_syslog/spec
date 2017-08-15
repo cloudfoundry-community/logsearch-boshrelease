@@ -25,10 +25,6 @@ provides:
   - logstash_ingestor.syslog.transport
   - logstash_ingestor.syslog_tls.port
   - logstash_ingestor.relp.port
-- name: syslog_forwarder
-  type: syslog_forwarder
-  properties:
-  - logstash_ingestor.syslog.port
 
 properties:
   logstash.heap_size:
