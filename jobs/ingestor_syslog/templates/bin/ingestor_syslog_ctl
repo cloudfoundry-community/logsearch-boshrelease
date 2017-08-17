@@ -73,14 +73,16 @@ case $1 in
     cat /var/vcap/packages/logsearch-config/logstash-filters-default.conf >> ${JOB_DIR}/config/logstash.conf
 
     <% if p('logstash_parser.filters').is_a? Array %>
-      # logstash_parser.filters is a list of filter rules
-      <% p('logstash_parser.filters').each do |filter| name, path = filter.first %>
-        cat "<%= path %>" >> ${JOB_DIR}/config/logstash.conf
+      <% p('logstash_parser.filters').each do |filter| %>
+        <% if filter.key? 'path' %>
+          cat "<%= filter['path'] %>" >> ${JOB_DIR}/config/logstash.conf
+        <% elsif !filter.key? 'content' %>
+          <% _, path = filter.first %>
+          cat "<%= path %>" >> ${JOB_DIR}/config/logstash.conf
+        <% end %>
       <% end %>
-    <% elsif p('logstash_parser.filters') != '' %>
-      # logstash_parser.filters is a block of text, which we treat as logstash filter config
-      cat ${JOB_DIR}/config/filters_override.conf >> ${JOB_DIR}/config/logstash.conf
     <% end %>
+    cat ${JOB_DIR}/config/filters_override.conf >> ${JOB_DIR}/config/logstash.conf
 
     cat ${JOB_DIR}/config/filters_post.conf >> ${JOB_DIR}/config/logstash.conf
     <% if p('logstash_parser.enable_json_filter') %>
