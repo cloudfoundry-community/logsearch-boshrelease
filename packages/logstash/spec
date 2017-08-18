@@ -5,7 +5,7 @@ dependencies:
   - java8
 
 files:
-  - logstash/logstash-5.5.1.tar.gz
+  - logstash/logstash-5.5.2.tar.gz
   - logstash/logstash-filter-alter-3.0.1.zip
   - logstash/logstash-filter-translate-3.0.2.zip
   - logstash/logstash-input-relp-3.0.1.zip
