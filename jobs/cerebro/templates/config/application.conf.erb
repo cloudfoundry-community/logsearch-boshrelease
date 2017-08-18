@@ -28,3 +28,13 @@ hosts = [
     name = "<%= cluster_name %>"
   }
 ]
+
+<% if_p('cerebro.user', 'cerebro.password') do %>
+auth = {
+  type: basic
+  settings: {
+    username = "<%= p('cerebro.user') %>"
+    password = "<%= p('cerebro.password') %>"
+  }
+}
+<% end %>

@@ -27,3 +27,8 @@ properties:
     default: []
   cerebro.secret:
     description: Secret will be used to sign Cerebro session cookies and CSRF tokens.
+  cerebro.user:
+    description: "Username for HTTP basic auth."
+    default: cerebro
+  cerebro.password:
+    description: "Password for HTTP basic auth."
