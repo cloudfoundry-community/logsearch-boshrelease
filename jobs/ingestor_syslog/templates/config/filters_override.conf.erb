@@ -1,1 +1,9 @@
-<%= p('logstash_parser.filters').empty? ? ' ' :  p('logstash_parser.filters')  %>
+<% if p('logstash_parser.filters').is_a? Array %>
+  <% p('logstash_parser.filters').each do |filter| %>
+    <% if filter.key? 'content' %>
+      <%= filter['content'] %>
+    <% end %>
+  <% end %>
+<% elsif p('logstash_parser.filters') != '' %>
+  <%= p('logstash_parser.filters') %>
+<% end %>
