@@ -13,4 +13,3 @@ properties:
       index: "logs-%{[@metadata][index]}-%{+YYYY.MM.dd}"
       index_type: "%{@type}"
       data_hosts: [127.0.0.1]
-      flush_size: 500
