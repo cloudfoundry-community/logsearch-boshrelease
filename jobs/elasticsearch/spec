@@ -116,3 +116,7 @@ properties:
   elasticsearch.cloud.aws.read_timeout:
     description: The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out
     default: 50s
+  elasticsearch.cloud.aws.bucket:
+    description: Bucket name on S3 where to keep snapshots
+  elasticsearch.cloud.repository:
+    description: Repository name for automatic snapshots

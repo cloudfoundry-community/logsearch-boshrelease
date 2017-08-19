@@ -56,6 +56,13 @@ curl -X PUT -s localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
 <% end %>
 
+<% if_p('elasticsearch.cloud.repository') do %>
+  REP=`curl -s localhost:9200/_snapshot/<%= p("elasticsearch.cloud.repository") %> | grep <%= p("elasticsearch.cloud.aws.bucket") %> | wc -l`
+  if [ $REP == 0 ]; then
+    curl -XPUT localhost:9200/_snapshot/<%= p("elasticsearch.cloud.repository") %> -d '{"type": "s3", "settings": {"bucket": "<%= p("elasticsearch.cloud.aws.bucket") %>"}}'
+  fi
+<% end %>
+
 <% else %>
 
 echo "Disable post start script property is set to <%= p("elasticsearch.health.disable_post_start") %>. Skipping post-start..."
