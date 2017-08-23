@@ -9,6 +9,7 @@ packages:
 templates:
   bin/ingestor_syslog_ctl: bin/ingestor_syslog_ctl
   bin/monit_debugger: bin/monit_debugger
+  bin/post-start.erb: bin/post-start
   config/input_and_output.conf.erb: config/input_and_output.conf
   config/filters_pre.conf.erb: config/filters_pre.conf
   config/filters_post.conf.erb: config/filters_post.conf
@@ -97,6 +98,16 @@ properties:
     default: "tcp"
   logstash_ingestor.syslog.use_keepalive:
     description: Instruct the socket to use TCP keep alives
+
+  logstash_ingestor.health.disable_post_start:
+    description: Allow node to run post-start script? (true / false)
+    default: false
+  logstash_ingestor.health.interval:
+    description: Logstash syslog health check interval (seconds)
+    default: 5
+  logstash_ingestor.health.timeout:
+    description: Logstash syslog health check number of attempts (seconds)
+    default: 300
 
   logstash_ingestor.syslog_tls.port:
     description: Port to listen for syslog-TLS messages (omit to disable)
