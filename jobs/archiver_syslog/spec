@@ -1,0 +1,110 @@
+---
+name: archiver_syslog
+
+packages:
+- logstash
+- logsearch-config
+- java8
+
+templates:
+  bin/archiver_syslog_ctl: bin/archiver_syslog_ctl
+  bin/monit_debugger: bin/monit_debugger
+  bin/post-start.erb: bin/post-start
+  config/input_and_output.conf.erb: config/input_and_output.conf
+  config/syslog_tls.crt.erb: config/syslog_tls.crt
+  config/syslog_tls.key.erb: config/syslog_tls.key
+  config/logstash.yml.erb: config/logstash.yml
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+provides:
+- name: archiver
+  type: archiver
+  properties:
+  - logstash_ingestor.syslog.port
+  - logstash_ingestor.syslog.transport
+  - logstash_ingestor.syslog_tls.port
+  - logstash_ingestor.relp.port
+
+properties:
+  logstash.heap_size:
+    description: sets jvm heap sized
+  logstash.metadata_level:
+    description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
+    default: "NONE"
+  logstash.log_level:
+    description: The default logging level (e.g. WARN, DEBUG, INFO)
+    default: info
+  logstash.plugins:
+    description: "Array of hashes describing logstash plugins to install"
+    example:
+    - {name: logstash-output-cloudwatchlogs, version: 2.0.0}
+    default: []
+  logstash.env:
+    description: "a list of arbitrary key-value pairs to be passed on as process environment variables. eg: FOO: 123"
+    default: []
+
+  logstash_ingestor.debug:
+    description: Debug level logging
+    default: false
+  logstash_ingestor.workers:
+    description: "The number of worker threads that logstash should use (default: auto = one per CPU)"
+    default: auto
+
+  logstash.queue.type:
+    description: Internal queuing model, "memory" for legacy in-memory based queuing and "persisted" for disk-based acked queueing.
+    default: persisted
+  logstash.queue.page_capacity:
+    description: The page data files size. The queue data consists of append-only data files separated into pages.
+    default: 250mb
+  logstash.queue.max_events:
+    description: The maximum number of unread events in the queue.
+    default: 0
+  logstash.queue.max_bytes:
+    description: The total capacity of the queue in number of bytes.
+    default: 1024mb
+  logstash.queue.checkpoint.acks:
+    description: The maximum number of acked events before forcing a checkpoint.
+    default: 1024
+  logstash.queue.checkpoint.writes:
+    description: The maximum number of written events before forcing a checkpoint.
+    default: 1024
+  logstash.queue.checkpoint.interval:
+    description: The interval in milliseconds when a checkpoint is forced on the head page.
+    default: 1000
+
+  logstash_ingestor.syslog.port:
+    description: Port to listen for syslog messages
+    default: 5514
+  logstash_ingestor.syslog.transport:
+    description: Transport protocol to use
+    default: "tcp"
+
+  logstash_ingestor.health.disable_post_start:
+    description: Allow node to run post-start script? (true / false)
+    default: false
+  logstash_ingestor.health.interval:
+    description: Logstash syslog health check interval (seconds)
+    default: 5
+  logstash_ingestor.health.timeout:
+    description: Logstash syslog health check number of attempts (seconds)
+    default: 300
+
+  logstash_ingestor.syslog_tls.port:
+    description: Port to listen for syslog-TLS messages (omit to disable)
+  logstash_ingestor.syslog_tls.ssl_cert:
+    description: Syslog-TLS SSL certificate (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
+  logstash_ingestor.syslog_tls.ssl_key:
+    description: Syslog-TLS SSL key (file contents, not a path) - required if logstash_ingestor.syslog_tls.port set
+  logstash_ingestor.syslog_tls.skip_ssl_validation:
+    description: Verify the identity of the other end of the SSL connection against the CA.
+    default: false
+
+  logstash_ingestor.relp.port:
+    description: Port to listen for RELP messages
+    default: 2514
+
+  logstash_ingestor.outputs:
+    description: A list of output plugins, with a hash of options for each of them.
+    default: []

@@ -1,5 +1,5 @@
 ---
 name: cerebro
-dependencies: []
+
 files:
-  - cerebro/cerebro-0.6.5.tgz
+  - cerebro/cerebro-0.6.6.tgz

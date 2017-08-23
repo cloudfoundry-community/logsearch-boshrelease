@@ -180,3 +180,10 @@ check_nfs_mount() {
     fi
   fi
 }
+
+ensure_no_more_logstash() {
+  for java_pid in $(ps -ef | grep java | grep logstash/runner.rb |grep -Po '\-DPID=\K[^ ]+'); do
+    echo "Found leftover Java process - killing($java_pid) if running: `ps -fp $java_pid`"
+    kill -9 $java_pid
+  done
+}

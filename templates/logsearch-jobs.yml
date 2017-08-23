@@ -22,6 +22,8 @@ jobs:
       node:
         allow_master: true
         allow_data: false
+    cerebro:
+      secret: (( param "specify cerebro secret key" ))
     syslog_forwarder:
       config:
       - {service: elasticsearch, file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log}
@@ -234,7 +236,7 @@ properties:
       unit: days
       retention_period: 30
     elasticsearch:
-      host: (( grab jobs.elasticsearch_master.networks.default.static_ips.[0] ))
+      hosts: (( grab jobs.elasticsearch_master.networks.default.static_ips ))
       port: 9200
   logstash_parser:
     debug: false

@@ -47,7 +47,8 @@ export RUN_DIR=/var/vcap/sys/run/$JOB_NAME
 export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 export TMP_DIR=/var/vcap/sys/tmp/$JOB_NAME
 export STORE_DIR=/var/vcap/store/$JOB_NAME
-for dir in $RUN_DIR $LOG_DIR $TMP_DIR $STORE_DIR
+export DATA_DIR=/var/vcap/data/$JOB_NAME
+for dir in $RUN_DIR $LOG_DIR $TMP_DIR $STORE_DIR $DATA_DIR
 do
   mkdir -p ${dir}
   chown vcap:vcap ${dir}
@@ -64,17 +65,10 @@ then
   export PYTHONPATH=$WEBAPP_DIR/vendor/lib/python
 fi
 
-if [[ -d /var/vcap/packages/java7 ]]
+if [[ -d /var/vcap/packages/java8 ]]
 then
-  export JAVA_HOME="/var/vcap/packages/java7"
+  export JAVA_HOME="/var/vcap/packages/java8"
 fi
-
-# setup CLASSPATH for all jars/ folders within packages
-export CLASSPATH=${CLASSPATH:-''} # default to empty
-for java_jar in $(ls -d /var/vcap/packages/*/*/*.jar)
-do
-  export CLASSPATH=${java_jar}:$CLASSPATH
-done
 
 PIDFILE=$RUN_DIR/$JOB_NAME.pid
 

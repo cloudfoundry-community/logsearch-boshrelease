@@ -1,59 +1,39 @@
-cerebro/cerebro-0.6.5.tgz:
-  size: 51211480
-  object_id: 7a7e401f-ba46-4043-6226-eda015b49a49
-  sha: d575cb6816db88653981ad2871bce39709718569
-curator/elasticsearch-curator-5.0.1.tar.gz:
-  size: 182112
-  object_id: a66f8365-c0b1-41ec-bfdb-d7a6037e531d
-  sha: 183924cfc48e578f9c8f94862db3ca222bd976ba
+cerebro/cerebro-0.6.6.tgz:
+  size: 51199362
+  object_id: fda10e6d-aeba-47b6-6f0d-fa313cffc109
+  sha: 69bc2aafb2c5966163c44b19f2768eb9f497aac3
+curator/elasticsearch-curator-5.1.1.tar.gz:
+  size: 191710
+  object_id: 306cc6fb-4693-42b9-52d5-1f65e6ed1f1f
+  sha: cd584da85f3bf346dc8eceef91ae72b7eeeaf2a9
 curator/vendor/PyYAML-3.12.tar.gz:
   size: 253011
   object_id: c437dff0-e2db-4d48-9c12-626160760901
   sha: cb7fd3e58c129494ee86e41baedfec69eb7dafbe
-curator/vendor/appdirs-1.4.3-py2.py3-none-any.whl:
-  size: 12154
-  object_id: dc6228ab-aab1-457b-bb61-ea6bbab11b8c
-  sha: 092e43d970e08a67c4f8074bf7777d865f92f5fc
-curator/vendor/certifi-2017.1.23-py2.py3-none-any.whl:
-  size: 382984
-  object_id: bcd789e3-5a1c-478e-aaae-74be9b3e84f1
-  sha: fa81df1779db594a994b21bfd478982529ca5369
+curator/vendor/certifi-2017.7.27.1-py2.py3-none-any.whl:
+  size: 349554
+  object_id: b3ad6e0e-1667-448e-57a8-f098cc499ac8
+  sha: aeb9761eb1231d8309a0b593747d0c95303467b5
 curator/vendor/click-6.7-py2.py3-none-any.whl:
   size: 71175
   object_id: 06f97a3a-8cc3-4d83-8c0f-6e85d15167f9
   sha: 9490775172e63ba94233d4b201f0e8d78b0cd939
-curator/vendor/elasticsearch-5.3.0-py2.py3-none-any.whl:
-  size: 66169
-  object_id: 9b191721-a07d-4bc6-bf57-391995451264
-  sha: 9ce33ca6508c263db6e3833273089fde431e82e1
-curator/vendor/packaging-16.8-py2.py3-none-any.whl:
-  size: 23069
-  object_id: 5ae6809e-5e93-4531-aa1d-989e81dda9d6
-  sha: 6c45e475be475c385ef46f583a0214dea6a35783
-curator/vendor/pyparsing-2.2.0-py2.py3-none-any.whl:
-  size: 56385
-  object_id: a7dd692a-9de5-44ab-93e6-9095bc5c734e
-  sha: b698b51e3680761ba520149ed7b0d3a3d6a0c0ca
-curator/vendor/setuptools-34.4.1-py2.py3-none-any.whl:
-  size: 390260
-  object_id: 54d3b5da-3c8e-4e78-bf23-93b54e23e008
-  sha: 9fec5bf7062298bc901b79ab9db88fc05ddb2a3d
-curator/vendor/six-1.10.0-py2.py3-none-any.whl:
-  size: 10341
-  object_id: efb0fe0f-863b-4f27-81ad-15c46bdb8f19
-  sha: 19df5f56abce3db94d5e0e079e54bf430fddbb02
-curator/vendor/urllib3-1.20-py2.py3-none-any.whl:
-  size: 111946
-  object_id: e1067d34-40d6-41b2-8690-a550ac847c25
-  sha: f04819411c2cbbb7a2d4ba7785e344b68bfd88a6
-curator/vendor/voluptuous-0.9.3.tar.gz:
-  size: 34097
-  object_id: 2a246c17-66fb-4c0c-8095-0c5bc6e0029f
-  sha: 315dd79c372380799d0d2e21ae711aa4097efb81
-elasticsearch/elasticsearch-5.5.0.tar.gz:
-  size: 33480586
-  object_id: 9267a5ae-fa79-405b-53e2-38746af2785c
-  sha: d79a3ade8b8589d13aeb99ceec1c54683596e88b
+curator/vendor/elasticsearch-5.4.0-py2.py3-none-any.whl:
+  size: 58679
+  object_id: 101d0ced-4af3-4f4f-5916-8ab699f6ad0c
+  sha: 0215d94d3e6b2c3c2ffcba54a84186a8aacb86df
+curator/vendor/urllib3-1.22-py2.py3-none-any.whl:
+  size: 132332
+  object_id: 0b6e809e-090d-4545-7808-b7968f1834a0
+  sha: ae6715ae61c34b72d5e0c3241abfb20c2c4d1313
+curator/vendor/voluptuous-0.10.5.tar.gz:
+  size: 41436
+  object_id: b67881a7-7adb-4456-7d0b-f5b00e936152
+  sha: 31373cc4ba935eda76b55e64e8bd218ce4882e2b
+elasticsearch/elasticsearch-5.5.1.tar.gz:
+  size: 33476827
+  object_id: 7dc3b18b-ddc5-4985-7801-9479bfd2da3d
+  sha: cb5648a6723527bdccee98caef7a9d08885a5b0f
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
@@ -66,26 +46,26 @@ java8/openjdk-1.8.0_141.tar.gz:
   size: 45927906
   object_id: e9caffab-2961-4a26-7428-e2c03b87c3ec
   sha: fef57709d2ca0b375a3879fe03df303afe24307f
-kibana/kibana-5.5.0-linux-x86_64.tar.gz:
-  size: 51068789
-  object_id: 6db7656b-47b5-4e40-6dd8-83e0929f092b
-  sha: 935e925713cb84eb1879a59ac68708fccf3361d4
-logstash/logstash-5.5.0.tar.gz:
-  size: 94906235
-  object_id: be68fa2d-2f93-41be-60f3-4676bfc4cf8b
-  sha: d380e8cdefb4c0d5291d0243b8ab5a9f20811826
-logstash/logstash-filter-alter-3.0.0.zip:
-  size: 6642
-  object_id: 8b0c5aa7-4675-4659-8b0a-78ebb6cd6b0c
-  sha: f7169d5bc42e99c3a89afadd5a838c4e4e0105ab
-logstash/logstash-filter-translate-3.0.1.zip:
-  size: 9437
-  object_id: 33680669-f431-43ac-9b83-c1b995617f47
-  sha: e01978407ca5a4f4a9f48d1fd04f8ad3e721e679
-logstash/logstash-input-relp-3.0.0.zip:
-  size: 11685
-  object_id: f96081d6-00d5-4689-99cc-c752cf3806c5
-  sha: 5805f45e5d3848cb45ed2163f7809e53364bbfb6
+kibana/kibana-5.5.1-linux-x86_64.tar.gz:
+  size: 50952073
+  object_id: cc9c5bb8-fa83-48fe-4863-7770776223be
+  sha: 6dba24c876841fdf116a413c843f09d3e98b4002
+logstash/logstash-5.5.1.tar.gz:
+  size: 93242602
+  object_id: 89e3ac08-9b05-46c1-573b-53d606d93343
+  sha: 2cd1cdc1c01f7e7af3919221668e9ec2547070be
+logstash/logstash-filter-alter-3.0.1.zip:
+  size: 7405
+  object_id: ddfd43a9-0585-4c0e-7109-37091ea3758f
+  sha: bd51998f9e5690d5e9fadf51ed0961ec468c15ad
+logstash/logstash-filter-translate-3.0.2.zip:
+  size: 10656
+  object_id: 45f289ea-42e1-48c0-5ab8-777cc1559556
+  sha: 2ab763179bc0fdae291f9a8facd4274fcad0fbd3
+logstash/logstash-input-relp-3.0.1.zip:
+  size: 12587
+  object_id: 29c87e17-136f-4841-5ff2-7c7ba67a8836
+  sha: c4bc33af867abf6502cfeb1e87547282b99dd47e
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   size: 2094679
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
@@ -94,10 +74,10 @@ python/Python-3.6.1.tgz:
   size: 22540566
   object_id: db2b3522-9d58-4998-81ec-237d900ad740
   sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
-redis/redis-3.2.9.tar.gz:
-  size: 1547695
-  object_id: 11340b96-739f-4532-8a38-8e00661ee18a
-  sha: 8fad759f28bcb14b94254124d824f1f3ed7b6aa6
+python/Python-3.6.2.tgz:
+  size: 22580749
+  object_id: 3f40fd31-5d63-4fe7-4b28-dcdb2cbe1f16
+  sha: b157ed490a453387874b354b743d1ae656680403
 ruby2.3/bundler-1.11.2.gem:
   size: 263168
   object_id: ce2c212f-c2ff-440e-9f4b-c2c214a010f9

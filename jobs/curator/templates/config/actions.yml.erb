@@ -1,0 +1,23 @@
+---
+actions:
+  1:
+    action: delete_indices
+    description: >-
+      Delete indices older than <%= p('curator.purge_logs.retention_period') %> <%= p('curator.purge_logs.unit') %> (based on index name), for logs-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: regex
+      value: logs*
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: <%= p('curator.purge_logs.unit') %>
+      unit_count: <%= p('curator.purge_logs.retention_period') %>
+<% p("curator.actions", []).each_with_index do | action, index | %>
+  <%= index + 2 %>:<%= action.to_yaml.gsub("---", "").gsub("\n", "\n    ") %>
+<% end %>
