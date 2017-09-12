@@ -13,7 +13,7 @@ function wait_for_template {
   set +e
   while true;  do
     echo "Waiting for index template to be uploaded: $template_name"
-    curl -X HEAD -f -i "$MASTER_URL"/_template/$template_name > /dev/null 2>&1
+    curl -I -f -i "$MASTER_URL"/_template/$template_name > /dev/null 2>&1
     [ $? ] && break
     sleep 5
   done
