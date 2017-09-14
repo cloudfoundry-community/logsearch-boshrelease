@@ -2,4 +2,4 @@
 name: elasticsearch
 
 files:
-  - elasticsearch/elasticsearch-5.5.2.tar.gz
+  - elasticsearch/elasticsearch-5.6.0.tar.gz

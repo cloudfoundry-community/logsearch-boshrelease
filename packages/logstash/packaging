@@ -2,9 +2,9 @@ set -e
 
 export JAVA_HOME=/var/vcap/packages/java8
 
-tar xzf logstash/logstash-5.5.2.tar.gz -C $BOSH_INSTALL_TARGET --strip-components 1
+tar xzf logstash/logstash-5.6.0.tar.gz -C $BOSH_INSTALL_TARGET --strip-components 1
 
 # Installs missing plugins
-$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-filter-alter-3.0.1.zip
-$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-input-relp-3.0.1.zip
-$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-filter-translate-3.0.2.zip
+$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-filter-alter-3.0.2.zip
+$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-input-relp-3.0.2.zip
+$BOSH_INSTALL_TARGET/bin/logstash-plugin install file://$PWD/logstash/logstash-filter-translate-3.0.3.zip
