@@ -21,7 +21,7 @@ consumes:
    optional: true
 
 properties:
-  elasticsearch.cloud.repository:
+  elasticsearch.snapshots.repository:
     description: Repository name for automatic snapshots
 
   curator.elasticsearch.hosts:

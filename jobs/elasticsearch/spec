@@ -48,6 +48,13 @@ properties:
     default: []
   elasticsearch.heap_size:
     description: sets jvm heap sized
+  elasticsearch.path_repo:
+    description: |
+      Shared file system to store snapshots.
+      In order to register the shared file system repository it is
+      necessary to mount the same shared filesystem to the same location
+      on all master and data nodes.
+    default: ''
   elasticsearch.node.allow_master:
     description: Allow node to become master? (true / false)
     default: false
@@ -118,6 +125,7 @@ properties:
     default: 50s
   elasticsearch.cloud.aws.bucket:
     description: Bucket name on S3 where to keep snapshots
-  elasticsearch.cloud.repository:
+    default: ''
+  elasticsearch.snapshots.repository:
     description: Repository name for automatic snapshots
     default: ''

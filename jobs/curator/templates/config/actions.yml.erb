@@ -1,6 +1,6 @@
 ---
 actions:
-  <% if_p('elasticsearch.cloud.repository') do |repo| %>
+  <% if_p('elasticsearch.snapshots.repository') do |repo| %>
   1:
     action: snapshot
     description: >-

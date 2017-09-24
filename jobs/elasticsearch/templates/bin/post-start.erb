@@ -56,9 +56,14 @@ curl -X PUT -s localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
 <% end %>
 
-<% if p('elasticsearch.cloud.repository') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
-curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.cloud.repository') %> \
+<% if p('elasticsearch.cloud.aws.bucket') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
+curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> \
   -d '{"type": "s3", "settings": {"bucket": "<%= p('elasticsearch.cloud.aws.bucket') %>"}}'
+<% end %>
+
+<% if p('elasticsearch.path_repo') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
+curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> \
+  -d '{"type": "fs", "settings": {"location": "<%= p('elasticsearch.path_repo') %>/<%= p('elasticsearch.snapshots.repository') %>", "compress": true}}'
 <% end %>
 
 <% else %>
