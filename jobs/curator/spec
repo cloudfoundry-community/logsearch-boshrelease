@@ -21,9 +21,12 @@ consumes:
    optional: true
 
 properties:
+  elasticsearch.cloud.repository:
+    description: Repository name for automatic snapshots
+
   curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
-    default: 
+    default:
     - "127.0.0.1"
   curator.elasticsearch.port:
     description: Port address of elasticsearch host to proxy requests for (eg, 9200)

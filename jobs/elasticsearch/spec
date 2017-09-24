@@ -120,3 +120,4 @@ properties:
     description: Bucket name on S3 where to keep snapshots
   elasticsearch.cloud.repository:
     description: Repository name for automatic snapshots
+    default: ''
