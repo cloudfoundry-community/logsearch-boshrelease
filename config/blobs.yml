@@ -2,10 +2,10 @@ cerebro/cerebro-0.6.6.tgz:
   size: 51199362
   object_id: fda10e6d-aeba-47b6-6f0d-fa313cffc109
   sha: 69bc2aafb2c5966163c44b19f2768eb9f497aac3
-curator/elasticsearch-curator-5.1.1.tar.gz:
-  size: 191710
-  object_id: 306cc6fb-4693-42b9-52d5-1f65e6ed1f1f
-  sha: cd584da85f3bf346dc8eceef91ae72b7eeeaf2a9
+curator/elasticsearch-curator-5.2.0.tar.gz:
+  size: 206905
+  object_id: cb6abe98-70e9-49ba-57b2-4704588ab7ec
+  sha: dd73ebd695d1f36028d4fb7e3dc2f4f71f602190
 curator/vendor/PyYAML-3.12.tar.gz:
   size: 253011
   object_id: c437dff0-e2db-4d48-9c12-626160760901
