@@ -7,6 +7,7 @@ packages:
 
 templates:
   bin/drain.erb: bin/drain
+  bin/post-deploy.erb: bin/post-deploy
   bin/post-start.erb: bin/post-start
   bin/elasticsearch_ctl: bin/elasticsearch_ctl
   bin/monit_debugger: bin/monit_debugger
