@@ -40,6 +40,9 @@ properties:
   curator.loglevel:
     description: Set the minimum acceptable log severity to display.
     default: INFO
+  curator.cron_schedule:
+    description: Schedule to trigger Curator, using normal cron format
+    default: 0 0 * * *
   curator.logformat:
     description: This should default, json, logstash.
     default: default
