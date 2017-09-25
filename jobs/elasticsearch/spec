@@ -7,6 +7,7 @@ packages:
 
 templates:
   bin/drain.erb: bin/drain
+  bin/post-deploy.erb: bin/post-deploy
   bin/post-start.erb: bin/post-start
   bin/elasticsearch_ctl: bin/elasticsearch_ctl
   bin/monit_debugger: bin/monit_debugger
@@ -48,6 +49,13 @@ properties:
     default: []
   elasticsearch.heap_size:
     description: sets jvm heap sized
+  elasticsearch.path_repo:
+    description: |
+      Shared file system to store snapshots.
+      In order to register the shared file system repository it is
+      necessary to mount the same shared filesystem to the same location
+      on all master and data nodes.
+    default: ''
   elasticsearch.node.allow_master:
     description: Allow node to become master? (true / false)
     default: false
@@ -103,3 +111,22 @@ properties:
   elasticsearch.health.disable_post_start:
     description: Allow node to run post-start script? (true / false)
     default: false
+
+  elasticsearch.cloud.aws.access_key:
+    description: Access key ID for AWS account
+  elasticsearch.cloud.aws.secret_key:
+    description: Secret access key for AWS account
+  elasticsearch.cloud.aws.region:
+    description: Specify the AWS region to use
+  elasticsearch.cloud.aws.protocol:
+    description: Protocol to use for all API calls to AWS endpoints
+    default: "https"
+  elasticsearch.cloud.aws.read_timeout:
+    description: The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out
+    default: 50s
+  elasticsearch.cloud.aws.bucket:
+    description: Bucket name on S3 where to keep snapshots
+    default: ''
+  elasticsearch.snapshots.repository:
+    description: Repository name for automatic snapshots
+    default: ''

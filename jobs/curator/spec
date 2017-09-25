@@ -21,9 +21,12 @@ consumes:
    optional: true
 
 properties:
+  elasticsearch.snapshots.repository:
+    description: Repository name for automatic snapshots
+
   curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
-    default: 
+    default:
     - "127.0.0.1"
   curator.elasticsearch.port:
     description: Port address of elasticsearch host to proxy requests for (eg, 9200)
@@ -37,6 +40,9 @@ properties:
   curator.loglevel:
     description: Set the minimum acceptable log severity to display.
     default: INFO
+  curator.cron_schedule:
+    description: Schedule to trigger Curator, using normal cron format
+    default: 0 0 * * *
   curator.logformat:
     description: This should default, json, logstash.
     default: default
