@@ -40,6 +40,7 @@ filter {
   ruby {
     code => 'event.cancel if event.get("message") == "\u0000"'
   }
+  <%= if_p('logstash_ingestor.filters') do |filters| %><%= filters %><% end %>
 }
 
 output {
