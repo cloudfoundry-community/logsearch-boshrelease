@@ -1,0 +1,60 @@
+input {
+  <% if p("logstash_ingestor.syslog.port") %>
+  tcp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= p("logstash_ingestor.syslog.port") %>"
+  }
+  udp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= p("logstash_ingestor.syslog.port") %>"
+  }
+  <% end %>
+
+  <% if_p("logstash_ingestor.syslog_tls.port") do | port | %>
+  tcp {
+    add_field => [ "type", "syslog" ]
+    host => "0.0.0.0"
+    port => "<%= port %>"
+    ssl_enable => true
+    <% if p("logstash_ingestor.syslog_tls.skip_ssl_validation") %>
+    ssl_verify => false
+    <% end %>
+    ssl_cert => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.crt"
+    ssl_key => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.key"
+  }
+  <% end %>
+
+  <% if_p("logstash_ingestor.relp.port") do | port | %>
+  relp {
+    add_field => { "_logstash_input" => "relp" }
+    host => "0.0.0.0"
+    port => "<%= port %>"
+  }
+  <% end %>
+}
+
+filter {
+  # drop empty logs (eg: monit connection healthcheck)
+  ruby {
+    code => 'event.cancel if event.get("message") == "\u0000"'
+  }
+  <%= if_p('logstash_ingestor.filters') do |filters| %><%= filters %><% end %>
+}
+
+output {
+    <% if p("logstash_ingestor.debug") %>
+        stdout {
+            codec => "json"
+        }
+    <% end %>
+
+    <% p('logstash_ingestor.outputs').each do | output | %>
+        <%= output['plugin'] %> {
+        <% output['options'].each do | k, v | %>
+          <%= k %> => <%= v.inspect %>
+        <% end %>
+        }
+    <% end %>
+}
