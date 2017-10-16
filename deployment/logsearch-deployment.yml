@@ -363,6 +363,10 @@ instance_groups:
           service: ingestor
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
           service: ingestor
+        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
+          service: ingestor_cloudfoundry-firehose
+        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
+          service: ingestor_cloudfoundry-firehose
 - name: ls-router
   azs:
   - z1
