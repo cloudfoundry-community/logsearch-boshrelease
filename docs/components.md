@@ -14,12 +14,10 @@ bosh -e my-env -d logsearch deploy logsearch-deployment.yml \
   -v cf_admin_password="[password for CloudFoundry admin]" \
   -v uaa_admin_client_secret="[secret for admin UAA client]" \
   -v system_domain="[CF system domain]" \
-  -v firehose_client_secret="[secret for firehose UAA client]" \
   -v archive_bucket_name="[name of S3 bucket to write logs to]" \
   -v archive_key_id="[AWS key ID that can write to S3 bucket]" \
   -v archive_secret_key="[secret key for archive_key_id]" \
-  -v s3_region="[AWS region used for S3 bucket]" \
-  -v s3_endpoint="[AWS S3 endpoint]"
+  -v s3_region="[AWS region used for S3 bucket]"
 ```
 
-See [the AWS docs for more on S3 regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region).  The AWS key only needs to give `s3:PutObject` to objects in the bucket and `s3:ListBucket` to the bucket itself.
+The AWS key only needs to give `s3:PutObject` to objects in the bucket and `s3:ListBucket` to the bucket itself.
