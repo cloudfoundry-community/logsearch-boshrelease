@@ -6,6 +6,7 @@ actions:
     description: >-
       Create snapshot for all indicies
     options:
+      disable_action: <% if p('elasticsearch.path_repo') != '' or p('elasticsearch.cloud.aws.bucket') != '' %>False<% else %>True<% end %>
       repository: <%= repo %>
       wait_for_completion: True
       ignore_empty_list: True

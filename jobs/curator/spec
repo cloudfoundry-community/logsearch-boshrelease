@@ -23,6 +23,16 @@ consumes:
 properties:
   elasticsearch.snapshots.repository:
     description: Repository name for automatic snapshots
+  elasticsearch.path_repo:
+    description: |
+      Shared file system to store snapshots.
+      In order to register the shared file system repository it is
+      necessary to mount the same shared filesystem to the same location
+      on all master and data nodes.
+    default: ''
+  elasticsearch.cloud.aws.bucket:
+    description: Bucket name on S3 where to keep snapshots
+    default: ''
 
   curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
