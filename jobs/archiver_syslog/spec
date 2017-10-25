@@ -5,9 +5,12 @@ packages:
 - logstash
 - logsearch-config
 - java8
+- watchdog
 
 templates:
   bin/archiver_syslog_ctl: bin/archiver_syslog_ctl
+  bin/archiver_syslog_watchdog_ctl: bin/archiver_syslog_watchdog_ctl
+  bin/crash_archiver_syslog: bin/crash_archiver_syslog
   bin/monit_debugger: bin/monit_debugger
   config/input_and_output.conf.erb: config/input_and_output.conf
   config/syslog_tls.crt.erb: config/syslog_tls.crt
@@ -103,3 +106,10 @@ properties:
   logstash_ingestor.outputs:
     description: A list of output plugins, with a hash of options for each of them.
     default: []
+
+  logstash_ingestor.watchdog.enable:
+    description: Enable Logstash watchdog timer
+    default: false
+  logstash_ingestor.watchdog.interval:
+    description: Logstash watchdog timer interval in seconds
+    default: 5

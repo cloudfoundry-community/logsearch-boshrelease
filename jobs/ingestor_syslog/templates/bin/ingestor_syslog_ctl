@@ -1,4 +1,9 @@
 #!/bin/bash
+<%
+  if p("logstash_ingestor.watchdog.enable")
+    p("logstash.plugins") << {"name" => "logstash-output-exec", "version" => "3.1.2"}
+  end
+%>
 
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables

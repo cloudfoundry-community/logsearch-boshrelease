@@ -1,0 +1,7 @@
+---
+name: watchdog
+
+dependencies: []
+
+files:
+- watchdog/**/*

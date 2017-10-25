@@ -41,40 +41,59 @@ input {
         <% end %>
       }
   <% end %>
+
+  <% if p("logstash_ingestor.watchdog.enable") %>
+  heartbeat {
+    id => "watchdog_heartbeat"
+    type => "heartbeat"
+    message => "heartbeat"
+    interval => <%= p("logstash_ingestor.watchdog.interval") %>
+  }
+  <% end %>
 }
 
 output {
-    <% if p("logstash_parser.debug") %>
-        stdout {
-            codec => "json"
-        }
-    <% end %>
+  <% if p("logstash_parser.debug") %>
+    stdout {
+      codec => "json"
+    }
+  <% end %>
 
-    <% p('logstash_parser.outputs').each do | output | %>
-        <%= output['plugin'] %> {
-        <% if 'elasticsearch' == output['plugin'] %>
-            <%
-              options = {
-                "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
-                "index" => p('logstash_parser.elasticsearch.index'),
-                "document_type" => p('logstash_parser.elasticsearch.index_type'),
-                "manage_template" => false
-              }
-              if p('logstash_parser.elasticsearch.idle_flush_time', nil)
-                options['idle_flush_time'] = p('logstash_parser.elasticsearch.idle_flush_time')
-              end
-              if p('logstash_parser.elasticsearch.document_id', nil)
-                options['document_id'] = p('logstash_parser.elasticsearch.document_id')
-              end
-              if p('logstash_parser.elasticsearch.routing', nil)
-                options['routing'] = p('logstash_parser.elasticsearch.routing')
-              end
-              output['options'] = options.merge(output['options'])
-            %>
-        <% end %>
-        <% output['options'].each do | k, v | %>
-          <%= k %> => <%= v.inspect %>
-        <% end %>
-        }
-    <% end %>
+  <% if p("logstash_ingestor.watchdog.enable") %>
+  if [@type] == "heartbeat" {
+    exec {
+      command => "touch /var/vcap/sys/run/ingestor_syslog/ingestor_syslog.watchdog"
+    }
+  }
+  <% end %>
+
+  if [@type] != "heartbeat" {
+  <% p('logstash_parser.outputs').each do | output | %>
+      <%= output['plugin'] %> {
+      <% if 'elasticsearch' == output['plugin'] %>
+          <%
+            options = {
+              "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
+              "index" => p('logstash_parser.elasticsearch.index'),
+              "document_type" => p('logstash_parser.elasticsearch.index_type'),
+              "manage_template" => false
+            }
+            if p('logstash_parser.elasticsearch.idle_flush_time', nil)
+              options['idle_flush_time'] = p('logstash_parser.elasticsearch.idle_flush_time')
+            end
+            if p('logstash_parser.elasticsearch.document_id', nil)
+              options['document_id'] = p('logstash_parser.elasticsearch.document_id')
+            end
+            if p('logstash_parser.elasticsearch.routing', nil)
+              options['routing'] = p('logstash_parser.elasticsearch.routing')
+            end
+            output['options'] = options.merge(output['options'])
+          %>
+      <% end %>
+      <% output['options'].each do | k, v | %>
+        <%= k %> => <%= v.inspect %>
+      <% end %>
+      }
+  <% end %>
+  }
 }

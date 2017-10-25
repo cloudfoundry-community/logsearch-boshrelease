@@ -33,6 +33,15 @@ input {
     port => "<%= port %>"
   }
   <% end %>
+
+  <% if p("logstash_ingestor.watchdog.enable") %>
+  heartbeat {
+    id => "watchdog_heartbeat"
+    type => "heartbeat"
+    message => "heartbeat"
+    interval => <%= p("logstash_ingestor.watchdog.interval") %>
+  }
+  <% end %>
 }
 
 filter {
@@ -44,17 +53,27 @@ filter {
 }
 
 output {
-    <% if p("logstash_ingestor.debug") %>
-        stdout {
-            codec => "json"
-        }
-    <% end %>
+  <% if p("logstash_ingestor.debug") %>
+  stdout {
+    codec => "json"
+  }
+  <% end %>
 
-    <% p('logstash_ingestor.outputs').each do | output | %>
-        <%= output['plugin'] %> {
-        <% output['options'].each do | k, v | %>
-          <%= k %> => <%= v.inspect %>
-        <% end %>
-        }
+  <% if p("logstash_ingestor.watchdog.enable") %>
+  if [@type] == "heartbeat" {
+    exec {
+      command => "touch /var/vcap/sys/run/ingestor_syslog/ingestor_syslog.watchdog"
+    }
+  }
+  <% end %>
+
+  if [@type] != "heartbeat" {
+  <% p('logstash_ingestor.outputs').each do | output | %>
+    <%= output['plugin'] %> {
+      <% output['options'].each do | k, v | %>
+        <%= k %> => <%= v.inspect %>
+      <% end %>
+    }
     <% end %>
+  }
 }

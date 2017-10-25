@@ -21,3 +21,22 @@ bosh -e my-env -d logsearch deploy logsearch-deployment.yml \
 ```
 
 The AWS key only needs to give `s3:PutObject` to objects in the bucket and `s3:ListBucket` to the bucket itself.
+
+## Logstash Watchdog
+Logstash sometimes suffers from bugs that cause it to deadlock. Because Logstash runs a limited number of worker threads, sometimes bugs in plugins can be the root cause.
+
+Obviously, deadlocks like this need to be debugged and fixed. However, some production environments have strict logging requirements, and a deadlock in Logstash is a critical outage. Logsearch's monitoring provides an optional [watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer) that's disabled by default. It can be enabled in the main Logsearch pipeline and the archiver using an [ops file](https://bosh.io/docs/cli-ops-files.html) like this:
+
+```
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties?/logstash_ingestor/watchdog/enable
+  value: true
+
+- type: replace
+  path: /instance_groups/name=archiver/jobs/name=archiver_syslog/properties?/logstash_ingestor/watchdog/enable
+  value: true
+```
+
+Because the watchdog can hide serious bugs in a deployment, it's recommended to leave it disabled in non-production environments.
+
+The watchdog works by using the [heartbeat input plugin](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-heartbeat.html) to generate messages that pass through Logstash and get picked up by an output plugin that updates the timestamp on a file. Another job watches this file, and shuts down Logstash if it ever gets too old. Monit then restarts Logstash as normal.

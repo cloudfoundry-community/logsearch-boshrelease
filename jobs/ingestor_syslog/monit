@@ -3,3 +3,11 @@ check process ingestor_syslog
   start program "/var/vcap/jobs/ingestor_syslog/bin/monit_debugger ingestor_syslog_ctl '/var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog_ctl start'"  with timeout 120 seconds
   stop program "/var/vcap/jobs/ingestor_syslog/bin/monit_debugger ingestor_syslog_ctl '/var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog_ctl stop'"
   group vcap
+
+<% if p("logstash_ingestor.watchdog.enable") %>
+check process ingestor_syslog_watchdog
+  with pidfile /var/vcap/sys/run/ingestor_syslog/ingestor_syslog_watchdog.pid
+  start program "/var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog_watchdog_ctl start"
+  stop program "/var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog_watchdog_ctl stop"
+  group vcap
+<% end %>

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -eu
+
+JOB_NAME=archiver_syslog_watchdog
+JOB_DIR="/var/vcap/jobs/archiver_syslog"
+LOG_DIR="/var/vcap/sys/log/archiver_syslog"
+PID_FILE="/var/vcap/sys/run/archiver_syslog/${JOB_NAME}.pid"
+
+exec 1>> "/var/vcap/sys/log/monit/${JOB_NAME}.log"
+exec 2>> "/var/vcap/sys/log/monit/${JOB_NAME}.err.log"
+source /var/vcap/jobs/archiver_syslog/helpers/ctl_utils.sh
+
+case $1 in
+
+  start)
+    pid_guard "${PID_FILE}" "${JOB_NAME}"
+    echo $$ > "${PID_FILE}"
+
+    STARTUP_TIME_SECS=300 exec /var/vcap/packages/watchdog/bin/watchdog \
+      archiver_syslog \
+      <%= 3 * p("logstash_ingestor.watchdog.interval") %> \
+      "${JOB_DIR}/bin/crash_archiver_syslog" \
+         >>"${LOG_DIR}/${JOB_NAME}.stdout.log" \
+         2>>"${LOG_DIR}/${JOB_NAME}.stderr.log"
+  ;;
+
+  stop)
+    kill_and_wait "${PID_FILE}"
+    ensure_no_more_logstash
+  ;;
+
+  *)
+    echo "Usage: archiver_syslog_watchdog_ctl {start|stop}"
+  ;;
+esac

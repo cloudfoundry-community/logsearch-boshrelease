@@ -3,3 +3,11 @@ check process archiver_syslog
   start program "/var/vcap/jobs/archiver_syslog/bin/monit_debugger archiver_syslog_ctl '/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_ctl start'"  with timeout 120 seconds
   stop program "/var/vcap/jobs/archiver_syslog/bin/monit_debugger archiver_syslog_ctl '/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_ctl stop'"
   group vcap
+
+<% if p("logstash_ingestor.watchdog.enable") %>
+check process archiver_syslog_watchdog
+  with pidfile /var/vcap/sys/run/archiver_syslog/archiver_syslog_watchdog.pid
+  start program "/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_watchdog_ctl start"
+  stop program "/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_watchdog_ctl stop"
+  group vcap
+<% end %>

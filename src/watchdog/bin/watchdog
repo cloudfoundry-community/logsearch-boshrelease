@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# Usage: watchdog <target job name> <max age in seconds> <kill command>
+#
+# This script watches a watchdog timer file.  If the file's timestamp ever gets
+# older than the given max age, the kill command is run.
+#
+# Various settings can be overridden using environment variables, e.g.:
+# BACKOFF_TIME_SECS=1800 watchdog foo_job 10 '/var/vcap/job/foo_job/bin/foo_job_ctl stop'
+#
+# The idea is that the target program should update the timer file at regular
+# intervals.  If it fails to do that, the watchdog kills it so that monit can
+# restart it.
+#
+# There's a risk to doing this naively.  If there are multiple replicated
+# servers under heavy load, and one gets slightly overloaded and is too slow to
+# update its watchdog timer, killing it could trigger a cascading failure as
+# extra load gets shifted to other servers while it restarts.
+#
+# It's recommended to avoid this two ways.  First, make the max age a multiple
+# of the timer update time so that a kill isn't triggered on overload.  Second,
+# make sure BACKOFF_TIME_SECS is set to a value that's much longer than the
+# startup time.  This prevents the script from repeatedly restarting a server
+# when it's obviously not helping.
+
+set -eu
+
+TARGET="$1"
+MAX_AGE_SECS="$2"
+KILL_CMD="$3"
+: ${STARTUP_TIME_SECS=10}
+: ${BACKOFF_TIME_SECS=3600}
+: ${RUN_DIR="/var/vcap/sys/run/${TARGET}"}
+: ${WATCHDOG_TIMER="${RUN_DIR}/${TARGET}.watchdog"}
+
+log() {
+  echo "$(date): $1"
+}
+
+log "Watchdog starting"
+log "Target: ${TARGET}"
+log "Watchdog timer file: ${WATCHDOG_TIMER}"
+log "Max age: ${MAX_AGE_SECS} seconds"
+
+# This temporary file is used for doing timestamp comparisons.
+# Kind of hacky, but simple and works.
+BENCHMARK="$(mktemp)"
+trap 'rm -f "${BENCHMARK}"' EXIT
+
+while true
+do
+  sleep "${MAX_AGE_SECS}"
+  TARGET_PID="$(cat "${RUN_DIR}/${TARGET}.pid")"
+  # Get the process uptime, or just use 0 as a dummy value if the process is missing and let monit deal with it.
+  UPTIME_SECS="$(ps -o etimes= -p "${TARGET_PID}" || echo 0)"
+
+  if [ "${UPTIME_SECS}" -gt "${STARTUP_TIME_SECS}" ]
+  then
+    touch -d "${MAX_AGE_SECS} seconds ago" "${BENCHMARK}"
+    if [ "${WATCHDOG_TIMER}" -ot "${BENCHMARK}" ]
+    then
+      log "${TARGET} watchdog timer file stale ($(stat -c %y "${WATCHDOG_TIMER}") older than $(stat -c %y "${BENCHMARK}")"
+      log "Running ${KILL_CMD}"
+      sh -c "${KILL_CMD}"
+      log "Sleeping for ${BACKOFF_TIME_SECS} seconds before checking again"
+      sleep "${BACKOFF_TIME_SECS}"
+      log "Waking up"
+    fi
+  fi
+done

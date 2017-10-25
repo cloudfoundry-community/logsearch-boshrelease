@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -eu
+
+PID="$(cat /var/vcap/sys/run/ingestor_syslog/ingestor_syslog.pid)"
+
+# SIGQUIT triggers a Java application to dump debugging information and a stack trace of all threads
+# (It doesn't quit the application.)
+kill -QUIT "${PID}"
+sleep 5
+
+/var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog_ctl stop
