@@ -5,6 +5,9 @@ properties:
   logstash_ingestor:
     syslog:
       port: 5514
+    watchdog:
+      enable: false
+      interval: 10
   logstash_parser:
     debug: false
     inputs: [ { plugin: "file", options: { path: "my/path/to/file" } }, { plugin: "syslog", options: { host: "127.0.0.1", port: 123} } ]

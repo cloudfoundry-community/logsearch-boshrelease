@@ -5,6 +5,9 @@ properties:
   logstash_ingestor:
     syslog:
       port: 5514
+    watchdog:
+      enable: false
+      interval: 10
   logstash_parser:
     debug: true
     outputs: [ { plugin: "elasticsearch", options: {} } ]
