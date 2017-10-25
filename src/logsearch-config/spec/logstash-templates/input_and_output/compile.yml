@@ -28,3 +28,7 @@ template:
     - name: "outputs - elasticsearch properties"
       config: "input_and_output/test_outputs_elasticsearch_required_properties-config.yml"
       destination: "target/input_and_output-test_outputs_elasticsearch_required_properties.conf"
+
+    - name: "watchdog"
+      config: "input_and_output/test_watchdog-config.yml"
+      destination: "target/input_and_output-test_watchdog.conf"
