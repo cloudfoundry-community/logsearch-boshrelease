@@ -19,6 +19,7 @@
           cloudfoundry:
             firehose_client_id: firehose-to-syslog
             firehose_client_secret: ((firehose_client_secret))
+            firehose_subscription_id: logsearch-archiver
             skip_ssl_validation: false
           syslog:
             host: 127.0.0.1
