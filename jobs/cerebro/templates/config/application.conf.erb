@@ -15,23 +15,16 @@ data.path = "/var/vcap/store/cerebro/cerebro.db"
 pidfile.path = "/dev/null"
 
 <%
-  elasticsearch_host = "http://localhost:9200"
-  if_p("cerebro.elasticsearch.host") do |host|
-    elasticsearch_host = host
+  cluster_name = nil
+  if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }
+  unless cluster_name
+    cluster_name = p("elasticsearch.cluster_name")
   end
-
-
-  cluster_name = "default"
-  if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("cerebro.elasticsearch.cluster_name") }
-  if_p("cerebro.elasticsearch.cluster_name") do |cn|
-    cluster_name = cn
-  end
-
 %>
 
 hosts = [
   {
-    host = "<%= elasticsearch_host %>"
+    host = "http://localhost:9200"
     name = "<%= cluster_name %>"
   }
 ]

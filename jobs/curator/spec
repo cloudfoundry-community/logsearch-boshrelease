@@ -32,7 +32,7 @@ properties:
     default: ''
   elasticsearch.cloud.aws.bucket:
     description: Bucket name on S3 where to keep snapshots
-    default: ''  
+    default: ''
 
   curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
