@@ -1,6 +1,16 @@
 <%
   elasticsearch_hosts = nil
   elasticsearch_port = nil
+  elasticsearch_url_prefix = nil
+  elasticsearch_use_ssl = 'false'
+  elasticsearch_ssl_cert = nil
+  elasticsearch_ssl_client_cert = nil
+  elasticsearch_ssl_client_key = nil
+  elasticsearch_ssl_no_validate = 'false'
+  elasticsearch_http_auth = nil
+  elasticsearch_timeout = 30
+  elasticsearch_master_only = 'false'
+
   if_link("elasticsearch") { |elasticsearch_link|
     elasticsearch_hosts = elasticsearch_link.instances.map { |instance| instance.address }
     elasticsearch_port = elasticsearch_link.p("elasticsearch.port")
@@ -11,23 +21,51 @@
   unless elasticsearch_port
     elasticsearch_port = p("curator.elasticsearch.port")
   end
+  unless elasticsearch_url_prefix
+    elasticsearch_url_prefix = p("curator.elasticsearch.url_prefix")
+  end
+  if_p("curator.elasticsearch.use_ssl") do |use_ssl| 
+    elasticsearch_use_ssl = use_ssl
+  end
+  unless elasticsearch_ssl_cert
+    elasticsearch_ssl_cert = p("curator.elasticsearch.ssl_certificate")
+  end    
+  unless elasticsearch_ssl_client_cert
+    elasticsearch_ssl_client_cert = p("curator.elasticsearch.client_cert")
+  end  
+  unless elasticsearch_ssl_client_key
+    elasticsearch_ssl_client_key = p("curator.elasticsearch.client_key")
+  end  
+  if_p("curator.elasticsearch.ssl_no_validate") do |ssl_no_validate|
+    elasticsearch_ssl_no_validate = ssl_no_validate
+  end
+  unless elasticsearch_http_auth
+    elasticsearch_http_auth = p("curator.elasticsearch.http_auth")
+  end      
+  if_p("curator.elasticsearch.timeout") do |timeout|
+    elasticsearch_timeout = timeout
+  end 
+  if_p("curator.elasticsearch.master_only") do |master_only| 
+    elasticsearch_master_only = master_only
+  end
+
 %>
 ---
 client:
   hosts: <%= elasticsearch_hosts %>
   port: <%= elasticsearch_port %>
-  url_prefix:
-  use_ssl: False
-  certificate:
-  client_cert:
-  client_key:
-  ssl_no_validate: False
-  http_auth:
-  timeout: 30
-  master_only: False
+  url_prefix: <%= elasticsearch_url_prefix %>
+  use_ssl: <%= elasticsearch_use_ssl %>
+  certificate: <%= elasticsearch_ssl_cert %>
+  client_cert: <%= elasticsearch_ssl_client_cert %>
+  client_key: <%= elasticsearch_ssl_client_key %>
+  ssl_no_validate: <%= elasticsearch_ssl_no_validate %>
+  http_auth: <%= elasticsearch_http_auth %>
+  timeout: <%= elasticsearch_timeout %>
+  master_only: <%= elasticsearch_master_only %>
 
 logging:
   loglevel: <%= p('curator.loglevel') %>
-  logfile:
+  logfile: '/var/vcap/sys/log/curator/curator.stdout.log'
   logformat: <%= p('curator.logformat') %>
   blacklist: ['elasticsearch', 'urllib3']
