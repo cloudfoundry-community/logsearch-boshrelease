@@ -40,13 +40,13 @@ until [ "${remaining}" -le 0 ]; do
     break
   fi
   <% end %>
-  let remaining-=<%= p("elasticsearch.health.interval") %>
+  remaining=$((remaining-<%= p("elasticsearch.health.interval") %>))
   sleep <%= p("elasticsearch.health.interval") %>
 done
 
 rm ${out}
 
-if [ -z "${remaining}" ]; then
+if [ "${remaining}" -le 0 ]; then
   echo "Node failed to join the cluster"
   exit 1
 fi
