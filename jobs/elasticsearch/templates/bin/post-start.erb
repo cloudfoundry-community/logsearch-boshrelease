@@ -8,7 +8,7 @@ echo "Waiting <%= p("elasticsearch.health.connect_timeout") %>s for elasticsearc
 elapsed=0
 until [ $elapsed -ge <%= p("elasticsearch.health.connect_timeout") %> ]
 do
-  nc -4 -z -v localhost 9200 2>&1 && break
+  nc -4 -v localhost 9200 < /dev/null 2>&1 && break
   elapsed=$[$elapsed+<%= p("elasticsearch.health.connect_interval") %>]
   sleep <%= p("elasticsearch.health.connect_interval") %>
 done
