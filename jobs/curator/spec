@@ -6,14 +6,14 @@ packages:
   - python3
 
 templates:
-  bin/run: bin/run
   bin/curator_ctl: bin/curator_ctl
+  bin/run-curator: bin/run-curator
   config/actions.yml.erb: config/actions.yml
   config/config.yml.erb: config/config.yml
   config/purge_logs.cron: config/purge_logs.cron
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
   data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 consumes:
  - name: elasticsearch
