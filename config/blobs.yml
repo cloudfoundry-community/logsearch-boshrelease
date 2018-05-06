@@ -30,10 +30,10 @@ curator/vendor/voluptuous-0.10.5.tar.gz:
   size: 41436
   object_id: b67881a7-7adb-4456-7d0b-f5b00e936152
   sha: 31373cc4ba935eda76b55e64e8bd218ce4882e2b
-elasticsearch/elasticsearch-5.6.4.tar.gz:
-  size: 33776770
-  object_id: 9df26f34-eaa4-4891-52dd-3bd2768591d4
-  sha: 6e97b8edc2c5d06b6d0343de44bc5bb750224233
+elasticsearch/elasticsearch-5.6.9.tar.gz:
+  size: 33794793
+  object_id: ec8beb33-5ee2-4af7-67ef-e5f681416dba
+  sha: 9dae4794cad7b804bffe09d03c94ab25b3e9c586
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
@@ -46,14 +46,14 @@ java8/openjdk-1.8.0_152.tar.gz:
   size: 45661256
   object_id: 2211b342-4102-4587-6037-23a143726f2b
   sha: 0d5758ed6f0e040684ea8bdf410ba44422f29f47
-kibana/kibana-5.6.4-linux-x86_64.tar.gz:
-  size: 51834711
-  object_id: df7bf2bc-bf04-4d82-4471-ac4e45abd816
-  sha: 1a331c46a878d7b1adfbb80834f7ab8d971e6872
-logstash/logstash-5.6.4.tar.gz:
-  size: 103421527
-  object_id: 9afbf193-0720-456b-6808-60a7b26a4f4d
-  sha: e50bf4ec506c4172ef269a353c62e69441d1119d
+kibana/kibana-5.6.9-linux-x86_64.tar.gz:
+  size: 52381284
+  object_id: 84b536d4-be5d-4038-736e-ad68297ead3e
+  sha: 38fde713648f0bdc424460cb59d8cd5b469d7d05
+logstash/logstash-5.6.9.tar.gz:
+  size: 101993306
+  object_id: 8a6653d5-7caf-4e55-5f04-4d58723737df
+  sha: b633b58a373dc7cb75ffeea7462f98b728fe7dee
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
   object_id: 543e5010-6449-400b-489d-31b82dcb4670
