@@ -414,4 +414,4 @@ releases:
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3445.11"
+  version: "3541.latest"
