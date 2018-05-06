@@ -32,3 +32,11 @@ properties:
     default: cerebro
   cerebro.password:
     description: "Password for HTTP basic auth."
+  cerebro.ldap.enabled:
+    description: "Set to true to enable LDAP authentication."
+    default: false
+  cerebro.ldap.options:
+    description: "Config options for LDAP authentication type."
+    example: |
+      method: simple
+      url: ldap://host:port

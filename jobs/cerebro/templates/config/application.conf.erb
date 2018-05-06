@@ -38,3 +38,14 @@ auth = {
   }
 }
 <% end %>
+
+<% if p('cerebro.ldap.enabled') %>
+auth = {
+  type: ldap
+  settings: {
+  <% p('cerebro.ldap.options').to_a.each do | k, v | %>
+    <%= k %> = "<%= v %>"
+  <% end %>
+  }
+}
+<% end %>
