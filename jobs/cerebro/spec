@@ -27,3 +27,16 @@ properties:
     default: []
   cerebro.secret:
     description: Secret will be used to sign Cerebro session cookies and CSRF tokens.
+  cerebro.user:
+    description: "Username for HTTP basic auth."
+    default: cerebro
+  cerebro.password:
+    description: "Password for HTTP basic auth."
+  cerebro.ldap.enabled:
+    description: "Set to true to enable LDAP authentication."
+    default: false
+  cerebro.ldap.options:
+    description: "Config options for LDAP authentication type."
+    example: |
+      method: simple
+      url: ldap://host:port

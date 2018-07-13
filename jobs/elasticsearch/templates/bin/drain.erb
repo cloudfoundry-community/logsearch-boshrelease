@@ -11,6 +11,14 @@ curl -s -X PUT localhost:9200/_all/_settings \
 
 <% end %>
 
+<% if p('elasticsearch.cloud.aws.bucket') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
+curl -X DELETE -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> > /dev/null
+<% end %>
+
+<% if p('elasticsearch.path_repo') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
+curl -X DELETE -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> > /dev/null
+<% end %>
+
 return_code=$?
 echo 0
 exit ${return_code}

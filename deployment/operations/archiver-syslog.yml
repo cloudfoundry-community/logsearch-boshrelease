@@ -1,0 +1,44 @@
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: archiver
+    instances: 1
+    vm_type: c3.large
+    azs: [z1]
+    stemcell: default
+    persistent_disk_pool: 10GB
+    networks:
+      - name: default
+    jobs:
+      - name: ingestor_cloudfoundry-firehose
+        release: logsearch-for-cloudfoundry
+        consumes:
+          ingestor: nil
+          cloud_controller: {from: cloud_controller, deployment: cf}
+        properties:
+          cloudfoundry:
+            firehose_client_id: firehose-to-syslog
+            firehose_client_secret: ((firehose_client_secret))
+            firehose_subscription_id: logsearch-archiver
+            skip_ssl_validation: false
+          syslog:
+            host: 127.0.0.1
+            port: 5514
+      - name: archiver_syslog
+        release: logsearch
+        properties:
+          logstash_ingestor:
+            outputs:
+              - plugin: s3
+                options:
+                  access_key_id: ((archive_key_id))
+                  secret_access_key: ((archive_secret_key))
+                  region: ((s3_region))
+                  bucket: ((archive_bucket_name))
+                  prefix: "%{+yyyy/MM/dd/HH/mm}"
+                  encoding: gzip
+                  server_side_encryption: true
+                  validate_credentials_on_root_bucket: false
+                  # FIXME: currently not supported by Logstash S3 output plugin
+                  # https://github.com/logstash-plugins/logstash-output-s3/pull/152
+                  # canned_acl: bucket-owner-read

@@ -1,6 +1,26 @@
 ---
 actions:
+  <% if_p('elasticsearch.snapshots.repository') do |repo| %>
   1:
+    action: snapshot
+    description: >-
+      Create snapshot for all indicies
+    options:
+      disable_action: <% if p('elasticsearch.path_repo') != '' or p('elasticsearch.cloud.aws.bucket') != '' %>False<% else %>True<% end %>
+      repository: <%= repo %>
+      wait_for_completion: True
+      ignore_empty_list: True
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: logs-
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: <%= p('curator.purge_logs.unit') %>
+      unit_count: <%= p('curator.purge_logs.retention_period') %>
+  <% end %>
+  2:
     action: delete_indices
     description: >-
       Delete indices older than <%= p('curator.purge_logs.retention_period') %> <%= p('curator.purge_logs.unit') %> (based on index name), for logs-
@@ -19,5 +39,5 @@ actions:
       unit: <%= p('curator.purge_logs.unit') %>
       unit_count: <%= p('curator.purge_logs.retention_period') %>
 <% p("curator.actions", []).each_with_index do | action, index | %>
-  <%= index + 2 %>:<%= action.to_yaml.gsub("---", "").gsub("\n", "\n    ") %>
+  <%= index + 3 %>:<%= action.to_yaml.gsub("---", "").gsub("\n", "\n    ") %>
 <% end %>

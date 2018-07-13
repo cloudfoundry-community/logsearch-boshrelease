@@ -92,13 +92,6 @@ instance_groups:
       elasticsearch:
         node:
           allow_master: true
-  - name: cerebro
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_master}
-    properties:
-      cerebro:
-        secret: ((cerebro_secret_key))
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -370,6 +363,10 @@ instance_groups:
           service: ingestor
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
           service: ingestor
+        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
+          service: ingestor_cloudfoundry-firehose
+        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
+          service: ingestor_cloudfoundry-firehose
 - name: ls-router
   azs:
   - z1
@@ -404,15 +401,17 @@ variables:
   type: password
 - name: firehose_client_secret
   type: password
-- name: cerebro_secret_key
-  type: password
 
 releases:
 - name: logsearch
-  version: "latest"
+  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=208.0.0
+  version: 208.0.0
+  sha1: 578283fd9d8dbbd02e7f4f35e6d60671953a924f
 - name: logsearch-for-cloudfoundry
-  version: "latest"
+  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=206.0.0
+  version: 206.0.0
+  sha1: 574720bed4d453ed4153f48d5244e2b4fde16354
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3421.11"
+  version: "3541.latest"

@@ -1,0 +1,41 @@
+---
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/-
+  value:
+    name: cerebro
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      cerebro:
+        secret: ((cerebro_secret_key))
+        password: ((cerebro_auth_password))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/-
+  value:
+    name: route_registrar
+    release: logsearch-for-cloudfoundry
+    consumes:
+      nats: {from: nats, deployment: cf}
+    properties:
+      route_registrar:
+        routes:
+        - name: cerebro
+          port: 9000
+          registration_interval: 60s
+          uris:
+          - "cerebro.((system_domain))"
+
+# --- define secrets for cerebro
+- type: replace
+  path: /variables/-
+  value:
+    name: cerebro_secret_key
+    type: password
+
+- type: replace
+  path: /variables/-
+  value:
+    name: cerebro_auth_password
+    type: password

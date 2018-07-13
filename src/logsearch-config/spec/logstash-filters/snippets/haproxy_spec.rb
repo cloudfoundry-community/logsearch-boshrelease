@@ -27,7 +27,7 @@ describe "Rules for parsing haproxy messages" do
         end
 
         it "adds @source.job" do
-          expect(parsed_result.get("@source")["job"]).to eq "router"
+          expect(parsed_result.get("@source")["job"]).to eq "ls-router"
         end
       end
 
@@ -45,7 +45,7 @@ describe "Rules for parsing haproxy messages" do
         end
 
         it "adds @source.job" do
-          expect(parsed_result.get("@source")["job"]).to eq "router"
+          expect(parsed_result.get("@source")["job"]).to eq "ls-router"
         end
       end
     end

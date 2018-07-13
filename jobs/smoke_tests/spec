@@ -1,5 +1,5 @@
 ---
-name: smoke-tests
+name: smoke_tests
 
 packages: []
 

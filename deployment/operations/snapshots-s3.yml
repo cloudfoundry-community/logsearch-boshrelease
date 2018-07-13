@@ -1,0 +1,27 @@
+---
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/snapshots?
+  value:
+    repository: "((snapshots_repository))"
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/cloud?
+  value:
+    aws:
+      access_key: "((aws_access_key))"
+      secret_key: "((aws_secret_key))"
+      bucket: "((aws_bucket))"
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/snapshots?
+  value:
+    repository: "((snapshots_repository))"
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/cloud?
+  value:
+    aws:
+      access_key: "((aws_access_key))"
+      secret_key: "((aws_secret_key))"
+      bucket: "((aws_bucket))"
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=curator/properties/elasticsearch?/snapshots?
+  value:
+    repository: "((snapshots_repository))"

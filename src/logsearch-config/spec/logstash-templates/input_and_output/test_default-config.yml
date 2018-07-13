@@ -14,4 +14,3 @@ properties:
       index_type: "%{@type}"
       idle_flush_time: 100
       data_hosts: [127.0.0.1]
-      flush_size: 500

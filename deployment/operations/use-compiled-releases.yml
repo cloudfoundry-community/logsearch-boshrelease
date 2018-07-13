@@ -1,0 +1,28 @@
+- path: /releases/name=logsearch/url
+  type: replace
+  value: https://s3.amazonaws.com/logsearch-deployment-compiled-releases/logsearch-208.0.0-ubuntu-trusty-3445.11-20170920-121357-222407703.tgz
+- path: /releases/name=logsearch/version
+  type: replace
+  value: 208.0.0
+- path: /releases/name=logsearch/sha1
+  type: replace
+  value: 0778443aaf94211f286faa1448d4f5f6071a5deb 
+- path: /releases/name=logsearch-for-cloudfoundry/url
+  type: replace
+  value: https://s3.amazonaws.com/logsearch-deployment-compiled-releases/logsearch-for-cloudfoundry-206.0.0-ubuntu-trusty-3445.11-20170920-121930-977395257.tgz
+- path: /releases/name=logsearch-for-cloudfoundry/version
+  type: replace
+  value: 206.0.0
+- path: /releases/name=logsearch-for-cloudfoundry/sha1
+  type: replace
+  value: 55cc342af1740355a3c3a5a4ca5fce9eca67dd2f
+- path: /releases/name=logsearch/stemcell?
+  type: replace
+  value:
+    os: ubuntu-trusty
+    version: "3445.11"
+- path: /releases/name=logsearch-for-cloudfoundry/stemcell?
+  type: replace
+  value:
+    os: ubuntu-trusty
+    version: "3445.11"

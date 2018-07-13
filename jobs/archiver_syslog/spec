@@ -26,6 +26,10 @@ provides:
   - logstash_ingestor.syslog.transport
   - logstash_ingestor.syslog_tls.port
   - logstash_ingestor.relp.port
+- name: syslog_forwarder
+  type: syslog_forwarder
+  properties:
+  - logstash_ingestor.syslog.port
 
 properties:
   logstash.heap_size:
@@ -51,6 +55,8 @@ properties:
   logstash_ingestor.workers:
     description: "The number of worker threads that logstash should use (default: auto = one per CPU)"
     default: auto
+  logstash_ingestor.filters:
+    description: Filters to execute on the ingestors
 
   logstash.queue.type:
     description: Internal queuing model, "memory" for legacy in-memory based queuing and "persisted" for disk-based acked queueing.
