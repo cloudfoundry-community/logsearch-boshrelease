@@ -6,14 +6,14 @@ packages:
   - python3
 
 templates:
-  bin/run: bin/run
   bin/curator_ctl: bin/curator_ctl
+  bin/run-curator: bin/run-curator
   config/actions.yml.erb: config/actions.yml
   config/config.yml.erb: config/config.yml
   config/purge_logs.cron: config/purge_logs.cron
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
   data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 consumes:
  - name: elasticsearch
@@ -21,9 +21,23 @@ consumes:
    optional: true
 
 properties:
-  curator.elasticsearch.host:
+  elasticsearch.snapshots.repository:
+    description: Repository name for automatic snapshots
+  elasticsearch.path_repo:
+    description: |
+      Shared file system to store snapshots.
+      In order to register the shared file system repository it is
+      necessary to mount the same shared filesystem to the same location
+      on all master and data nodes.
+    default: ''
+  elasticsearch.cloud.aws.bucket:
+    description: Bucket name on S3 where to keep snapshots
+    default: ''
+
+  curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
-    default: "127.0.0.1"
+    default:
+    - "127.0.0.1"
   curator.elasticsearch.port:
     description: Port address of elasticsearch host to proxy requests for (eg, 9200)
     default: 9200
@@ -36,6 +50,9 @@ properties:
   curator.loglevel:
     description: Set the minimum acceptable log severity to display.
     default: INFO
+  curator.cron_schedule:
+    description: Schedule to trigger Curator, using normal cron format
+    default: 0 0 * * *
   curator.logformat:
     description: This should default, json, logstash.
     default: default

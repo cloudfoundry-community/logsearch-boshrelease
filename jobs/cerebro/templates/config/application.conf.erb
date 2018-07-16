@@ -28,3 +28,24 @@ hosts = [
     name = "<%= cluster_name %>"
   }
 ]
+
+<% if_p('cerebro.user', 'cerebro.password') do %>
+auth = {
+  type: basic
+  settings: {
+    username = "<%= p('cerebro.user') %>"
+    password = "<%= p('cerebro.password') %>"
+  }
+}
+<% end %>
+
+<% if p('cerebro.ldap.enabled') %>
+auth = {
+  type: ldap
+  settings: {
+  <% p('cerebro.ldap.options').to_a.each do | k, v | %>
+    <%= k %> = "<%= v %>"
+  <% end %>
+  }
+}
+<% end %>

@@ -157,9 +157,6 @@ properties:
   logstash_parser.elasticsearch.data_hosts:
     description: The list of elasticsearch data node IPs
     default: [127.0.0.1]
-  logstash_parser.elasticsearch.flush_size:
-    description: Controls how many logs will be buffered and sent to Elasticsearch for bulk indexing
-    default: 500
   logstash_parser.timecop.reject_greater_than_hours:
     description: "Logs with timestamps greater than this many hours in the future won't be parsed and will get tagged with fail/timecop"
     default: 1

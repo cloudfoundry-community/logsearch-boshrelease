@@ -1,0 +1,34 @@
+---
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/cloud?
+  value:
+    repository: "((snapshots_repository))"
+    aws:
+      access_key: "((aws_access_key))"
+      secret_key: "((aws_secret_key))"
+      region: "((aws_region))"
+      bucket: "((aws_bucket))"
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/cloud?
+  value:
+    repository: "((snapshots_repository))"
+    aws:
+      access_key: "((aws_access_key))"
+      secret_key: "((aws_secret_key))"
+      region: "((aws_region))"
+      bucket: "((aws_bucket))"
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=curator/properties?
+  value:
+    curator:
+      actions:
+      - action: snapshot
+        description: >-
+          Create snapshots for all indicies
+        options:
+          repository: "((snapshots_repository))"
+          wait_for_completion: True
+        filters:
+        - filtertype: pattern
+          kind: prefix
+          value: logs-
