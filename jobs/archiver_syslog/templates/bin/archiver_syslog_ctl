@@ -41,6 +41,7 @@ case $1 in
     # construct a complete config file from all the fragments
     cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
 
+    ulimit -n <%= p("logstash_archiver.files") %>
     exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
         --path.data ${STORE_DIR} \
         --path.config ${JOB_DIR}/config/logstash.conf \
