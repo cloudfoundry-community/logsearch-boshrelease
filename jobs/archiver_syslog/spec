@@ -114,3 +114,7 @@ properties:
   logstash_ingestor.outputs:
     description: A list of output plugins, with a hash of options for each of them.
     default: []
+
+  logstash_archiver.files:
+    description: Number of files open which the system ulimit settings allow
+    default: 4096
