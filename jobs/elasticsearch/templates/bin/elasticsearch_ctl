@@ -13,7 +13,9 @@ export LANG=en_US.UTF-8
 export <%= k %>=<%= v %>
 <% end %>
 
-export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+# test for bosh-lite
+# export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+export HEAP_SIZE=8737062K
 
 <% if_p('elasticsearch.heap_size') do |heap_size| %>
   HEAP_SIZE=<%= heap_size %>
