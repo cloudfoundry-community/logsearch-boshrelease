@@ -19,12 +19,13 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
 <% end %>
 
 export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Djava.io.tmpdir=$TMP_DIR"
-export ES_JVM_OPTIONS="${JOB_DIR}/config/jvm.options"
+export ES_PATH_CONF=${JOB_DIR}/config
 # encountered environment variables that are no longer suppor; thentted
 
 export MAX_OPEN_FILES=<%= p("elasticsearch.limits.fd") %>
 export MAX_LOCKED_MEMORY=unlimited  # required to enable elasticsearch's mlockall setting
 export MAX_MAP_COUNT=262144
+
 
 case $1 in
 
@@ -66,7 +67,6 @@ case $1 in
 
     chpst -u vcap:vcap /var/vcap/packages/elasticsearch/bin/elasticsearch \
          -p ${PIDFILE} \
-         -Epath.conf=${JOB_DIR}/config \
          <%= p("elasticsearch.exec.options", []).join(' ') %> \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
