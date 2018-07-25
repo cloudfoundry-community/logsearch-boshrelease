@@ -19,8 +19,8 @@
             "match": "*",
             "match_mapping_type": "string",
             "mapping": {
-              "type": "string",
-              "index": "not_analyzed",
+              "type": "text",
+              "index": false,
               "omit_norms": true
             }
           }
@@ -28,12 +28,12 @@
       ],
       "properties": {
         "@version": {
-          "type": "string",
-          "index": "not_analyzed"
+          "type": "text",
+          "index": false
         },
         "@raw": {
-          "type": "string",
-          "index": "analyzed",
+          "type": "text",
+          "index": true,
           "norms": {
             "enabled": false
           }
