@@ -2,7 +2,6 @@ bootstrap.memory_lock: true
 
 path.logs: "/var/vcap/sys/log/elasticsearch"
 path.data: "/var/vcap/store/elasticsearch"
-path.scripts: "/var/vcap/data/elasticsearch/plugin-scripts"
 <% if p('elasticsearch.path_repo') != '' %>
 path.repo: ["<%= p('elasticsearch.path_repo') %>"]
 <% end %>
