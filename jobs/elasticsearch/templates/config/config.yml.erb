@@ -64,4 +64,12 @@ cloud:
     <% if_p('elasticsearch.cloud.aws.region') do |region| %>region: <%= region %><% end %>
 <% end %>
 
+# disable xpack
+xpack.monitoring.enabled: true
+xpack.graph.enabled: false
+xpack.ml.enabled: false
+xpack.security.enabled: false
+xpack.watcher.enabled: false
+
+
 <% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>
