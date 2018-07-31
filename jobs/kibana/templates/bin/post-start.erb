@@ -4,19 +4,24 @@ set -e
 
 <% if !p("kibana.health.disable_post_start") %>
 
-echo "Waiting <%= p("kibana.health.timeout") %>s for kibana to accept connections..."
-elapsed=0
-until [ $elapsed -ge <%= p("kibana.health.timeout") %> ]
-do
-  curl -is http://<%= p("kibana.host") %>:<%= p("kibana.port") %> 2>&1 && break
-  elapsed=$[$elapsed+<%= p("kibana.health.interval") %>]
-  sleep <%= p("kibana.health.interval") %>
-done
+# flock is to make sure we don't run more than one
+(
+ flock -n 9 || exit 1
 
-if [ "$elapsed" -ge "<%= p("kibana.health.timeout") %>" ]; then
-  echo "ERROR: Cannot connect to kibana. Exiting..."
-  exit 1
-fi
+ echo "Waiting <%= p("kibana.health.timeout") %>s for kibana to accept connections..."
+ elapsed=0
+ until [ $elapsed -ge <%= p("kibana.health.timeout") %> ]
+ do
+   curl -is http://<%= p("kibana.host") %>:<%= p("kibana.port") %> 2>&1 && break
+   elapsed=$[$elapsed+<%= p("kibana.health.interval") %>]
+   sleep <%= p("kibana.health.interval") %>
+ done
+
+ if [ "$elapsed" -ge "<%= p("kibana.health.timeout") %>" ]; then
+   echo "ERROR: Cannot connect to kibana. Exiting..."
+   exit 1
+ fi
+) 9>/var/lock/kibana.post-start.lock
 
 <% end %>
 
