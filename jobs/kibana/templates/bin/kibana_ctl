@@ -67,6 +67,8 @@ case $1 in
     # Note:  You can also just nuke .kibana with `curl -k -X DELETE http://localhost:9200/.kibana` while logged into the kibana instance and
     #        then recreate everything with `bosh run-errand -d logsearch upload-kibana-objects`.
     if grep 'Your Kibana index is out of date, reset it or use the X-Pack upgrade assistant' $LOG_DIR/kibana.stdout.log >/dev/null ; then
+      echo "converting .kibana index to new 6.x format"
+
       # move the log out of the way so that we don't do this more than once.
       mv $LOG_DIR/kibana.stdout.log $LOG_DIR/kibana.stdout.log.kibanaupgrade
 
