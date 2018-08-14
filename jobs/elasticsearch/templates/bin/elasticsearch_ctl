@@ -27,7 +27,6 @@ export MAX_OPEN_FILES=<%= p("elasticsearch.limits.fd") %>
 export MAX_LOCKED_MEMORY=unlimited  # required to enable elasticsearch's mlockall setting
 export MAX_MAP_COUNT=262144
 
-
 case $1 in
 
   start)
