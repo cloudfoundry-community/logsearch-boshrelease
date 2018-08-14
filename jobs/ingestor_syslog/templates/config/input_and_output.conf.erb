@@ -57,7 +57,6 @@ output {
               options = {
                 "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
                 "index" => p('logstash_parser.elasticsearch.index'),
-#                "document_type" => p('logstash_parser.elasticsearch.index_type'),
                 "manage_template" => false
               }
               if p('logstash_parser.elasticsearch.idle_flush_time', nil)
