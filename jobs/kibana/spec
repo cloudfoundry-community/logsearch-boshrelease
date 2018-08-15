@@ -58,6 +58,15 @@ properties:
   kibana.console_enabled:
     description: "Enable Kibana development console; should be set to `false` in a multi-tenant deployment."
     default: false
+  kibana.searchprofiler_enabled:
+    description: "Enable Kibana development search profiler; should be set to `false` in a multi-tenant deployment."
+    default: false
+  kibana.grokdebugger_enabled:
+    description: "Enable Kibana development grok debugger; should be set to `false` in a multi-tenant deployment."
+    default: false
+  kibana.apm_enabled:
+    description: "Enable Kibana APM ui; should be set to `false` in a multi-tenant deployment."
+    default: false
   kibana.config_options:
     description: "Additional options to append to kibana's config.yml (YAML format)."
     default: ~
