@@ -1,7 +1,7 @@
 bootstrap.memory_lock: true
 
 path.logs: "/var/vcap/sys/log/elasticsearch"
-path.data: "/var/vcap/store/elasticsearch"
+path.data: "/var/vcap/store/elasticsearch/logsearch"
 <% if p('elasticsearch.path_repo') != '' %>
 path.repo: ["<%= p('elasticsearch.path_repo') %>"]
 <% end %>
