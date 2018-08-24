@@ -1,9 +1,7 @@
 bootstrap.memory_lock: true
 
-path.conf: "/var/vcap/jobs/elasticsearch/config"
 path.logs: "/var/vcap/sys/log/elasticsearch"
-path.data: "/var/vcap/store/elasticsearch"
-path.scripts: "/var/vcap/data/elasticsearch/plugin-scripts"
+path.data: "/var/vcap/store/elasticsearch/logsearch"
 <% if p('elasticsearch.path_repo') != '' %>
 path.repo: ["<%= p('elasticsearch.path_repo') %>"]
 <% end %>
@@ -65,5 +63,12 @@ cloud:
     secret_key: <%= p('elasticsearch.cloud.aws.secret_key') %>
     <% if_p('elasticsearch.cloud.aws.region') do |region| %>region: <%= region %><% end %>
 <% end %>
+
+# disable xpack
+xpack.monitoring.enabled: false
+xpack.graph.enabled: false
+xpack.ml.enabled: false
+xpack.security.enabled: false
+xpack.watcher.enabled: false
 
 <% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>

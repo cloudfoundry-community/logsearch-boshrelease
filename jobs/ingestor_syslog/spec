@@ -17,6 +17,7 @@ templates:
   config/syslog_tls.crt.erb: config/syslog_tls.crt
   config/syslog_tls.key.erb: config/syslog_tls.key
   config/logstash.yml.erb: config/logstash.yml
+  config/jvm.options.erb: config/jvm.options
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
@@ -33,6 +34,9 @@ provides:
 properties:
   logstash.heap_size:
     description: sets jvm heap sized
+  logstash.jvm_options:
+    description: additional jvm options
+    default: []
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"

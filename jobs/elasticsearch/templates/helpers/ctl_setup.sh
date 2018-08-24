@@ -56,6 +56,9 @@ do
 done
 export TMPDIR=$TMP_DIR
 
+# need this so that java keystore can be created (https://github.com/elastic/ansible-elasticsearch/issues/430)
+chmod 1775 ${JOB_DIR}/config
+
 export C_INCLUDE_PATH=/var/vcap/packages/mysqlclient/include/mysql:/var/vcap/packages/sqlite/include:/var/vcap/packages/libpq/include
 export LIBRARY_PATH=/var/vcap/packages/mysqlclient/lib/mysql:/var/vcap/packages/sqlite/lib:/var/vcap/packages/libpq/lib
 

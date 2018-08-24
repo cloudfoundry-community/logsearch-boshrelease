@@ -41,6 +41,12 @@ case $1 in
     # construct a complete config file from all the fragments
     cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
 
+    # clear persistent queue if the upgrade failed last run
+    if tail -8 $LOG_DIR/$JOB_NAME.stdout.log | grep 'QueueUpgrade - Logstash was unable to upgrade your persistent queue data' >/dev/null ; then
+      mkdir ${STORE_DIR}/oldqueue.$$
+      mv ${STORE_DIR}/queue ${STORE_DIR}/.lock ${STORE_DIR}/dead_letter_queue ${STORE_DIR}/uuid ${STORE_DIR}/oldqueue.$$
+    fi
+
     ulimit -n <%= p("logstash_archiver.files") %>
     exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
         --path.data ${STORE_DIR} \
