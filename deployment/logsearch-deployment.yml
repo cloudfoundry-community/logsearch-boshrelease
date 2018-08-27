@@ -12,7 +12,7 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   update:
     max_in_flight: 1
@@ -33,7 +33,7 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   update:
     max_in_flight: 1
@@ -55,7 +55,7 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   update:
     max_in_flight: 1
@@ -74,7 +74,7 @@ instance_groups:
   - z3
   instances: 3
   persistent_disk_type: 5GB
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   update:
     max_in_flight: 1
@@ -112,7 +112,7 @@ instance_groups:
   - z1
   instances: 1
   persistent_disk_type: 100GB
-  vm_type: m3.large
+  vm_type: large
   stemcell: default
   update:
     max_in_flight: 1
@@ -171,7 +171,7 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   update:
     serial: true
@@ -214,7 +214,7 @@ instance_groups:
   - z3
   instances: 3
   persistent_disk_type: 100GB
-  vm_type: m3.large
+  vm_type: large
   stemcell: default
   update:
     max_in_flight: 1
@@ -249,8 +249,8 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  persistent_disk_type: 2GB
-  vm_type: c3.large
+  persistent_disk_type: 5GB
+  vm_type: large
   stemcell: default
   networks:
   - name: default
@@ -310,8 +310,8 @@ instance_groups:
   - z1
   - z2
   instances: 2
-  persistent_disk_type: 2GB
-  vm_type: c3.large
+  persistent_disk_type: 5GB
+  vm_type: large
   stemcell: default
   networks:
   - name: default
@@ -371,7 +371,7 @@ instance_groups:
   azs:
   - z1
   instances: 1
-  vm_type: m3.medium
+  vm_type: medium
   stemcell: default
   networks:
   - name: default
@@ -404,14 +404,14 @@ variables:
 
 releases:
 - name: logsearch
-  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=208.0.0
-  version: 208.0.0
-  sha1: 578283fd9d8dbbd02e7f4f35e6d60671953a924f
+  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.0
+  version: 209.0.0
+  sha1: 8b6b78106903a665082814655495dd1ea388a644
 - name: logsearch-for-cloudfoundry
-  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=206.0.0
-  version: 206.0.0
-  sha1: 574720bed4d453ed4153f48d5244e2b4fde16354
+  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.0
+  version: 207.0.0
+  sha1: 5dde900a2800301705261ef653598ad10180d426
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3541.latest"
+  version: "3586.latest"
