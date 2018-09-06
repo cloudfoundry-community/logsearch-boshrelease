@@ -55,7 +55,7 @@ for NODEREF in $( curl -s "${CLUSTER}/_cat/nodes?h=host,node.role,master,name" |
 
   decho "  > disabling allocations"
 
-  curl -s -X PUT -d @- "${CLUSTER}/_cluster/settings" > /dev/null <<EOF
+  curl -s -H 'Content-Type: application/json' -X PUT -d @- "${CLUSTER}/_cluster/settings" > /dev/null <<EOF
 {"transient":{"cluster.routing.allocation.enable":"primaries"}}
 EOF
 

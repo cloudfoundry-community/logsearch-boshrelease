@@ -47,7 +47,7 @@ done
 rm ${out}
 
 <% if p("elasticsearch.node.allow_data") %>
-curl -X PUT -s localhost:9200/_all/_settings \
+curl -H 'Content-Type: application/json' -X PUT -s localhost:9200/_all/_settings \
   -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation") %>"}}'
 <% end %>
 
