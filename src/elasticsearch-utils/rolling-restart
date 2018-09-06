@@ -58,22 +58,22 @@ for NODEREF in $( curl -s "${CLUSTER}/_cat/nodes?h=host,node.role,master,name" |
   curl -s -X PUT -d @- "${CLUSTER}/_cluster/settings" > /dev/null <<EOF
 {"transient":{"cluster.routing.allocation.enable":"primaries"}}
 EOF
-  
+
 
   decho "  > sending shutdown to ${NODE}"
 
   curl -s -X POST "${CLUSTER}/_cluster/nodes/${NODE}/_shutdown" > /dev/null
-  
+
 
   decho "  > waiting for node to leave"
-  
+
   while curl -s "${CLUSTER}/_cat/nodes?h=host" | grep "${NODE}" > /dev/null ; do
     sleep 2
   done
-  
+
 
   decho "  > waiting for node to rejoin"
-  
+
   while ! curl -s --retry 8 "${CLUSTER}/_cat/nodes?h=host" | grep "${NODE}" > /dev/null ; do
     sleep 2
   done
