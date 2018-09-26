@@ -36,6 +36,9 @@ provides:
 properties:
   logstash.heap_size:
     description: sets jvm heap sized
+  logstash.heap_percentage:
+    description: The percentage value used in the calculation to set the heap size.
+    default: 46
   logstash.metadata_level:
     description: "Whether to include additional metadata throughout the event lifecycle. NONE = disabled, DEBUG = fully enabled"
     default: "NONE"
