@@ -1,0 +1,147 @@
+---
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: create-uaa-client
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+    properties:
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+        oauth2_client_secret: "((kibana_oauth2_client_secret))"
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: smoke-tests
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      smoke_tests:
+        admin_password: "((cf_admin_password))"
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: upload-kibana-objects
+    release: logsearch-for-cloudfoundry
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+  - index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
+  - index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
+  - index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+  - name: elasticsearch-config-lfc
+    release: logsearch-for-cloudfoundry
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/-
+  value:
+  - name: parser-config-lfc
+    release: logsearch-for-cloudfoundry
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/deployment_dictionary/-
+  value:
+  - /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/-
+  value:
+    name: ingestor_cloudfoundry-firehose
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      ingestor: {from: ingestor_link}
+    properties:
+      cloudfoundry:
+        firehose_client_id: firehose-to-syslog
+        firehose_client_secret: "((firehose_client_secret))"
+        skip_ssl_validation: true
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
+  value:
+  - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
+    service: ingestor_cloudfoundry-firehose
+  - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
+    service: ingestor_cloudfoundry-firehose
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/-
+  value:
+  - name: redis
+    release: logsearch-for-cloudfoundry
+    provides:
+      redis: {as: redis_link}
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/-
+  value:
+  - name: kibana-auth-plugin
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      kibana: {from: kibana_link}
+      redis: {from: redis_link}
+    properties:
+      kibana-auth:
+        cloudfoundry:
+          client_secret: "((kibana_oauth2_client_secret))"
+          skip_ssl_validation: true
+
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/-
+  value:
+    name: route_registrar
+    release: logsearch-for-cloudfoundry
+    consumes:
+      nats: {from: nats, deployment: cf}
+    properties:
+      route_registrar:
+        routes:
+        - name: kibana
+          port: 80
+          registration_interval: 60s
+          uris:
+          - "logs.((system_domain))"
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=kibana/properties/kibana/plugins?
+  value:
+  - auth: /var/vcap/packages/kibana-auth-plugin/kibana-auth-plugin.zip
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=kibana/properties/kibana/source_files?
+  value:
+  - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
+
+- type: replace
+  path: /variables?
+  value:
+  - name: kibana_oauth2_client_secret
+    type: password
+  - name: firehose_client_secret
+    type: password
+
+- type: replace
+  path: /releases/-
+  value:
+    name: logsearch-for-cloudfoundry
+    url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.0
+    version: 207.0.0
+    sha1: 5dde900a2800301705261ef653598ad10180d426

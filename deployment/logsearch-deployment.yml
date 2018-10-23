@@ -6,67 +6,8 @@ update:
   max_in_flight: 1
   serial: false
   update_watch_time: 5000-1200000
-instance_groups:
-- name: smoke-tests
-  lifecycle: errand
-  azs:
-  - z1
-  instances: 1
-  vm_type: medium
-  stemcell: default
-  update:
-    max_in_flight: 1
-    serial: true
-  networks:
-  - name: default
-  jobs:
-  - name: smoke-tests
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-      elasticsearch: {from: elasticsearch_master}
-    properties:
-      smoke_tests:
-        admin_password: "((cf_admin_password))"
-- name: create-uaa-client
-  lifecycle: errand
-  azs:
-  - z1
-  instances: 1
-  vm_type: medium
-  stemcell: default
-  update:
-    max_in_flight: 1
-    serial: true
-  networks:
-  - name: default
-  jobs:
-  - name: create-uaa-client
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-    properties:
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
-        oauth2_client_secret: "((kibana_oauth2_client_secret))"
-- name: upload-kibana-objects
-  lifecycle: errand
-  azs:
-  - z1
-  instances: 1
-  vm_type: medium
-  stemcell: default
-  update:
-    max_in_flight: 1
-    serial: true
-  networks:
-  - name: default
-  jobs:
-  - name: upload-kibana-objects
-    release: logsearch-for-cloudfoundry
-    consumes:
-      elasticsearch: {from: elasticsearch_master}
+
+instance_groups: 
 - name: elasticsearch_master
   azs:
   - z1
@@ -189,15 +130,12 @@ instance_groups:
           - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
           - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
           - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
-          - index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
-          - index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
-          - index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
+          
   - name: curator
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
-  - name: elasticsearch-config-lfc
-    release: logsearch-for-cloudfoundry
+  
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -259,21 +197,6 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
-  - name: redis
-    release: logsearch-for-cloudfoundry
-    provides:
-      redis: {as: redis_link}
-  - name: kibana-auth-plugin
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-      kibana: {from: kibana_link}
-      redis: {from: redis_link}
-    properties:
-      kibana-auth:
-        cloudfoundry:
-          client_secret: "((kibana_oauth2_client_secret))"
-          skip_ssl_validation: true
   - name: kibana
     release: logsearch
     provides:
@@ -286,10 +209,7 @@ instance_groups:
           timeout: 300
         env:
           - NODE_ENV: production
-        plugins:
-          - auth: /var/vcap/packages/kibana-auth-plugin/kibana-auth-plugin.zip
-        source_files:
-          - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
+          
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -320,8 +240,6 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
-  - name: parser-config-lfc
-    release: logsearch-for-cloudfoundry
   - name: ingestor_syslog
     release: logsearch
     provides:
@@ -329,25 +247,11 @@ instance_groups:
     properties:
       logstash_parser:
         filters:
-          - logsearch-for-cf: /var/vcap/packages/logsearch-config-logstash-filters/logstash-filters-default.conf
+          - default: /var/vcap/packages/logsearch-config/logstash-filters-default.conf
         elasticsearch:
           index: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
-          - /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
-  - name: ingestor_cloudfoundry-firehose
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-      ingestor: {from: ingestor_link}
-    properties:
-      cloudfoundry:
-        firehose_client_id: firehose-to-syslog
-        firehose_client_secret: "((firehose_client_secret))"
-        skip_ssl_validation: true
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -362,11 +266,7 @@ instance_groups:
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stdout.log
           service: ingestor
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
-          service: ingestor
-        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
-          service: ingestor_cloudfoundry-firehose
-        - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
-          service: ingestor_cloudfoundry-firehose
+          service: ingestor        
 - name: ls-router
   azs:
   - z1
@@ -383,34 +283,13 @@ instance_groups:
       ingestor: {from: ingestor_link}
       kibana: {from: kibana_link}
       syslog_forwarder: {from: cluster_monitor}
-  - name: route_registrar
-    release: logsearch-for-cloudfoundry
-    consumes:
-      nats: {from: nats, deployment: cf}
-    properties:
-      route_registrar:
-        routes:
-        - name: kibana
-          port: 80
-          registration_interval: 60s
-          uris:
-          - "logs.((system_domain))"
-
-variables:
-- name: kibana_oauth2_client_secret
-  type: password
-- name: firehose_client_secret
-  type: password
 
 releases:
 - name: logsearch
   url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.0
   version: 209.0.0
   sha1: 8b6b78106903a665082814655495dd1ea388a644
-- name: logsearch-for-cloudfoundry
-  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.0
-  version: 207.0.0
-  sha1: 5dde900a2800301705261ef653598ad10180d426
+
 stemcells:
 - alias: default
   os: ubuntu-trusty
