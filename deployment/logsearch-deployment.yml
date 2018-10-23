@@ -88,6 +88,7 @@ instance_groups:
     release: logsearch
     provides:
       syslog_forwarder: {as: cluster_monitor}
+      ingestor: nil
     properties:
       logstash_parser:
         filters:
@@ -130,12 +131,10 @@ instance_groups:
           - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
           - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
           - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
-          
   - name: curator
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
-  
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -145,6 +144,11 @@ instance_groups:
         config:
         - file: /var/vcap/sys/log/curator/curator.log
           service: curator
+  - name: smoke_tests
+    release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+      ingestor_link: {from: ingestor_syslog}
 - name: elasticsearch_data
   azs:
   - z1
