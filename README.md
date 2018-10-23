@@ -28,65 +28,15 @@ for a list of the common Addons:
 
   * [Logsearch for CloudFoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
 
-If you are sure you want install just Logsearch Core, read on...
 
 ## Installing Logsearch Core
-
-0. Upload the latest logserach release
-
-   * Download the latest logsearch release
    
-     NOTE: At the moment you can get working logsearch release by cloning Git repository and creating bosh release from it.
+Before starting deployment, make sure your BOSH environment is ready, and all `BOSH_` evironment variables are set. We suggest you to use [BBL](https://github.com/cloudfoundry/bosh-bootloader) tool to spin up the BOSH environment.
 
-      Example:
-   
-      ```sh
-      $ git clone https://github.com/cloudfoundry-community/logsearch-boshrelease.git
-      $ cd logsearch-boshrelease
-      $ bosh create release
-      ```
-   
-   * Upload bosh release
-   
-      Example:
-
-      ```sh
-      $ bosh upload release
-      ```
-   
-0. Customise your deployment stub:
-
-   * Make a copy of `templates/stub.$INFRASTRUCTURE.example.yml` to `stub-logsearch.yml`
-   
-      Example: 
-      ```sh
-      $ cp logsearch-boshrelease/templates/stub.openstack.example.yml stub-logsearch.yml
-      ```
-     
-   * Edit `stub-logsearch.yml` to match your IAAS settings
-
-0. Generate a manifest with `scripts/generate_deployment_manifest $INFRASTRUCTURE stub-logsearch.yml > logsearch.yml`
-
-   Example: 
-   
-   ```sh
-   $ logsearch-boshrelease/scripts/generate_deployment_manifest openstack stub-logsearch.yml > logsearch.yml
-   ```
-   
-   Notice `logsearch.yml` generated.
-
-0. Make sure you have these 2 security groups configured:
-
-   * `bosh` which allow access from this group itself
-
-   * `logsearch` which allow access to ports 80, 8080, 8888
-
-0. Deploy!
-
-   ```sh
-   $ bosh -d logsearch.yml deploy
-   ```
-
+```
+$ cd deployment
+$ bosh -d logsearch deploy logsearch-deployment.yml
+```
 ## Common customisations:
 
 0. Adding new parsing rules:
