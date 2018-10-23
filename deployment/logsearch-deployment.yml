@@ -286,11 +286,11 @@ instance_groups:
 
 releases:
 - name: logsearch
-  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.0
+  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.1
   version: 209.0.0
-  sha1: 8b6b78106903a665082814655495dd1ea388a644
+  sha1: 038b039dc30d71a4c3ed4570035867797538edef
 
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: "3586.latest"
+  version: "latest"
