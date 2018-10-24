@@ -1,0 +1,14 @@
+- type: replace
+  path: /vm_extensions/-
+  value:
+    name: lb-logsearch
+    cloud_properties:
+      lb_target_groups:
+      - logsearch80
+      - logsearch8080
+      - logsearch5514
+      - logsearch6514
+      - logsearch2514
+      security_groups:
+      - ((internal_security_group))
+      - logsearch-lb-security-group
