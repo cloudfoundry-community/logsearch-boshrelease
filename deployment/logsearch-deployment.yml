@@ -291,7 +291,7 @@ instance_groups:
 releases:
 - name: logsearch
   url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.1
-  version: 209.0.0
+  version: 209.0.1
   sha1: 038b039dc30d71a4c3ed4570035867797538edef
 
 stemcells:
