@@ -35,26 +35,34 @@
 - type: replace
   path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
   value:
-  - index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
-  - index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
-  - index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
+    index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+    index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+    index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
 
 - type: replace
   path: /instance_groups/name=maintenance/jobs/-
   value:
-  - name: elasticsearch-config-lfc
+    name: elasticsearch-config-lfc
     release: logsearch-for-cloudfoundry
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/-
   value:
-  - name: parser-config-lfc
+    name: parser-config-lfc
     release: logsearch-for-cloudfoundry
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/deployment_dictionary/-
   value:
-  - /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
+    /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/-
@@ -76,15 +84,19 @@
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
   value:
-  - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
+    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
     service: ingestor_cloudfoundry-firehose
-  - file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
+  value:
+    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
     service: ingestor_cloudfoundry-firehose
 
 - type: replace
   path: /instance_groups/name=kibana/jobs/-
   value:
-  - name: redis
+    name: redis
     release: logsearch-for-cloudfoundry
     provides:
       redis: {as: redis_link}
@@ -92,7 +104,7 @@
 - type: replace
   path: /instance_groups/name=kibana/jobs/-
   value:
-  - name: kibana-auth-plugin
+    name: kibana-auth-plugin
     release: logsearch-for-cloudfoundry
     consumes:
       cloud_controller: {from: cloud_controller, deployment: cf}
@@ -131,17 +143,21 @@
   - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
 
 - type: replace
-  path: /variables?
+  path: /variables/-
   value:
-  - name: kibana_oauth2_client_secret
-    type: password
-  - name: firehose_client_secret
+   name: kibana_oauth2_client_secret
+   type: password
+
+- type: replace
+  path: /variables/-
+  value:
+    name: firehose_client_secret
     type: password
 
 - type: replace
   path: /releases/-
   value:
     name: logsearch-for-cloudfoundry
-    url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.0
-    version: 207.0.0
-    sha1: 5dde900a2800301705261ef653598ad10180d426
+    url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.1
+    version: 207.0.1
+    sha1: 599d238be5281f5a2ef903936b9ef868611baab1
