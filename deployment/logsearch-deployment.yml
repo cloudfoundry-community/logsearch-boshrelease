@@ -298,3 +298,5 @@ stemcells:
 - alias: default
   os: ubuntu-trusty
   version: "latest"
+
+variables: []
