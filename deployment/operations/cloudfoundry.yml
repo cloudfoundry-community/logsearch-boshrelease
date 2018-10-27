@@ -13,7 +13,7 @@
         oauth2_client_secret: "((kibana_oauth2_client_secret))"
 
 - type: replace
-  path: /instance_groups/name=maintenance/jobs/-
+  path: /instance_groups/name=maintenance/jobs/name=smoke_tests
   value:
     name: smoke-tests
     release: logsearch-for-cloudfoundry
