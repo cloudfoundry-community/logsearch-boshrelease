@@ -22,3 +22,10 @@ $ cd <logsearch-boshrelease path>/deployment
 
 $ bosh -d logsearch deploy logsearch-deployment.yml -o operations/aws-lb.yml
 ```
+
+## cloudfoundry.yml
+Includes [logsearch-for-cloudfoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry) release. It allows to fetch application logs from CloudFoundry deployment via Firehose interface. 
+
+To use this extention, you have to provide following variables: `cf_admin_password`, `uaa_admin_client_secret` and `system_domain`. You can find them in your CloudFoundry deployment variables.
+
+After deployment, please run `create-uaa-client` errand to create UAA client, and `elasticsearch_config` to upload the config. After that, you will be able to login into Logsearch UI using your CloudFoundry credentials, and use `https://logs.<YOUR_DOMAIN>` endpoint to access Logsearch UI.
