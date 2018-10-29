@@ -250,10 +250,6 @@ instance_groups:
       ingestor: {as: ingestor_link}
     properties:
       logstash_parser:
-        filters:
-          - default: /var/vcap/packages/logsearch-config/logstash-filters-default.conf
-        elasticsearch:
-          index: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
   - name: syslog_forwarder
