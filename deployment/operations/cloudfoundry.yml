@@ -65,9 +65,14 @@
     /var/vcap/jobs/parser-config-lfc/config/deployment_lookup.yml
 
 - type: replace
-  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/filters
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/filters?
   value:
   - logsearch-for-cf: /var/vcap/packages/logsearch-config-logstash-filters/logstash-filters-default.conf
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/elasticsearch?
+  value:
+    index: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/-
