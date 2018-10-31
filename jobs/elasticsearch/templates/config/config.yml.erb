@@ -66,4 +66,6 @@ cloud:
     <% if_p('elasticsearch.cloud.aws.region') do |region| %>region: <%= region %><% end %>
 <% end %>
 
-<% if_p('elasticsearch.config_options') do | v | %><%= v %><% end %>
+<% if_p('elasticsearch.config_options') do p("elasticsearch.config_options", {}).each do | k, v | %>
+<%= k %>: <%= v %><% end %>
+<% end %>
