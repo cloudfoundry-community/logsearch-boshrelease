@@ -33,6 +33,12 @@ instance_groups:
       elasticsearch:
         node:
           allow_master: true
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -172,6 +178,12 @@ instance_groups:
       elasticsearch:
         node:
           allow_data: true
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -213,7 +225,12 @@ instance_groups:
           timeout: 300
         env:
           - NODE_ENV: production
-          
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
