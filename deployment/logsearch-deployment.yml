@@ -222,7 +222,7 @@ instance_groups:
     properties:
       kibana:
         health:
-          timeout: 300
+          timeout: 500
         env:
           - NODE_ENV: production
         config_options:
