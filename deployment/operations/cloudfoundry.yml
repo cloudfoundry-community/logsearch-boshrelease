@@ -168,6 +168,6 @@
   path: /releases/-
   value:
     name: logsearch-for-cloudfoundry
-    url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=207.0.1
-    version: 207.0.1
-    sha1: 599d238be5281f5a2ef903936b9ef868611baab1
+    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-207.0.2.tgz
+    version: 207.0.2
+    sha1: 40c1f1bb9a60a4832280824d5fb508031a9558a7

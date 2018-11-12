@@ -286,9 +286,9 @@ instance_groups:
 
 releases:
 - name: logsearch
-  url: https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=209.0.1
-  version: 209.0.1
-  sha1: 038b039dc30d71a4c3ed4570035867797538edef
+  url: https://s3.amazonaws.com/logsearch/logsearch-209.0.2.tgz
+  version: 209.0.2
+  sha1: ded7606b342cfd180a8ba442727cd1eb4673793f
 
 stemcells:
 - alias: default
