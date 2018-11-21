@@ -33,6 +33,9 @@ curator/vendor/voluptuous-0.10.5.tar.gz:
 elasticsearch/elasticsearch-6.4.2.tar.gz:
   size: 97914519
   sha: f77e97f6ad99b2cb5b9bdcecc5d9a47854bc5b2c
+elasticsearch/elasticsearch-6.5.0.tar.gz:
+  size: 113280785
+  sha: e79e3086c16c7a6724e116f4d245a9b44a5f0c47
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
@@ -48,9 +51,15 @@ java8/openjdk-1.8.0_152.tar.gz:
 kibana/kibana-6.4.2-linux-x86_64.tar.gz:
   size: 188077286
   sha: f0842be3985e7ae594656caaa1f7e95fafc185dc
+kibana/kibana-6.5.0-linux-x86_64.tar.gz:
+  size: 206012037
+  sha: 369b8514c3d7cb8ea1270842e1fd1330b320f000
 logstash/logstash-6.4.2.tar.gz:
   size: 153924169
   sha: 25309ee640a396d411d24ca1d953c7347aaf0ace
+logstash/logstash-6.5.0.tar.gz:
+  size: 160214762
+  sha: 75f498bbc771688b4bd911b06ca777b7340ebee9
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
   object_id: 543e5010-6449-400b-489d-31b82dcb4670
