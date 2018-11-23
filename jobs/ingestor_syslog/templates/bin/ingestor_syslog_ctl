@@ -94,9 +94,10 @@ case $1 in
     echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
 
     # clear persistent queue if the upgrade failed last run
-    if tail -80 $LOG_DIR/$JOB_NAME.stdout.log | grep 'QueueUpgrade - Logstash was unable to upgrade your persistent queue data' >/dev/null ; then
+    if cat $LOG_DIR/$JOB_NAME.stdout.log | grep -a 'QueueUpgrade - Logstash was unable to upgrade your persistent queue data' >/dev/null ; then
       mkdir ${STORE_DIR}/oldqueue.$$
       mv ${STORE_DIR}/queue ${STORE_DIR}/.lock ${STORE_DIR}/dead_letter_queue ${STORE_DIR}/uuid ${STORE_DIR}/oldqueue.$$
+      mv $LOG_DIR/$JOB_NAME.stdout.log $LOG_DIR/$JOB_NAME.stdout.log.old
     fi
 
     exec chpst -u vcap:vcap /var/vcap/packages/logstash/bin/logstash \
