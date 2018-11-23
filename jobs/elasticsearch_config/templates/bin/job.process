@@ -20,7 +20,7 @@ case $1 in
   start)
     echo $$ > "${PIDFILE}"
 
-    /var/vcap/jobs/elasticsearch_config/bin/run
+    /var/vcap/jobs/elasticsearch_config/bin/upload-config
 
     # pretend we're still running to keep monit happy
     echo 1 > "${PIDFILE}"
