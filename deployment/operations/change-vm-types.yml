@@ -1,0 +1,29 @@
+---
+# VM types
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/vm_type
+  value: ((elasticsearch_master_vm_type))
+
+- type: replace
+  path: /instance_groups/name=cluster_monitor/vm_type
+  value: ((cluster_monitor_vm_type))
+
+- type: replace
+  path: /instance_groups/name=maintenance/vm_type
+  value: ((maintenance_vm_type))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/vm_type
+  value: ((elasticsearch_data_vm_type))
+
+- type: replace
+  path: /instance_groups/name=kibana/vm_type
+  value: ((kibana_vm_type))
+
+- type: replace
+  path: /instance_groups/name=ingestor/vm_type
+  value: ((ingestor_vm_type))
+
+- type: replace
+  path: /instance_groups/name=ls-router/vm_type
+  value: ((ls_router_vm_type))

@@ -1,0 +1,20 @@
+---
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=create-uaa-client/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=smoke-tests/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_cloudfoundry-firehose/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=kibana-auth-plugin/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/name=route_registrar/consumes/nats/deployment?
+  value: ((cf_deployment_name))

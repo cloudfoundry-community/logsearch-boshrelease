@@ -1,0 +1,29 @@
+---
+# Availability zones
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=cluster_monitor/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=maintenance/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=kibana/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=ingestor/azs
+  value: ((azs))
+
+- type: replace
+  path: /instance_groups/name=ls-router/azs
+  value: ((azs))

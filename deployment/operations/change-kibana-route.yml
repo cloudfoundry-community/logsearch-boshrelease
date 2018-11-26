@@ -1,0 +1,7 @@
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/name=route_registrar/properties/route_registrar/routes/name=kibana/uris?
+  value: ["((kibana_route)).((system_domain))"]
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=create-uaa-client/properties/create-uaa-client/kibana_host?
+  value: "((kibana_route))"

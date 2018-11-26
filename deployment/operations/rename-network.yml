@@ -1,0 +1,29 @@
+---
+# Network name
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=cluster_monitor/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=maintenance/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=kibana/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=ingestor/networks/name=default/name
+  value: ((network_name))
+
+- type: replace
+  path: /instance_groups/name=ls-router/networks/name=default/name
+  value: ((network_name))

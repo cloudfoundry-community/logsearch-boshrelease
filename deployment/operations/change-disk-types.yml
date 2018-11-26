@@ -1,0 +1,21 @@
+---
+# Persistent disk types
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/persistent_disk_type
+  value: ((elasticsearch_master_disk_type))
+
+- type: replace
+  path: /instance_groups/name=cluster_monitor/persistent_disk_type
+  value: ((cluster_monitor_disk_type))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/persistent_disk_type
+  value: ((elasticsearch_data_disk_type))
+
+- type: replace
+  path: /instance_groups/name=kibana/persistent_disk_type
+  value: ((kibana_disk_type))
+
+- type: replace
+  path: /instance_groups/name=ingestor/persistent_disk_type
+  value: ((ingestor_disk_type))

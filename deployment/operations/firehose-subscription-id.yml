@@ -1,0 +1,3 @@
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_cloudfoundry-firehose/properties/cloudfoundry/firehose_subscription_id?
+  value: ((firehose_subscription_id))
