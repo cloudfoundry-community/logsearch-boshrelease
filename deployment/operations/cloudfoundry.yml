@@ -72,7 +72,7 @@
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser/elasticsearch?
   value:
-    index: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
+    index: logs-%{[@metadata][index]}-v6-%{+YYYY.MM.dd}
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/-
