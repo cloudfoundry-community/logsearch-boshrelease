@@ -10,7 +10,7 @@ meta:
     haproxy: m1.small
     errand: m1.small
   stemcell:
-    name: bosh-cloudstack-xen-ubuntu-trusty-go_agent
+    name: bosh-openstack-kvm-ubuntu-trusty-go_agent
     version: latest
 
 releases:
