@@ -2,4 +2,4 @@
 name: kibana
 
 files:
-  - kibana/kibana-5.6.13-linux-x86_64.tar.gz
+  - kibana/kibana-6.4.3-linux-x86_64.tar.gz

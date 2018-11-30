@@ -29,3 +29,9 @@ Includes [logsearch-for-cloudfoundry](https://github.com/cloudfoundry-community/
 To use this extention, you have to provide following variables: `cf_admin_password`, `uaa_admin_client_secret` and `system_domain`. You can find them in your CloudFoundry deployment variables.
 
 After deployment, please run `create-uaa-client` errand to create UAA client. After that, you will be able to login into Logsearch UI using your CloudFoundry credentials, and use `https://logs.<YOUR_DOMAIN>` endpoint to access Logsearch UI.
+
+## cf-kibana.yml
+Errand to push Kibana application into CloudFoundry as an alternative to running it as a separate job.
+
+- Depend from **cloudfoundry.yml**
+- Requires `cf-kibana_client_secre` variable

@@ -1,0 +1,28 @@
+---
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: cf-kibana
+    release: logsearch-for-cloudfoundry
+    lifecycle: errand
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+      cloud_controller: {from: cloud_controller, deployment: cf}
+    properties:
+      cloudfoundry:
+        admin_password: "((cf_admin_password))"
+      cf-kibana:
+        app_name: kibana
+        app_memory: 4G
+        oauth2_client_secret: "((cf-kibana_client_secret))"
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+          api_security_group: public_networks
+          system_org: system
+          apps_domain: ((system_domain))
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false

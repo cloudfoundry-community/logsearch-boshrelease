@@ -33,6 +33,12 @@ instance_groups:
       elasticsearch:
         node:
           allow_master: true
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -172,6 +178,12 @@ instance_groups:
       elasticsearch:
         node:
           allow_data: true
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -210,10 +222,15 @@ instance_groups:
     properties:
       kibana:
         health:
-          timeout: 300
+          timeout: 500
         env:
           - NODE_ENV: production
-          
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: syslog_forwarder
     release: logsearch
     consumes:
@@ -292,7 +309,7 @@ releases:
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   version: "latest"
 
 variables: []
