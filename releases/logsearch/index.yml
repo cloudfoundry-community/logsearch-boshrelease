@@ -93,6 +93,8 @@ builds:
     version: 201.0.2
   f5e27c62-648b-4854-9b28-1223e47b59f4:
     version: 206.0.0
+  f78bbc7c-6212-4ae4-788c-8b0e91644037:
+    version: 210.0.0
   fadd88a3-2fe7-4095-b68e-fc3da3ae42a5:
     version: 208.0.0
 format-version: "2"
