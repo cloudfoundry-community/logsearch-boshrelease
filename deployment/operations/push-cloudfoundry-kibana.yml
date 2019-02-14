@@ -5,38 +5,26 @@
   path: /instance_groups/name=ls-router
 
 - type: replace
-  path: /instance_groups/name=create-uaa-client
+  path: /instance_groups/name=maintenance/jobs/-
   value:
     name: cf-kibana
-    lifecycle: errand
-    azs: [z1]
-    instances: 1
-    vm_type: m3.medium
-    stemcell: default
-    update:
-      max_in_flight: 1
-      serial: true
-    networks:
-    - name: default
-    jobs:
-    - name: cf-kibana
-      release: logsearch-for-cloudfoundry
-      consumes:
-        elasticsearch: {from: elasticsearch_master}
-        cloud_controller: {from: cloud_controller, deployment: cf}
-        redis: {from: redis_link}
-      properties:
+    release: logsearch-for-cloudfoundry
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+      cloud_controller: {from: cloud_controller, deployment: cf}
+      redis: {from: redis_link}
+    properties:
+      cloudfoundry:
+        admin_password: "((cf_admin_password))"
+      cf-kibana:
         cloudfoundry:
-          admin_password: "((cf_admin_password))"
-        cf-kibana:
-          cloudfoundry:
-            api_security_group: "((api_security_group))"
-            uaa_admin_client_secret: "((uaa_admin_client_secret))"
-          oauth2_client_secret: "((kibana_oauth2_client_secret))"
-        create-uaa-client:
-          cloudfoundry:
-            uaa_admin_client_secret: "((uaa_admin_client_secret))"
-          oauth2_client_secret: "((kibana_oauth2_client_secret))"
+          api_security_group: "((api_security_group))"
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+        oauth2_client_secret: "((kibana_oauth2_client_secret))"
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+        oauth2_client_secret: "((kibana_oauth2_client_secret))"
 
 - type: replace
   path: /instance_groups/-
