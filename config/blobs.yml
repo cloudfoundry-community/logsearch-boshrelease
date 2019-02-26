@@ -1,7 +1,7 @@
-cerebro/cerebro-0.6.6.tgz:
-  size: 51199362
-  object_id: fda10e6d-aeba-47b6-6f0d-fa313cffc109
-  sha: 69bc2aafb2c5966163c44b19f2768eb9f497aac3
+cerebro/cerebro-0.8.1.tgz:
+  size: 56517603
+  object_id: 6e70a2d9-e205-4dc3-610c-9337ce7242a9
+  sha: 34f19e3f26d37946e45cad3150cd1815b5abde34
 curator/elasticsearch-curator-5.2.0.tar.gz:
   size: 206905
   object_id: cb6abe98-70e9-49ba-57b2-4704588ab7ec

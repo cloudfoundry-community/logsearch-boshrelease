@@ -14,6 +14,11 @@ data.path = "/var/vcap/store/cerebro/cerebro.db"
 # To avoid creating a PID file set this value to /dev/null
 pidfile.path = "/dev/null"
 
+# Enable gzip when requesting data from es
+es = {
+  gzip = true
+}
+
 <%
   cluster_name = nil
   if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }
