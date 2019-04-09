@@ -74,10 +74,6 @@ nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   size: 2094679
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
   sha: d27c56da9cdf214ed39a471f0ca5c970abbd510d
-python/Python-3.6.1.tgz:
-  size: 22540566
-  object_id: db2b3522-9d58-4998-81ec-237d900ad740
-  sha: 6e91434cf22414af8240dfa1bf8ab2d043b04998
 python/Python-3.6.2.tgz:
   size: 22580749
   object_id: 3f40fd31-5d63-4fe7-4b28-dcdb2cbe1f16
