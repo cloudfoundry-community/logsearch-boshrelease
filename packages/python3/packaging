@@ -1,15 +1,17 @@
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-CPUS=`grep -c ^processor /proc/cpuinfo`
+CPUS=$(grep -c ^processor /proc/cpuinfo)
+PYTHON_VERSION=3.6.2
 
-tar xzf python/Python-3.6.2.tgz
+tar xzf "python/Python-${PYTHON_VERSION}.tgz"
 
-pushd Python-3.6.2
+pushd "Python-${PYTHON_VERSION}"
   ./configure \
-    --prefix=${BOSH_INSTALL_TARGET} \
+    --prefix="${BOSH_INSTALL_TARGET}" \
     --with-ensurepip \
     --enable-shared
 
-  make -j${CPUS}
+  make -j"${CPUS}"
   make install
 popd
