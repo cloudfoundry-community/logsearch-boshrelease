@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 set -e
 
-export PATH=/var/vcap/packages/python3/bin:$PATH LD_LIBRARY_PATH=/var/vcap/packages/python3/lib:$LD_LIBRARY_PATH C_INCLUDE_PATH=/var/vcap/packages/python3/include:$C_INCLUDE_PATH
+export PATH="/var/vcap/packages/python3/bin:${PATH}" LD_LIBRARY_PATH="/var/vcap/packages/python3/lib:${LD_LIBRARY_PATH}" C_INCLUDE_PATH="/var/vcap/packages/python3/include:${C_INCLUDE_PATH}"
 
 # --no-index prevents contacting pypi to download packages
 # --find-links tells pip where to look for the dependancies
 # --prefix installation prefix where lib, bin and other top-level folders are placed
-pip3 install --no-index --find-links ./curator/vendor/ --prefix=${BOSH_INSTALL_TARGET} curator/elasticsearch-curator-5.2.0.tar.gz
+pip3 install --no-index --find-links ./curator/vendor/ "--prefix=${BOSH_INSTALL_TARGET}" curator/elasticsearch-curator-v5.4.0.tar.gz

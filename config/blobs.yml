@@ -2,34 +2,34 @@ cerebro/cerebro-0.8.1.tgz:
   size: 56517603
   object_id: 6e70a2d9-e205-4dc3-610c-9337ce7242a9
   sha: 34f19e3f26d37946e45cad3150cd1815b5abde34
-curator/elasticsearch-curator-5.2.0.tar.gz:
-  size: 206905
-  object_id: cb6abe98-70e9-49ba-57b2-4704588ab7ec
-  sha: dd73ebd695d1f36028d4fb7e3dc2f4f71f602190
-curator/vendor/PyYAML-3.12.tar.gz:
-  size: 253011
-  object_id: c437dff0-e2db-4d48-9c12-626160760901
-  sha: cb7fd3e58c129494ee86e41baedfec69eb7dafbe
-curator/vendor/certifi-2017.7.27.1-py2.py3-none-any.whl:
-  size: 349554
-  object_id: b3ad6e0e-1667-448e-57a8-f098cc499ac8
-  sha: aeb9761eb1231d8309a0b593747d0c95303467b5
-curator/vendor/click-6.7-py2.py3-none-any.whl:
-  size: 71175
-  object_id: 06f97a3a-8cc3-4d83-8c0f-6e85d15167f9
-  sha: 9490775172e63ba94233d4b201f0e8d78b0cd939
-curator/vendor/elasticsearch-5.4.0-py2.py3-none-any.whl:
-  size: 58679
-  object_id: 101d0ced-4af3-4f4f-5916-8ab699f6ad0c
-  sha: 0215d94d3e6b2c3c2ffcba54a84186a8aacb86df
-curator/vendor/urllib3-1.22-py2.py3-none-any.whl:
-  size: 132332
-  object_id: 0b6e809e-090d-4545-7808-b7968f1834a0
-  sha: ae6715ae61c34b72d5e0c3241abfb20c2c4d1313
-curator/vendor/voluptuous-0.10.5.tar.gz:
-  size: 41436
-  object_id: b67881a7-7adb-4456-7d0b-f5b00e936152
-  sha: 31373cc4ba935eda76b55e64e8bd218ce4882e2b
+curator/elasticsearch-curator-v5.4.0.tar.gz:
+  size: 293962
+  object_id: d31708d2-5ffd-4b51-51aa-addb6d0fc9de
+  sha: 58c7c3962a176e98b16d19b23712accd334f2291
+curator/vendor/Click-7.0-py2.py3-none-any.whl:
+  size: 81299
+  object_id: 2a4ba8b8-f59e-42a5-6ca8-3f4e03749bc6
+  sha: c5b8267a60ed6a4035eaa575485c2d11d3cf5688
+curator/vendor/PyYAML-5.1.tar.gz:
+  size: 274244
+  object_id: dcd9ec97-c876-4451-5e76-f9aa3f5ab6fd
+  sha: 53fc16036940089ceadd4127381e40fd6106a7ed
+curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl:
+  size: 158601
+  object_id: 3954b6d3-5aa1-494f-6e1a-044e7f283359
+  sha: ddcc44d35cf435ddaad142789305e7b95e9644d7
+curator/vendor/elasticsearch-6.3.1-py2.py3-none-any.whl:
+  size: 119897
+  object_id: c105e2e1-af02-4b2f-6dec-58900c4d0eed
+  sha: 025d9d1f746f31ab49dcac242f79d16d47e6f834
+curator/vendor/urllib3-1.24.1-py2.py3-none-any.whl:
+  size: 118086
+  object_id: c6e3c1ce-e6c2-47cf-7184-5c14528ae214
+  sha: 5386c8d6788f5d3f2f91556ef77f99af10435b17
+curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
+  size: 27677
+  object_id: 30fbe47c-eb16-4db8-57ce-f853940769c7
+  sha: b5c82285df0610464a9332c567cf8bd06b8786f6
 elasticsearch/elasticsearch-6.4.3.tar.gz:
   size: 97872736
   object_id: 23a715d7-4f0c-48c4-41f4-8090f6148a11

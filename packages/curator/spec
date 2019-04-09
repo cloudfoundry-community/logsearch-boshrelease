@@ -5,10 +5,10 @@ dependencies:
   - python3
 
 files:
-  - curator/elasticsearch-curator-5.2.0.tar.gz
-  - curator/vendor/PyYAML-3.12.tar.gz
-  - curator/vendor/click-6.7-py2.py3-none-any.whl
-  - curator/vendor/urllib3-1.22-py2.py3-none-any.whl
-  - curator/vendor/certifi-2017.7.27.1-py2.py3-none-any.whl
-  - curator/vendor/elasticsearch-5.4.0-py2.py3-none-any.whl
-  - curator/vendor/voluptuous-0.10.5.tar.gz
+  - curator/elasticsearch-curator-v5.4.0.tar.gz
+  - curator/vendor/Click-7.0-py2.py3-none-any.whl
+  - curator/vendor/PyYAML-5.1.tar.gz
+  - curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl
+  - curator/vendor/elasticsearch-6.3.1-py2.py3-none-any.whl
+  - curator/vendor/urllib3-1.24.1-py2.py3-none-any.whl
+  - curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl
