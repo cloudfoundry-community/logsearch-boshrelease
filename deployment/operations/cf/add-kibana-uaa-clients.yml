@@ -1,0 +1,18 @@
+# Apply to your cf-deployment based Cloud Foundry
+
+# UAA client for Kibana
+- type: replace
+  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/kibana?
+  value:
+    override: true
+    authorized-grant-types: authorization_code,refresh_token
+    authorities: uaa.none
+    scope: openid,oauth.approvals,scim.userids,cloud_controller.read
+    secret: "((uaa_clients_kibana_secret))"
+    redirect-uri: "((kibana_redirect_uri))"
+
+- type: replace
+  path: /variables/-
+  value:
+    name: uaa_clients_kibana_secret
+    type: password
