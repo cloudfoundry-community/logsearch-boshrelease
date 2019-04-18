@@ -1,0 +1,16 @@
+# Apply to your cf-deployment based Cloud Foundry
+
+# UAA client for firehose-to-syslog
+- type: replace
+  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/firehose-to-syslog?
+  value:
+    override: true
+    authorized-grant-types: client_credentials
+    authorities: doppler.firehose,cloud_controller.global_auditor
+    secret: "((uaa_clients_firehose_to_syslog_secret))"
+
+- type: replace
+  path: /variables/-
+  value:
+    name: uaa_clients_firehose_to_syslog_secret
+    type: password
