@@ -7,7 +7,7 @@ update:
   serial: false
   update_watch_time: 5000-1200000
 
-instance_groups: 
+instance_groups:
 - name: elasticsearch_master
   azs:
   - z1
@@ -283,7 +283,7 @@ instance_groups:
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stdout.log
           service: ingestor
         - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
-          service: ingestor        
+          service: ingestor
 - name: ls-router
   azs:
   - z1
@@ -303,9 +303,9 @@ instance_groups:
 
 releases:
 - name: logsearch
-  url: https://s3.amazonaws.com/logsearch/logsearch-210.0.0.tgz
-  version: 210.0.0
-  sha1: cf5f2f90d1382eb9648d9f9d3b62201af73bf39a
+  url: https://s3.amazonaws.com/logsearch/logsearch-210.1.0.tgz
+  version: 210.1.0
+  sha1: 9fe14b8d5237c5350bbaa3d389336b0bc92e434e
 
 stemcells:
 - alias: default
