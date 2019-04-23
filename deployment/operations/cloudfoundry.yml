@@ -168,6 +168,6 @@
   path: /releases/-
   value:
     name: logsearch-for-cloudfoundry
-    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-210.0.0.tgz
-    version: 210.0.0
-    sha1: f427b07793484b8b8f3f3dd665055e805d9224b9
+    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-210.1.0.tgz
+    version: 210.1.0
+    sha1: 63f2a44707fbfdb74ffe02b03d6627a969b5ce6f
