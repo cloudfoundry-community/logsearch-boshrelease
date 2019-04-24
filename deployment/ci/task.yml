@@ -12,7 +12,7 @@ inputs:
 - name: logsearch-boshrelease
 
 run:
-  path: logsearch-boshrelease/ci/task.sh
+  path: logsearch-boshrelease/deployment/ci/task.sh
 
 params:
   BBL_STATE_DIR: bbl-state
