@@ -24,3 +24,4 @@ version
 
 /logsearch-config
 /logsearch-config.tgz
+deployment/ci/logsearch-vars.yml
