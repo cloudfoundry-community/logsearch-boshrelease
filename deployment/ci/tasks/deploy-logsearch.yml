@@ -18,3 +18,4 @@ params:
   BBL_STATE_DIR: bbl-state
   SYSTEM_DOMAIN:
   OPS_FILES:
+  ENV_NAME:
