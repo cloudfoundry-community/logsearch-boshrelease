@@ -12,7 +12,8 @@ inputs:
 - name: logsearch-boshrelease
 
 run:
-  path: logsearch-boshrelease/deployment/ci/tasks/smoke-tests.sh
+  path: logsearch-boshrelease/deployment/ci/tasks/run-errand.sh
 
 params:
   BBL_STATE_DIR: bbl-state
+  ERRAND_NAME:

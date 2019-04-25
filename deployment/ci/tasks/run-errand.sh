@@ -6,4 +6,4 @@ eval "`bbl print-env`"
 set -x
 popd
 
-bosh -n -d logsearch run-errand smoke-tests
+bosh -n -d logsearch run-errand ${ERRAND_NAME}
