@@ -8,6 +8,10 @@
   value: ((cf_deployment_name))
 
 - type: replace
+  path: /instance_groups/name=maintenance/jobs/name=upload-kibana-objects/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+- type: replace
   path: /instance_groups/name=ingestor/jobs/name=ingestor_cloudfoundry-firehose/consumes/cloud_controller/deployment?
   value: ((cf_deployment_name))
 
