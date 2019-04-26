@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: https://github.com/cloudfoundry-community/logsearch-boshrelease.git
-    branch: master
+    branch: ci
 
 - name: bbl-state
   type: git
