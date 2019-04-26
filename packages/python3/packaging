@@ -15,3 +15,12 @@ pushd "Python-${PYTHON_VERSION}"
   make -j"${CPUS}"
   make install
 popd
+
+export PATH="${BOSH_INSTALL_TARGET}/bin:${PATH}"
+export LD_LIBRARY_PATH="${BOSH_INSTALL_TARGET}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export C_INCLUDE_PATH="${BOSH_INSTALL_TARGET}/include${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}"
+
+# --no-index prevents contacting pypi to download packages
+# --find-links tells pip where to look for the dependancies
+# --prefix installation prefix where lib, bin and other top-level folders are placed
+pip3 install --no-index --find-links ./python/vendor/ "--prefix=${BOSH_INSTALL_TARGET}" python/requests-2.21.0-py2.py3-none-any.whl
