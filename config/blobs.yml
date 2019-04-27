@@ -78,6 +78,26 @@ python/Python-3.6.2.tgz:
   size: 22580749
   object_id: 3f40fd31-5d63-4fe7-4b28-dcdb2cbe1f16
   sha: b157ed490a453387874b354b743d1ae656680403
+python/requests-2.21.0-py2.py3-none-any.whl:
+  size: 57987
+  object_id: 121f40c9-3eef-42d8-77ff-dbf8510fbaff
+  sha: sha256:7bf2a778576d825600030a110f3c0e3e8edc51dfaafe1c146e39a2027784957b
+python/vendor/certifi-2019.3.9-py2.py3-none-any.whl:
+  size: 158601
+  object_id: 5bd5a450-971d-4ee9-5aea-97cece4f39dc
+  sha: sha256:59b7658e26ca9c7339e00f8f4636cdfe59d34fa37b9b04f6f9e9926b3cece1a5
+python/vendor/chardet-3.0.4-py2.py3-none-any.whl:
+  size: 133356
+  object_id: 070aaab6-b96d-4804-5cc3-3fe962c7c80e
+  sha: sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691
+python/vendor/idna-2.8-py2.py3-none-any.whl:
+  size: 58594
+  object_id: 68a819f8-b5d5-451d-6df7-a2fd9f3b19f7
+  sha: sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c
+python/vendor/urllib3-1.24.2-py2.py3-none-any.whl:
+  size: 131747
+  object_id: 64fb21d8-4d73-4215-7faf-a6a630d48fa9
+  sha: sha256:4c291ca23bbb55c76518905869ef34bdd5f0e46af7afe6861e8375643ffee1a0
 ruby2.3/bundler-1.11.2.gem:
   size: 263168
   object_id: ce2c212f-c2ff-440e-9f4b-c2c214a010f9

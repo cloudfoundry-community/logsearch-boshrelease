@@ -30,7 +30,12 @@
     name: upload-kibana-objects
     release: logsearch-for-cloudfoundry
     consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      cloudfoundry:
+        user: admin
+        password: "((cf_admin_password))"
 
 - type: replace
   path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
