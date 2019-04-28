@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: relintdockerhubpushbot/cf-deployment-concourse-tasks
+    tag: v6.8.0
+
+inputs:
+- name: bbl-state             # - The repo containing the Director's bbl state dir
+- name: logsearch-boshrelease # - This repo
+
+run:
+  path: logsearch-boshrelease/deployment/ci/tasks/delete-logsearch.sh
+
+params:
+  BBL_STATE_DIR: bbl-state
+  # - Path to the directory containing the `bbl-state.json` file
+  # - The path is relative to the `bbl-state` input
+
+  ENV_NAME:
+  # - Required
+  # - It is equal to BBL_ENV_NAME variable of bbl-up task from cf-deployment-concourse-tasks
+  # - and required to access variables in Credhub

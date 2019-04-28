@@ -1,0 +1,7 @@
+bbl_state_repo: git@github.com:my-github-user/cf-deployment-state.git
+bbl_env_name: cf
+cf_domain: cf.example.com
+git_private_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  ...
+  -----END RSA PRIVATE KEY-----

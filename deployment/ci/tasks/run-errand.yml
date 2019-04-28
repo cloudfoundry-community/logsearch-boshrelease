@@ -1,0 +1,24 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: relintdockerhubpushbot/cf-deployment-concourse-tasks
+    tag: v6.8.0
+
+inputs:
+- name: bbl-state             # - The repo containing the Director's bbl state dir
+- name: logsearch-boshrelease # - This repo
+
+run:
+  path: logsearch-boshrelease/deployment/ci/tasks/run-errand.sh
+
+params:
+  BBL_STATE_DIR: bbl-state
+  # - Path to the directory containing the `bbl-state.json` file
+  # - The path is relative to the `bbl-state` input
+
+  ERRAND_NAME:
+  # - Required
+  # - Errand name to run

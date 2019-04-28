@@ -1,0 +1,72 @@
+resources:
+- name: logsearch-boshrelease
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-community/logsearch-boshrelease.git
+    branch: ci
+
+- name: bbl-state
+  type: git
+  source:
+    uri: ((bbl_state_repo))
+    branch: master
+    private_key: ((git_private_key))
+
+jobs:
+- name: deploy-logsearch
+  plan:
+  - get: logsearch-boshrelease
+  - get: bbl-state
+  - task: deploy-logsearch
+    file: logsearch-boshrelease/deployment/ci/tasks/deploy-logsearch.yml
+    params:
+      OPS_FILES: "operations/scale-to-one-az.yml operations/cloudfoundry.yml"
+      SYSTEM_DOMAIN: ((cf_domain))
+      ENV_NAME: ((bbl_env_name))
+
+- name: smoke-tests
+  plan:
+  - get: logsearch-boshrelease
+  - get: bbl-state
+    passed:
+    - deploy-logsearch
+    trigger: true
+  - task: smoke-tests
+    file: logsearch-boshrelease/deployment/ci/tasks/run-errand.yml
+    params:
+      ERRAND_NAME: smoke-tests
+
+- name: create-uaa-client
+  plan:
+  - get: logsearch-boshrelease
+  - get: bbl-state
+    passed:
+    - smoke-tests
+    trigger: false
+  - task: create-uaa-client
+    file: logsearch-boshrelease/deployment/ci/tasks/run-errand.yml
+    params:
+      ERRAND_NAME: create-uaa-client
+
+- name: upload-kibana-objects
+  plan:
+  - get: logsearch-boshrelease
+  - get: bbl-state
+    passed:
+    - create-uaa-client
+    trigger: false
+  - task: upload-kibana-objects
+    file: logsearch-boshrelease/deployment/ci/tasks/run-errand.yml
+    params:
+      ERRAND_NAME: upload-kibana-objects
+
+- name: delete-logsearch
+  plan:
+  - get: logsearch-boshrelease
+  - get: bbl-state
+    passed:
+    - deploy-logsearch
+  - task: delete-logsearch
+    file: logsearch-boshrelease/deployment/ci/tasks/delete-logsearch.yml
+    params:
+      ENV_NAME: ((bbl_env_name))
