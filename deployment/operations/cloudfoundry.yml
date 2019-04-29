@@ -134,10 +134,18 @@
 - type: replace
   path: /instance_groups/name=ls-router/jobs/-
   value:
+    name: bpm
+    release: bpm
+
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/-
+  value:
     name: route_registrar
-    release: logsearch-for-cloudfoundry
+    release: routing
     consumes:
-      nats: {from: nats, deployment: cf}
+      nats:
+        from: nats
+        deployment: cf
     properties:
       route_registrar:
         routes:
@@ -168,6 +176,23 @@
   value:
     name: firehose_client_secret
     type: password
+
+# Releases
+- type: replace
+  path: /releases/-
+  value:
+    name: bpm
+    version: 1.0.4
+    url: https://bosh.io/d/github.com/cloudfoundry-incubator/bpm-release?v=1.0.4
+    sha1: 41df19697d6a69d2552bc2c132928157fa91abe0
+
+- type: replace
+  path: /releases/-
+  value:
+    name: routing
+    version: 0.188.0
+    url: https://bosh.io/d/github.com/cloudfoundry-incubator/cf-routing-release?v=0.188.0
+    sha1: d3420851c470790e8980ff0c506f75e3e52c15d9
 
 - type: replace
   path: /releases/-
