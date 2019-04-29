@@ -98,19 +98,7 @@ python/vendor/urllib3-1.24.2-py2.py3-none-any.whl:
   size: 131747
   object_id: 64fb21d8-4d73-4215-7faf-a6a630d48fa9
   sha: sha256:4c291ca23bbb55c76518905869ef34bdd5f0e46af7afe6861e8375643ffee1a0
-ruby2.3/bundler-1.11.2.gem:
-  size: 263168
-  object_id: ce2c212f-c2ff-440e-9f4b-c2c214a010f9
-  sha: 8eb956dec72da753d3d2a2126c78508b17af434e
-ruby2.3/rake-11.2.2.gem:
-  size: 102400
-  object_id: 757c960e-1536-4be2-b0d9-d4f587e4c6ab
-  sha: 879e7c02b1a0b37333a91f11621f798deb874b6e
-ruby2.3/ruby-2.3.1.tar.gz:
-  size: 17797997
-  object_id: 0ab54e2b-3919-4e52-b157-50c8a7704cad
-  sha: c39b4001f7acb4e334cb60a0f4df72d434bef711
-ruby2.3/rubygems-2.6.4.tgz:
-  size: 478582
-  object_id: 4f90feb0-d0cf-41d8-a191-9b63e6f08f27
-  sha: 8ef39e536af2ecd20b0e7a95765fa6a485087ac8
+ruby/rake-12.3.2.gem:
+  size: 87040
+  object_id: 9d2112bb-271b-45b0-52a1-571ecb6ec1bd
+  sha: sha256:56362f144a29ffbc5e49161a80ca4e2e6b7da2946170067d624d7603ed51c5eb

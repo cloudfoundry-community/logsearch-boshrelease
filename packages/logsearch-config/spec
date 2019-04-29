@@ -2,7 +2,8 @@
 name: logsearch-config
 
 dependencies:
-  - ruby2.3
+  - ruby-2.4-r5
 
 files:
-- logsearch-config/**/*
+  - logsearch-config/**/*
+  - ruby/rake-12.3.2.gem
