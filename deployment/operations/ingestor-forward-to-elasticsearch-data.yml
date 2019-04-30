@@ -1,0 +1,22 @@
+- type: replace
+  path: /instance_groups/name=cluster_monitor/jobs/name=ingestor_syslog/consumes?
+  value:
+    elasticsearch: nil
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/provides?
+  value:
+    elasticsearch:
+      as: elasticsearch_data
+
+- type: remove
+  path: /instance_groups/name=ingestor/jobs/name=elasticsearch
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/consumes?
+  value:
+    elasticsearch:
+      from: elasticsearch_data
+
+- type: remove
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties?/logstash_parser?/elasticsearch?/data_hosts?

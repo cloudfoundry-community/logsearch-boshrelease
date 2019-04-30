@@ -97,6 +97,9 @@ instance_groups:
       ingestor: nil
     properties:
       logstash_parser:
+        elasticsearch:
+          data_hosts:
+          - 127.0.0.1
         filters:
         - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
   - name: curator
@@ -263,10 +266,15 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
   - name: ingestor_syslog
     release: logsearch
+    consumes:
+      elasticsearch: {from: elasticsearch_data}
     provides:
       ingestor: {as: ingestor_link}
     properties:
       logstash_parser:
+        elasticsearch:
+          data_hosts:
+          - 127.0.0.1
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
   - name: syslog_forwarder

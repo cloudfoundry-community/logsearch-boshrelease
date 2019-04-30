@@ -6,9 +6,17 @@ set -u # report the usage of uninitialized variables
 # Setup env vars and folders for the webapp_ctl script
 source /var/vcap/jobs/ingestor_syslog/helpers/ctl_setup.sh 'ingestor_syslog'
 
+<%
+  es_host = nil
+  if_p("logstash_parser.elasticsearch.data_hosts") { |hosts| es_host = hosts.first }
+  unless es_host
+    es_host =  link("elasticsearch").instances.first.address
+  end
+%>
+
 function wait_for_template {
   local template_name="$1"
-  local MASTER_URL="<%= p("logstash_parser.elasticsearch.data_hosts").first %>:9200"
+  local MASTER_URL="<%= es_host %>:9200"
 
   set +e
   while true;  do

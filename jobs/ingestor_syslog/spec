@@ -34,6 +34,11 @@ provides:
   properties:
   - logstash_ingestor.syslog.port
 
+consumes:
+- name: elasticsearch
+  type: elasticsearch
+  optional: true
+
 properties:
   logstash.heap_size:
     description: sets jvm heap sized
@@ -156,7 +161,6 @@ properties:
     description: "The routing to be used when indexing a document."
   logstash_parser.elasticsearch.data_hosts:
     description: The list of elasticsearch data node IPs
-    default: [127.0.0.1]
   logstash_parser.timecop.reject_greater_than_hours:
     description: "Logs with timestamps greater than this many hours in the future won't be parsed and will get tagged with fail/timecop"
     default: 1
