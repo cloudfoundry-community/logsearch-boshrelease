@@ -3,7 +3,8 @@ name: cerebro
 
 packages:
 - cerebro
-- java8
+- openjdk-8
+
 
 templates:
   bin/cerebro_ctl: bin/cerebro_ctl

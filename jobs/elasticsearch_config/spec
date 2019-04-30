@@ -3,7 +3,7 @@ name: elasticsearch_config
 
 packages:
   - elasticsearch
-  - java8
+  - openjdk-8
 
 templates:
   bin/run.erb: bin/upload-config

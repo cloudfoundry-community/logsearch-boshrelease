@@ -4,7 +4,7 @@ name: archiver_syslog
 packages:
 - logstash
 - logsearch-config
-- java8
+- openjdk-8
 
 templates:
   bin/archiver_syslog_ctl: bin/archiver_syslog_ctl

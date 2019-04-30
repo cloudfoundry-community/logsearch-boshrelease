@@ -4,7 +4,7 @@ name: ingestor_syslog
 packages:
 - logstash
 - logsearch-config
-- java8
+- openjdk-8
 
 templates:
   bin/ingestor_syslog_ctl: bin/ingestor_syslog_ctl

@@ -2,7 +2,7 @@
 name: logstash
 
 dependencies:
-  - java8
+  - openjdk-8
 
 files:
   - logstash/logstash-6.4.3.tar.gz

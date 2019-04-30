@@ -68,10 +68,7 @@ then
   export PYTHONPATH=$WEBAPP_DIR/vendor/lib/python
 fi
 
-if [[ -d /var/vcap/packages/java8 ]]
-then
-  export JAVA_HOME="/var/vcap/packages/java8"
-fi
+source /var/vcap/packages/openjdk-8/bosh/runtime.env
 
 export PIDFILE=$RUN_DIR/$JOB_NAME.pid
 
