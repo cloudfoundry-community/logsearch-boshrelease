@@ -14,6 +14,7 @@ path.repo: ["<%= p('elasticsearch.path_repo') %>"]
   end
 %>
 cluster.name: "<%= cluster_name %>"
+cluster.remote.connect: <%= p("elasticsearch.cluster.remote.connect") %>
 
 node.max_local_storage_nodes: 1
 node.name: "<%= name %>/<%= index %>"
