@@ -23,8 +23,8 @@ $ cd ci
 $ cp logsearch-vars-template.yml logsearch-vars.yml
 $ vim logsearch-vars.yml
 
-$ fly -t mytarget set-pipeline -p logseach -c logsearch-pipeline.yml -l logsearch-vars.yml
-$ fly -t mytarget unpause-pipeline -p logseach
-$ fly -t mytarget trigger-job  -j logseach/deploy-logsearch
+$ fly -t mytarget set-pipeline -p logsearch -c logsearch-pipeline.yml -l logsearch-vars.yml
+$ fly -t mytarget unpause-pipeline -p logsearch
+$ fly -t mytarget trigger-job  -j logsearch/deploy-logsearch
 ```
 
