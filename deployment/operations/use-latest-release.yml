@@ -1,0 +1,19 @@
+- type: replace
+  path: /releases/name=logsearch/version
+  value: latest
+
+- type: remove
+  path: /releases/name=logsearch/url
+
+- type: remove
+  path: /releases/name=logsearch/sha1
+
+- type: replace
+  path: /releases/name=logsearch-for-cloudfoundry/version
+  value: latest
+
+- type: remove
+  path: /releases/name=logsearch-for-cloudfoundry/url
+
+- type: remove
+  path: /releases/name=logsearch-for-cloudfoundry/sha1
