@@ -268,8 +268,6 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
   - name: ingestor_syslog
     release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_data}
     provides:
       ingestor: {as: ingestor_link}
     properties:
