@@ -43,6 +43,14 @@ input {
   <% end %>
 }
 
+<%
+  es_output_hosts = nil
+  if_p("logstash_parser.elasticsearch.data_hosts") { |hosts| es_output_hosts = hosts.map { |ip| "#{ip}:9200" }.join(',') }
+  unless es_output_hosts
+    es_output_hosts =  link("elasticsearch").address
+  end
+%>
+
 output {
     <% if p("logstash_parser.debug") %>
         stdout {
@@ -55,7 +63,7 @@ output {
         <% if 'elasticsearch' == output['plugin'] %>
             <%
               options = {
-                "hosts" => [ p('logstash_parser.elasticsearch.data_hosts').map { |ip| "#{ip}:9200" }.join(',') ],
+                "hosts" => [ es_output_hosts ],
                 "index" => p('logstash_parser.elasticsearch.index'),
                 "manage_template" => false
               }
