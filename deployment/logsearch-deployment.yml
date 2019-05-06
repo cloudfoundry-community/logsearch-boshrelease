@@ -93,7 +93,7 @@ instance_groups:
   - name: ingestor_syslog
     release: logsearch
     consumes:
-     elasticsearch: nil
+      elasticsearch: nil
     provides:
       syslog_forwarder: {as: cluster_monitor}
       ingestor: nil
@@ -268,6 +268,8 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
   - name: ingestor_syslog
     release: logsearch
+    consumes:
+      elasticsearch: nil
     provides:
       ingestor: {as: ingestor_link}
     properties:
