@@ -92,6 +92,8 @@ instance_groups:
         - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
   - name: ingestor_syslog
     release: logsearch
+    consumes:
+     elasticsearch: nil
     provides:
       syslog_forwarder: {as: cluster_monitor}
       ingestor: nil
