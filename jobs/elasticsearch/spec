@@ -68,9 +68,6 @@ properties:
   elasticsearch.node.allow_ingest:
     description: Allow node to become ingest node? (true / false)
     default: false
-  elasticsearch.cluster.remote.connect:
-    description: Enable cross-cluster search
-    default: false
   elasticsearch.health.timeout:
     description: Post-start timeout for node to join cluster (seconds)
     default: 300
