@@ -6,14 +6,10 @@ packages:
   - python3
 
 templates:
-  bin/curator_ctl: bin/curator_ctl
+  bin/pre-start: bin/pre-start
   bin/run-curator: bin/run-curator
   config/actions.yml.erb: config/actions.yml
   config/config.yml.erb: config/config.yml
-  config/purge_logs.cron: config/purge_logs.cron
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 consumes:
  - name: elasticsearch
@@ -34,6 +30,16 @@ properties:
     description: Bucket name on S3 where to keep snapshots
     default: ''
 
+  curator.execute.hourly:
+    description: "Execute Curator hourly?"
+    default: true
+  curator.execute.daily:
+    description: "Execute Curator daily?"
+    default: false
+  curator.execute.weekly:
+    description: "Execute Curator weekly?"
+    default: false
+
   curator.elasticsearch.hosts:
     description: IP address of elasticsearch host to proxy requests for (eg, 127.0.0.1)
     default:
@@ -50,9 +56,6 @@ properties:
   curator.loglevel:
     description: Set the minimum acceptable log severity to display.
     default: INFO
-  curator.cron_schedule:
-    description: Schedule to trigger Curator, using normal cron format
-    default: 0 0 * * *
   curator.logformat:
     description: This should default, json, logstash.
     default: default

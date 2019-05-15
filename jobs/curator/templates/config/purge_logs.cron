@@ -1,1 +1,0 @@
-<%= p('curator.cron_schedule') %> /var/vcap/jobs/curator/bin/run-curator >>/var/vcap/sys/log/curator/curator.log 2>&1
