@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -eu
+
+<% if p('curator.execute.hourly') %>
+# Execute Curator hourly
+cp /var/vcap/jobs/curator/bin/run-curator /etc/cron.hourly
+<% else %>
+# Remove pre-existing hourly script
+rm -f /etc/cron.hourly/run-curator
+<% end %>
+
+<% if p('curator.execute.daily') %>
+# Execute Curator daily
+cp /var/vcap/jobs/curator/bin/run-curator /etc/cron.daily
+<% else %>
+# Remove pre-existing daily script
+rm -f /etc/cron.daily/run-curator
+<% end %>
+
+<% if p('curator.execute.weekly') %>
+# Execute curator weekly
+cp /var/vcap/jobs/curator/bin/run-curator /etc/cron.weekly
+<% else %>
+# Remove pre-existing weekly script
+rm -f /etc/cron.weekly/run-curator
+<% end %>
