@@ -1,0 +1,23 @@
+---
+# Remove Cluster Monitor
+- type: remove
+  path: /instance_groups/name=cluster_monitor
+
+- type: remove
+  path: /instance_groups/name=elasticsearch_master/jobs/name=syslog_forwarder
+
+- type: remove
+  path: /instance_groups/name=maintenance/jobs/name=syslog_forwarder
+
+- type: remove
+  path: /instance_groups/name=elasticsearch_data/jobs/name=syslog_forwarder
+
+- type: remove
+  path: /instance_groups/name=kibana/jobs/name=syslog_forwarder
+
+- type: remove
+  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder
+
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/name=haproxy/consumes/syslog_forwarder
+  value: nil
