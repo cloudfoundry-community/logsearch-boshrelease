@@ -199,7 +199,7 @@ backend elastic
     mode http
     balance roundrobin
     <% elasticsearch_hosts.each_with_index do |ip, index| %>
-    server elastic<%= index %> <%= ip %>:9000 check inter 1000
+    server elastic<%= index %> <%= ip %>:9200 check inter 1000
     <% end %>
 
 
