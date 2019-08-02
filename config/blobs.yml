@@ -36,6 +36,7 @@ elasticsearch/elasticsearch-6.7.2.tar.gz:
   sha: sha256:d0ed638c825914d3c5fd8b34f69b5bcf9cfa5cf85af25145ea7a910ea8f708a9
 elasticsearch/elasticsearch-6.8.1.tar.gz:
   size: 148584086
+  object_id: fb771ca7-96af-4049-6c7b-d60d603145ad
   sha: sha256:ad33d463884acde2d8682cb46927f03603ea66133b84c12f53dc9edbc02447e3
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
@@ -51,6 +52,7 @@ kibana/kibana-6.4.3-linux-x86_64.tar.gz:
   sha: 30d9adca00c0c4bae35b40a305fcb16a046a9601
 kibana/kibana-6.8.1-linux-x86_64.tar.gz:
   size: 186486884
+  object_id: 50129e46-7644-4084-4ffb-21951f799e11
   sha: sha256:45cc8c47286f218abbdab04ec502b5de99c86e3da2e8debadaeb99ac79391e02
 logstash/logstash-6.4.3.tar.gz:
   size: 153936585
@@ -58,6 +60,7 @@ logstash/logstash-6.4.3.tar.gz:
   sha: cb1c4c6ff2c5ef9b14809733624b5c4b5e55e78d
 logstash/logstash-6.8.1.tar.gz:
   size: 172031559
+  object_id: 70fb8b71-7b2c-4acc-5ab3-52963e6fba85
   sha: sha256:7e6b7aeee8fa3293f957fc251e2bd47428bf4f1e67a09e6170eca5bcd215669f
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
