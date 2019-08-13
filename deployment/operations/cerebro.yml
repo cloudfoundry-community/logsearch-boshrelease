@@ -15,7 +15,7 @@
   path: /instance_groups/name=elasticsearch_master/jobs/-
   value:
     name: route_registrar
-    release: logsearch-for-cloudfoundry
+    release: routing
     consumes:
       nats: {from: nats, deployment: cf}
     properties:
@@ -26,6 +26,10 @@
           registration_interval: 60s
           uris:
           - "cerebro.((system_domain))"
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=bpm?/release
+  value: bpm
 
 # --- define secrets for cerebro
 - type: replace
