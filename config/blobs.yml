@@ -30,10 +30,6 @@ curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   size: 27677
   object_id: 30fbe47c-eb16-4db8-57ce-f853940769c7
   sha: b5c82285df0610464a9332c567cf8bd06b8786f6
-elasticsearch/elasticsearch-6.7.2.tar.gz:
-  size: 148569042
-  object_id: 4b97cee3-4be8-41e2-6ec3-a4adeca3df61
-  sha: sha256:d0ed638c825914d3c5fd8b34f69b5bcf9cfa5cf85af25145ea7a910ea8f708a9
 elasticsearch/elasticsearch-6.8.1.tar.gz:
   size: 148584086
   object_id: fb771ca7-96af-4049-6c7b-d60d603145ad
@@ -46,18 +42,10 @@ haproxy/pcre-8.40.tar.gz:
   size: 2065161
   object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
-kibana/kibana-6.4.3-linux-x86_64.tar.gz:
-  size: 235299366
-  object_id: 0aad6732-1974-4211-6661-6b064d324644
-  sha: 30d9adca00c0c4bae35b40a305fcb16a046a9601
 kibana/kibana-6.8.1-linux-x86_64.tar.gz:
   size: 186486884
   object_id: 50129e46-7644-4084-4ffb-21951f799e11
   sha: sha256:45cc8c47286f218abbdab04ec502b5de99c86e3da2e8debadaeb99ac79391e02
-logstash/logstash-6.4.3.tar.gz:
-  size: 153936585
-  object_id: 8d5c9c76-018d-4dec-6a31-5dc2c8018c57
-  sha: cb1c4c6ff2c5ef9b14809733624b5c4b5e55e78d
 logstash/logstash-6.8.1.tar.gz:
   size: 172031559
   object_id: 70fb8b71-7b2c-4acc-5ab3-52963e6fba85
