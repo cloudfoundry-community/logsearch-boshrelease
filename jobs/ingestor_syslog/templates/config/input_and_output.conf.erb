@@ -4,6 +4,9 @@ input {
     add_field => [ "type", "syslog" ]
     host => "0.0.0.0"
     port => "<%= p("logstash_ingestor.syslog.port") %>"
+    <% if_p("logstash_ingestor.syslog.use_keepalive") do |v| %>
+    tcp_keep_alive => <%= v %>
+    <% end %>
   }
   udp {
     add_field => [ "type", "syslog" ]
@@ -23,6 +26,9 @@ input {
     <% end %>
     ssl_cert => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.crt"
     ssl_key => "/var/vcap/jobs/ingestor_syslog/config/syslog_tls.key"
+    <% if_p("logstash_ingestor.syslog_tls.use_keepalive") do |v| %>
+    tcp_keep_alive => <%= v %>
+    <% end %>
   }
   <% end %>
 

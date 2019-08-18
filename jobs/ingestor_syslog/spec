@@ -95,6 +95,8 @@ properties:
   logstash_ingestor.syslog.transport:
     description: Transport protocol to use
     default: "tcp"
+  logstash_ingestor.syslog.use_keepalive:
+    description: Instruct the socket to use TCP keep alives
 
   logstash_ingestor.syslog_tls.port:
     description: Port to listen for syslog-TLS messages (omit to disable)
@@ -105,6 +107,8 @@ properties:
   logstash_ingestor.syslog_tls.skip_ssl_validation:
     description: Verify the identity of the other end of the SSL connection against the CA.
     default: false
+  logstash_ingestor.syslog_tls.use_keepalive:
+    description: Instruct the socket to use TCP keep alives
 
   logstash_ingestor.relp.port:
     description: Port to listen for RELP messages
