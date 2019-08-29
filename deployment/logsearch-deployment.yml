@@ -97,6 +97,7 @@ instance_groups:
     provides:
       syslog_forwarder: {as: cluster_monitor}
       ingestor: nil
+      ingestor_inputs: nil
     properties:
       logstash_parser:
         elasticsearch:
@@ -272,6 +273,7 @@ instance_groups:
       elasticsearch: nil
     provides:
       ingestor: {as: ingestor_link}
+      ingestor_inputs: nil
     properties:
       logstash_parser:
         elasticsearch:
