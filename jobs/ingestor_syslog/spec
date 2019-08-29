@@ -33,7 +33,10 @@ provides:
   type: syslog_forwarder
   properties:
   - logstash_ingestor.syslog.port
-
+- name: ingestor_inputs
+  type: ingestor_inputs
+  properties:
+  - logstash_parser.inputs 
 consumes:
 - name: elasticsearch
   type: elasticsearch

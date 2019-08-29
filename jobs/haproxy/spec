@@ -26,8 +26,8 @@ consumes:
 - name: syslog_forwarder
   type: syslog_forwarder
   optional: true
-- name: ingestor_plugins
-  type: ingestor_plugins
+- name: ingestor_inputs
+  type: ingestor_inputs
   optional: true
   
 properties:
