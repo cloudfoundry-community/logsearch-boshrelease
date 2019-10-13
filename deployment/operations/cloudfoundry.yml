@@ -1,18 +1,5 @@
 ---
 - type: replace
-  path: /instance_groups/name=maintenance/jobs/-
-  value:
-    name: create-uaa-client
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-    properties:
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
-        oauth2_client_secret: "((kibana_oauth2_client_secret))"
-
-- type: replace
   path: /instance_groups/name=maintenance/jobs/name=smoke_tests
   value:
     name: smoke-tests
@@ -93,9 +80,6 @@
         firehose_client_id: firehose-to-syslog
         firehose_client_secret: "((firehose_client_secret))"
         skip_ssl_validation: true
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
