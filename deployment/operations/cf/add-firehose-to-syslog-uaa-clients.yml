@@ -1,4 +1,5 @@
 # Apply to your cf-deployment based Cloud Foundry
+# Use it with: ../set-firehose-to-syslog-password.yml
 
 # UAA client for firehose-to-syslog
 - type: replace
