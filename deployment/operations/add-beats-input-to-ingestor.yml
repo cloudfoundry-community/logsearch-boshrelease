@@ -1,0 +1,18 @@
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties/logstash_parser?/inputs/-
+  value:
+    plugin: beats
+    options:
+      port: 5044
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/provides/ingestor_inputs?/as?
+  value: ingestor_inputs_link
+
+- type: replace
+  path: /instance_groups/name=cluster_monitor/jobs/name=ingestor_syslog/provides/ingestor_inputs?
+  value: nil
+
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/name=haproxy/consumes/ingestor_inputs?/from?
+  value: ingestor_inputs_link

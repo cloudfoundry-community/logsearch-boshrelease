@@ -54,6 +54,8 @@
     syslog_tls_port = link('ingestor').p('logstash_ingestor.syslog_tls.port')
   end
 
+  inputs = []
+  if_link("ingestor_inputs") { |ingestor_inputs| inputs = ingestor_inputs.p("logstash_parser.inputs") }
 %>
 global
     log <%= syslog_forwarder_host %> syslog <%= p('haproxy.log_level') %>
@@ -176,6 +178,24 @@ backend cluster_monitor
     <% cluster_monitor_hosts.each_with_index do |ip, index| %>
     server kibana<%= index %> <%= ip %>:<%= kibana_port %> check inter 1000
     <% end %>
+
+<% inputs.each do |input| %>
+frontend <%= input["plugin"] %>-in
+    mode tcp
+    balance roundrobin
+
+    bind :<%= input["options"]["port"] %>
+    default_backend <%= input["plugin"] %>
+<% end %>
+<% inputs.each do |input| %>
+backend <%= input["plugin"] %>
+    mode tcp
+    balance roundrobin
+
+    <% ingestor_hosts.each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= input["options"]["port"] %> check inter 1000
+    <% end %>
+<% end %>
 
 <% if p("haproxy.elastic.inbound_port", nil) %>
 frontend elastic-in

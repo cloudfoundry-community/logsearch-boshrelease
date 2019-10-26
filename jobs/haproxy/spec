@@ -26,7 +26,10 @@ consumes:
 - name: syslog_forwarder
   type: syslog_forwarder
   optional: true
-
+- name: ingestor_inputs
+  type: ingestor_inputs
+  optional: true
+  
 properties:
   haproxy.syslog_server:
     description: "An IPv4 address optionally followed by a colon and a UDP port. It can also be an IPv6 address or filesystem path to a UNIX domain socket."
