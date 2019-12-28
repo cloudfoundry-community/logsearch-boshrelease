@@ -80,6 +80,7 @@
         firehose_client_id: "((firehose_client_id))"
         firehose_client_secret: "((firehose_client_secret))"
         skip_ssl_validation: true
+        firehose_subscription_id: "((firehose_client_id))"
 
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
