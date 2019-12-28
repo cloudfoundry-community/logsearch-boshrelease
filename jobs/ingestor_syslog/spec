@@ -158,9 +158,27 @@ properties:
   logstash_parser.elasticsearch.document_id:
     description: "Use a specific, dynamic ID rather than an auto-generated identifier."
     default: ~
+  logstash_parser.elasticsearch.index_name.platform.base:
+    description: "The platform index base name"
+    default: "platform"
+  logstash_parser.elasticsearch.index_name.platform.period:
+    description: "The platform index period - Joda-Time format https://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html"
+    default: "YYYY.MM.dd"
+  logstash_parser.elasticsearch.index_name.app.base:
+    description: "The app index base name"
+    default: "app"
+  logstash_parser.elasticsearch.index_name.app.append_org_to_base:
+    description: "Whether to add the CF Org to the index base name"
+    default: true
+  logstash_parser.elasticsearch.index_name.app.append_space_to_base:
+    description: "Whether to add the CF Space to the index base name"
+    default: false
+  logstash_parser.elasticsearch.index_name.app.period:
+    description: "The app index period - Joda-Time format https://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html"
+    default: "xxxx'w'ww"
   logstash_parser.elasticsearch.index:
     description: "The specific, dynamic index name to write events to."
-    default: "logstash-%{+YYYY.MM.dd}"
+    default: "logs-%{[@metadata][index_base]}-%{[@metadata][index_period]}"
   logstash_parser.elasticsearch.index_type:
     description: "The specific, dynamic index type name to write events to."
     default: "%{@type}"

@@ -3,7 +3,7 @@
 
 # UAA client for firehose-to-syslog
 - type: replace
-  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/firehose-to-syslog?
+  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/((uaa_clients_firehose_client_id))?
   value:
     override: true
     authorized-grant-types: client_credentials

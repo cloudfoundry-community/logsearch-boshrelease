@@ -20,3 +20,33 @@
       }
     }
 
+
+    mutate {
+      add_field => { "[@metadata][index_base]" => "<%=p('logstash_parser.elasticsearch.index_name.platform.base')%>" }
+      add_field => { "[@metadata][index_period]" => "%{+<%=p('logstash_parser.elasticsearch.index_name.platform.period')%>}" } # YYYY.MM.dd
+    }
+
+    # Custom Override @metadata.index
+    if [@index_type] == "app" {
+        mutate {
+            replace => { "[@metadata][index_base]" => "<%=p('logstash_parser.elasticsearch.index_name.app.base')%>" }
+            replace => { "[@metadata][index_period]" => "%{+<%=p('logstash_parser.elasticsearch.index_name.app.period')%>}" } # YYYY.MM, xxxx.ww, YYYY.MM.dd
+        }
+        <% if p('logstash_parser.elasticsearch.index_name.app.append_org_to_base') %>
+        if [@cf][org] {
+            mutate {
+                replace => { "[@metadata][index_base]" => "%{[@metadata][index_base]}-%{[@cf][org]}" }
+            }
+        }
+        <% end %>
+        <% if p('logstash_parser.elasticsearch.index_name.app.append_space_to_base') %>
+        if [@cf][space] {
+            mutate {
+                replace => { "[@metadata][index_base]" => "%{[@metadata][index_base]}-%{[@cf][space]}" }
+            }
+        }
+        <% end %>
+        mutate {
+            lowercase => [ "[@metadata][index_base]" ]
+        }
+    }
