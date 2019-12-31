@@ -175,7 +175,7 @@ properties:
     default: false
   logstash_parser.elasticsearch.index_name.app.period:
     description: "The app index period - Joda-Time format https://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html"
-    default: "xxxx'w'ww"
+    default: "YYYY.MM.dd"
   logstash_parser.elasticsearch.index:
     description: "The specific, dynamic index name to write events to."
     default: "logs-%{[@metadata][index_base]}-%{[@metadata][index_period]}"
