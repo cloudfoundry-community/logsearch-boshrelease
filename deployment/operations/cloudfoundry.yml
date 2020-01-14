@@ -150,18 +150,6 @@
   value:
   - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
 
-- type: replace
-  path: /variables/-
-  value:
-   name: kibana_oauth2_client_secret
-   type: password
-
-- type: replace
-  path: /variables/-
-  value:
-    name: firehose_client_secret
-    type: password
-
 # Releases
 - type: replace
   path: /releases/-
