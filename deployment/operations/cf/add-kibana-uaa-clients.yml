@@ -2,7 +2,7 @@
 
 # UAA client for Kibana
 - type: replace
-  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/kibana?
+  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/kibana_oauth2_client?
   value:
     authorities: uaa.none
     authorized-grant-types: authorization_code,refresh_token
@@ -10,10 +10,10 @@
     override: true
     redirect-uri: "((kibana_redirect_uri))"
     scope: openid,oauth.approvals,scim.userids,cloud_controller.read
-    secret: "((uaa_clients_kibana_secret))"
+    secret: "((kibana_oauth2_client_secret))"
 
 - type: replace
   path: /variables/-
   value:
-    name: uaa_clients_kibana_secret
+    name: kibana_oauth2_client_secret
     type: password
