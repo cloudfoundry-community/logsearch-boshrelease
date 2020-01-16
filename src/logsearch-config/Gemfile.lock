@@ -60,7 +60,7 @@ GEM
       manticore (>= 0.5.4, < 1.0.0)
       minitar (~> 0.5.4)
       pry (~> 0.10.1)
-      puma (~> 2.16)
+      puma (>= 3.12.2)
       rack (>= 1.6.12)
       ruby-maven (~> 3.3.9)
       rubyzip (>= 1.3.0)
@@ -151,7 +151,7 @@ GEM
       slop (~> 3.4)
       spoon (~> 0.0)
     public_suffix (2.0.5)
-    puma (2.16.0-java)
+    puma (>= 3.12.2)
     rack (>= 1.6.12)
     rack-protection (1.5.3)
       rack
