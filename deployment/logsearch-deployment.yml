@@ -315,9 +315,9 @@ instance_groups:
 
 releases:
 - name: logsearch
-  url: https://s3.amazonaws.com/logsearch/logsearch-210.4.0.tgz
-  version: 210.4.0
-  sha1: d28bc9314c937de3aeab45d11548d0914fb54c2d
+  url: https://s3.amazonaws.com/logsearch/logsearch-210.5.0.tgz
+  version: 210.5.0
+  sha1: e5f3545f7efebc82efe5f113efbc5f27cb81a323
 
 stemcells:
 - alias: default
