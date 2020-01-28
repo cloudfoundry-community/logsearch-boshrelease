@@ -10,3 +10,4 @@ files:
   - logstash/logstash-filter-translate-3.0.3.zip
   - logstash/logstash-input-relp-3.0.2.zip
   - logstash/logstash-input-syslog-3.2.2.zip
+  - logstash/logstash-output-syslog-3.0.5.zip
