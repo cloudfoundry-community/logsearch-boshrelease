@@ -52,6 +52,8 @@ case $1 in
       <% end %>
     <% end %>
 
+    ulimit -u 4096
+    
     if [ -n "$MAX_OPEN_FILES" ]; then
       ulimit -n $MAX_OPEN_FILES
     fi
