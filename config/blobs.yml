@@ -66,6 +66,10 @@ logstash/logstash-input-syslog-3.2.2.zip:
   size: 10966
   object_id: 88ec3912-4366-492a-752c-25080365790d
   sha: e73dc3326021fc57e8b73ba87b74255870aa69a2
+logstash/logstash-output-syslog-3.0.5.zip:
+  size: 9679
+  object_id: d1c0b0f1-b98b-41b6-4b00-08d3b1bb9467
+  sha: sha256:eaac1ea66848d34dbe41e4126fffac4e221deecb402b310e64fd5bb41e3b870f
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   size: 2094679
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb
