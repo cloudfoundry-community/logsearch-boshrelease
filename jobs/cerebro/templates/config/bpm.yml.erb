@@ -1,0 +1,8 @@
+processes:
+  - name: cerebro
+    executable: /var/vcap/jobs/cerebro/bin/cerebro.sh
+    persistent_disk: true
+    additional_volumes:
+    - path: /var/vcap/sys/tmp/cerebro
+      writable: true
+      allow_executions: true
