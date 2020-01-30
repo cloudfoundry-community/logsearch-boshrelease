@@ -107,12 +107,6 @@
 - type: replace
   path: /instance_groups/name=ls-router/jobs/-
   value:
-    name: bpm
-    release: bpm
-
-- type: replace
-  path: /instance_groups/name=ls-router/jobs/-
-  value:
     name: route_registrar
     release: routing
     consumes:
@@ -139,14 +133,6 @@
   - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
 
 # Releases
-- type: replace
-  path: /releases/-
-  value:
-    name: bpm
-    version: 1.0.4
-    url: https://bosh.io/d/github.com/cloudfoundry-incubator/bpm-release?v=1.0.4
-    sha1: 41df19697d6a69d2552bc2c132928157fa91abe0
-
 - type: replace
   path: /releases/-
   value:
