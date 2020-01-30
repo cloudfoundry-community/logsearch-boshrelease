@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+source /var/vcap/packages/openjdk-8/bosh/runtime.env
+export JOB_NAME=elasticsearch
+export PORT=${PORT:-5000}
+export LANG=en_US.UTF-8
+export TMP_DIR=/var/vcap/sys/tmp/$JOB_NAME
+export JOB_DIR=/var/vcap/jobs/$JOB_NAME
+export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+
+<% p("elasticsearch.exec.environment", {}).each do |k, v| %>
+export <%= k %>=<%= v %>
+<% end %>
+
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * <%= p("elasticsearch.heap_percentage") %> ) / 100 ))K
+<% if_p('elasticsearch.heap_size') do |heap_size| %>
+  HEAP_SIZE=<%= heap_size %>
+<% end %>
+
+export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Djava.io.tmpdir=$TMP_DIR"
+export ES_PATH_CONF=${JOB_DIR}/config
+
+export MAX_OPEN_FILES=<%= p("elasticsearch.limits.fd") %>
+export MAX_LOCKED_MEMORY=unlimited  # required to enable elasticsearch's mlockall setting
+
+mkdir -p /var/vcap/packages/elasticsearch/plugins
+
+# install plugins
+rm -rf /var/vcap/packages/elasticsearch/plugins/*
+<% if_p('elasticsearch.cloud.aws.access_key', 'elasticsearch.cloud.aws.secret_key') do %>
+  /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install -b repository-s3
+<% end %>
+<% p("elasticsearch.plugins").each do |plugin| name, path = plugin.first %>
+  <% if path.start_with? '/var/vcap' %>
+    /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "file://<%= path %>"
+  <% elsif path.start_with? 'http' %>
+    /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "<%= path %>"
+  <% else %>
+    /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install "<%= path %>"
+  <% end %>
+<% end %>
+
+ulimit -u 4096
+
+if [ -n "$MAX_OPEN_FILES" ]; then
+  ulimit -n $MAX_OPEN_FILES
+fi
+
+if [ -n "$MAX_LOCKED_MEMORY" ]; then
+  ulimit -l $MAX_LOCKED_MEMORY
+fi
+
+/var/vcap/packages/elasticsearch/bin/elasticsearch \
+     <%= p("elasticsearch.exec.options", []).join(' ') %>
