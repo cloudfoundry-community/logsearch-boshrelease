@@ -7,8 +7,8 @@ packages:
 - openjdk-8
 
 templates:
-  bin/ingestor_syslog_ctl: bin/ingestor_syslog_ctl
-  bin/monit_debugger: bin/monit_debugger
+  bin/ingestor_syslog: bin/ingestor_syslog.sh
+  config/bpm.yml.erb: config/bpm.yml
   config/input_and_output.conf.erb: config/input_and_output.conf
   config/filters_pre.conf.erb: config/filters_pre.conf
   config/filters_post.conf.erb: config/filters_post.conf
@@ -17,9 +17,6 @@ templates:
   config/syslog_tls.key.erb: config/syslog_tls.key
   config/logstash.yml.erb: config/logstash.yml
   config/jvm.options.erb: config/jvm.options
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 provides:
 - name: ingestor
@@ -36,7 +33,7 @@ provides:
 - name: ingestor_inputs
   type: ingestor_inputs
   properties:
-  - logstash_parser.inputs 
+  - logstash_parser.inputs
 consumes:
 - name: elasticsearch
   type: elasticsearch

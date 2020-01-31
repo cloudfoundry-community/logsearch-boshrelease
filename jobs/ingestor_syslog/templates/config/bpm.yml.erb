@@ -1,0 +1,12 @@
+processes:
+  - name: ingestor_syslog
+    executable: /var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog.sh
+    ephemeral_disk: true
+    persistent_disk: true
+    additional_volumes:
+    - path: /var/vcap/sys/tmp/ingestor_syslog
+      writable: true
+      allow_executions: true
+    - path: /var/vcap/jobs/ingestor_syslog/config
+      writable: true
+    - path: /var/vcap/jobs/parser-config-lfc/config
