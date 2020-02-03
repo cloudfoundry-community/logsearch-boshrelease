@@ -9,6 +9,7 @@ templates:
   bin/drain.erb: bin/drain
   bin/post-deploy.erb: bin/post-deploy
   bin/post-start.erb: bin/post-start
+  bin/pre-start: bin/pre-start
   bin/elasticsearch: bin/elasticsearch.sh
   config/bpm.yml.erb: config/bpm.yml
   config/config.yml.erb: config/elasticsearch.yml

@@ -1,5 +1,7 @@
 processes:
   - name: elasticsearch
+    hooks:
+      pre_start: /var/vcap/jobs/elasticsearch/bin/pre-start
     executable: /var/vcap/jobs/elasticsearch/bin/elasticsearch.sh
     persistent_disk: true
     ephemeral_disk: true
