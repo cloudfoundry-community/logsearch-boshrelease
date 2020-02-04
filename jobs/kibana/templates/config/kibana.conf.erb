@@ -17,7 +17,7 @@ server.host: <%= p('kibana.host') %>
     elasticsearch_port = p("kibana.elasticsearch.port")
   end
 %>
-elasticsearch.url: "http://<%= p("kibana.elasticsearch.host") + ':' + elasticsearch_port.to_s %>"
+elasticsearch.hosts: "http://<%= p("kibana.elasticsearch.host") + ':' + elasticsearch_port.to_s %>"
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.

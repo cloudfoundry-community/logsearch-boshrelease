@@ -5,13 +5,11 @@ packages:
   - kibana
 
 templates:
-  bin/kibana_ctl: bin/kibana_ctl
-  config/kibana.conf.erb: config/kibana.conf
-  bin/monit_debugger: bin/monit_debugger
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  bin/kibana: bin/kibana.sh
+  bin/pre-start.erb: bin/pre-start
   bin/post-start.erb: bin/post-start
+  config/kibana.conf.erb: config/kibana.conf
+  config/bpm.yml.erb: config/bpm.yml
 
 consumes:
 - name: elasticsearch
@@ -67,9 +65,6 @@ properties:
   kibana.memory_limit:
     description: "Configure the GC in nodejs to treat this number as the available memory for this process. The value is in the form of % of VM memory."
     default: 75
-  kibana.wait_for_templates:
-    description: "A list of index templates that need to be present in ElasticSearch before the process starts"
-    default: []
   kibana.health.disable_post_start:
     description: Allow node to run post-start script? (true / false)
     default: false
