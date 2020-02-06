@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -ex
-
+export DATA_DIR=/var/vcap/data/elasticsearch_config
 <%
   elasticsearch_host = nil
   if_link("elasticsearch") { |elasticsearch_link| elasticsearch_host = elasticsearch_link.instances.first.address }
@@ -69,25 +69,25 @@ def put_to_es(url_stem_base, es_config, request_params = {})
         ret << "CONTENT_PATH=\"#{content}\""
       else
         ret << <<BASH
-CONTENT_PATH=/tmp/elasticsearch_config-http_body.txt
-cat <<EOF > $CONTENT_PATH
+CONTENT_PATH=${DATA_DIR}/elasticsearch_config-http_body.txt
+cat <<EOF > ${CONTENT_PATH}
 #{content}
 EOF
 BASH
       end
 
       ret << <<BASH
-HTTP_CODE=$(curl -s -H 'Content-Type: application/json' -w '%{http_code}' -o /tmp/elasticsearch_config-response.txt -X PUT --data-binary @$CONTENT_PATH "$URL")
+HTTP_CODE=$(curl -s -H 'Content-Type: application/json' -w '%{http_code}' -o ${DATA_DIR}/elasticsearch_config-response.txt -X PUT --data-binary @$CONTENT_PATH "$URL")
 
-if grep --quiet "\"errors\":true" /tmp/elasticsearch_config-response.txt ; then
-  cat /tmp/elasticsearch_config-response.txt > /dev/stderr
+if grep --quiet "\"errors\":true" ${DATA_DIR}/elasticsearch_config-response.txt ; then
+  cat ${DATA_DIR}/elasticsearch_config-response.txt > /dev/stderr
   exit $HTTP_CODE
 fi
 
 if [ "$HTTP_CODE" -le "300" ]; then
-  cat /tmp/elasticsearch_config-response.txt
+  cat ${DATA_DIR}/elasticsearch_config-response.txt
 else
-  cat /tmp/elasticsearch_config-response.txt > /dev/stderr
+  cat ${DATA_DIR}/elasticsearch_config-response.txt > /dev/stderr
   exit $HTTP_CODE
 fi
 BASH
