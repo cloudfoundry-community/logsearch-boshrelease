@@ -12,4 +12,5 @@ fi
   <% end %>
 <% end %>
 
-rm -rf /var/vcap/packages/kibana/optimize/bundles/src/ui
+cd /var/vcap/packages/kibana
+chown -R vcap:vcap optimize config data
