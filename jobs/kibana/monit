@@ -1,5 +1,5 @@
 check process kibana
   with pidfile /var/vcap/sys/run/bpm/kibana/kibana.pid
-  start program "/var/vcap/jobs/bpm/bin/bpm start kibana"
+  start program "/var/vcap/jobs/bpm/bin/bpm start kibana" with timeout 300 seconds
   stop program "/var/vcap/jobs/bpm/bin/bpm stop kibana"
   group vcap
