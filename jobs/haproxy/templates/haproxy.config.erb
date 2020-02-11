@@ -60,7 +60,6 @@
 global
     log <%= syslog_forwarder_host %> syslog <%= p('haproxy.log_level') %>
     log-tag ls-router
-    daemon
     user vcap
     group vcap
     maxconn 64000
@@ -241,4 +240,3 @@ userlist kibana-user
 userlist cluster-monitor-user
     user <%= p('haproxy.cluster_monitor.auth.username') %> insecure-password <%= p('haproxy.cluster_monitor.auth.password') %>
 <% end %>
-

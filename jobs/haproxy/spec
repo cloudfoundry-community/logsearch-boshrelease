@@ -6,12 +6,9 @@ packages:
 
 templates:
   haproxy.config.erb: config/haproxy.config
-  haproxy_ctl: bin/haproxy_ctl
-  monit_debugger: bin/monit_debugger
+  haproxy: bin/haproxy.sh
+  bpm.yml.erb: config/bpm.yml
   cert.pem.erb: config/cert.pem
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  properties.sh.erb: data/properties.sh
 
 consumes:
 - name: elasticsearch
@@ -29,7 +26,7 @@ consumes:
 - name: ingestor_inputs
   type: ingestor_inputs
   optional: true
-  
+
 properties:
   haproxy.syslog_server:
     description: "An IPv4 address optionally followed by a colon and a UDP port. It can also be an IPv6 address or filesystem path to a UNIX domain socket."
@@ -40,6 +37,9 @@ properties:
   haproxy.ssl_pem:
     description: "SSL certificate (PEM file).  Omit if you don't want to use SSL"
     default: ~
+  haproxy.fd_limit:
+    description: "File descriptors limit (uname -n)"
+    default: 256000
 
   haproxy.connect_timeout:
     description: "Timeout waiting for connections to establish to a server (in seconds)"
@@ -95,7 +95,7 @@ properties:
     default: 5601
   haproxy.kibana.enable_ssl:
     description: "Enable or Disable SSL for Kibana traffic on haproxy"
-    default: true 
+    default: true
   haproxy.kibana.auth.username:
     description: "Basic auth username for kibana. Optional"
     default: ""

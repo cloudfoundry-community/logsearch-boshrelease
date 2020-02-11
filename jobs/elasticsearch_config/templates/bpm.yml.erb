@@ -1,0 +1,6 @@
+processes:
+  - name: elasticsearch_config
+    executable: /var/vcap/jobs/elasticsearch_config/bin/job.process
+    ephemeral_disk: true
+    additional_volumes:
+    - path: /var/vcap/jobs/elasticsearch-config-lfc

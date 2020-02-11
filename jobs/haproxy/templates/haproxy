@@ -1,0 +1,9 @@
+#!/bin/bash -e
+#
+#source /var/vcap/jobs/haproxy/helpers/ctl_setup.sh 'haproxy'
+PATH=/var/vcap/packages/haproxy/bin:$PATH
+
+NAME=haproxy
+CONFIG=/var/vcap/jobs/haproxy/config/haproxy.config
+
+/var/vcap/packages/haproxy/bin/haproxy -f "${CONFIG}"

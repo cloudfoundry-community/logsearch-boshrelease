@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sysctl -q -w vm.max_map_count=262144
