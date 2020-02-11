@@ -73,6 +73,8 @@ builds:
     version: "17"
   82d3ade0-a2a8-432a-95a1-a92c8873667f:
     version: 201.0.11
+  992d96c6-6170-487f-7728-f8d136e7b5d1:
+    version: 210.5.2
   a041f75c-652b-446b-46d9-1f5a7ac5ff14:
     version: 209.0.0
   a24471ae-4bb9-4456-58d3-f8f859a4f557:

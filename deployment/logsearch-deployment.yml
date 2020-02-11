@@ -194,9 +194,9 @@ instance_groups:
 
 releases:
 - name: logsearch
-  url: https://s3.amazonaws.com/logsearch/logsearch-210.5.0.tgz
-  version: 210.5.0
-  sha1: e5f3545f7efebc82efe5f113efbc5f27cb81a323
+  url: https://s3.amazonaws.com/logsearch/logsearch-210.5.2.tgz
+  version: 210.5.2
+  sha1: ad8440e67ecf1a268a9cd8534eefc4bb76d866db
 
 - name: bpm
   url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.6
