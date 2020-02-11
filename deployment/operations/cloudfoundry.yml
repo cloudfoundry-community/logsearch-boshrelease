@@ -82,18 +82,6 @@
         skip_ssl_validation: true
 
 - type: replace
-  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
-  value:
-    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
-    service: ingestor_cloudfoundry-firehose
-
-- type: replace
-  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
-  value:
-    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
-    service: ingestor_cloudfoundry-firehose
-
-- type: replace
   path: /instance_groups/name=kibana/jobs/-
   value:
     name: redis
