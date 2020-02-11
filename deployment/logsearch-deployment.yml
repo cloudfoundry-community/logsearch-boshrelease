@@ -199,9 +199,9 @@ releases:
   sha1: e5f3545f7efebc82efe5f113efbc5f27cb81a323
 
 - name: bpm
-  url: https://bosh.io/d/github.com/cloudfoundry-incubator/bpm-release?v=1.0.4
-  version: 1.0.4
-  sha1: 41df19697d6a69d2552bc2c132928157fa91abe0
+  url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.6
+  version: 1.1.6
+  sha1: 5bad6161dbbcf068830a100b6a76056fe3b99bc8
 
 stemcells:
 - alias: default
