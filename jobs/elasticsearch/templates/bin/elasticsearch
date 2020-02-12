@@ -3,7 +3,7 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-source /var/vcap/packages/openjdk-8/bosh/runtime.env
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
 export JOB_NAME=elasticsearch
 export PORT=${PORT:-5000}
 export LANG=en_US.UTF-8

@@ -3,7 +3,7 @@ name: elasticsearch
 
 packages:
   - elasticsearch
-  - openjdk-8
+  - openjdk-11
 
 templates:
   bin/drain.erb: bin/drain

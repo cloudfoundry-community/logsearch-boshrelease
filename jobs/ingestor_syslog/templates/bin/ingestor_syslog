@@ -9,7 +9,7 @@ JOB_NAME=ingestor_syslog
 export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 export STORE_DIR=/var/vcap/store/$JOB_NAME
 export JOB_DIR=/var/vcap/jobs/$JOB_NAME
-source /var/vcap/packages/openjdk-8/bosh/runtime.env
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
 
 <%
   es_host = nil
