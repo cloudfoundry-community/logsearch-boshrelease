@@ -26,4 +26,13 @@ export <%= env.keys[0] %>="<%= env.values[0] %>"
 source <%= sf %>
 <% end %>
 
+<% p("kibana.plugins").each do |plugin| name, path = plugin.first %>
+    cd /var/vcap/packages/kibana/plugins/
+  <% if path.start_with? '/var/vcap' %>
+    /var/vcap/packages/kibana/bin/kibana-plugin install "file://<%= path %>"
+  <% else %>
+    /var/vcap/packages/kibana/bin/kibana-plugin install "<%= path %>"
+  <% end %>
+<% end %>
+
 /var/vcap/packages/kibana/bin/kibana -c $JOB_DIR/config/kibana.conf
