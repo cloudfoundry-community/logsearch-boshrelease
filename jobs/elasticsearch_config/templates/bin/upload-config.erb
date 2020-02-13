@@ -20,7 +20,7 @@ export DATA_DIR=/var/vcap/data/elasticsearch_config
 URL=http://<%= elasticsearch_host %>:<%= elasticsearch_port %>
 for template in $(curl -s ${URL}/_cat/templates | awk '{print $1}'); do
   if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.templates').map { |template| template.keys.first }.join(' ') %>"); then
-    curl -XDELETE ${URL}/_template/${template}
+    curl -s -XDELETE ${URL}/_template/${template}
   fi
 done
 
@@ -80,14 +80,14 @@ BASH
 HTTP_CODE=$(curl -s -H 'Content-Type: application/json' -w '%{http_code}' -o ${DATA_DIR}/elasticsearch_config-response.txt -X PUT --data-binary @$CONTENT_PATH "$URL")
 
 if grep --quiet "\"errors\":true" ${DATA_DIR}/elasticsearch_config-response.txt ; then
-  cat ${DATA_DIR}/elasticsearch_config-response.txt > /dev/stderr
+  cat ${DATA_DIR}/elasticsearch_config-response.txt >> /dev/stderr
   exit $HTTP_CODE
 fi
 
 if [ "$HTTP_CODE" -le "300" ]; then
   cat ${DATA_DIR}/elasticsearch_config-response.txt
 else
-  cat ${DATA_DIR}/elasticsearch_config-response.txt > /dev/stderr
+  cat ${DATA_DIR}/elasticsearch_config-response.txt >> /dev/stderr
   exit $HTTP_CODE
 fi
 BASH
@@ -101,21 +101,15 @@ end
 # wait for elasticsearch availability
 #
 
-until curl -f 'http://<%= elasticsearch_host %>:<%= elasticsearch_port %>/_cluster/health?wait_for_status=yellow&timeout=10m'; do :; done
+until curl -sf 'http://<%= elasticsearch_host %>:<%= elasticsearch_port %>/_cluster/health?wait_for_status=yellow&timeout=10m'; do :; done
 
-#
-# templates
-#
+echo "--- Templates"
 <%= put_to_es('_template', p('elasticsearch_config.templates')) %>
 
-#
-# documents
-#
+echo "--- Documents"
 <%= put_to_es('', p('elasticsearch_config.docs')) %>
 
-#
-# license
-#
+echo "--- License"
 <% if_p("elasticsearch_config.license") do |license| %>
   <%= put_to_es('_license', license, acknowledge: true) %>
 <% end %>
