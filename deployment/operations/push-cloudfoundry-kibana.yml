@@ -40,6 +40,8 @@
     networks:
     - name: default
     jobs:
+    - name: bpm
+      release: bpm
     - name: redis
       release: logsearch-for-cloudfoundry
       provides:
