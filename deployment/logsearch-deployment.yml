@@ -53,6 +53,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch_config
     release: logsearch
     consumes:
