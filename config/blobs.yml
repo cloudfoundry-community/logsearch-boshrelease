@@ -1,5 +1,6 @@
 cerebro/cerebro-0.8.5.tgz:
   size: 52409310
+  object_id: 1ebc64b1-4f12-460f-43d4-42824b712cae
   sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
 curator/elasticsearch-curator-v5.4.0.tar.gz:
   size: 293962
@@ -31,6 +32,7 @@ curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   sha: b5c82285df0610464a9332c567cf8bd06b8786f6
 elasticsearch/elasticsearch-7.6.0-linux-x86_64.tar.gz:
   size: 296200685
+  object_id: bf225a26-f847-4dbc-7b6d-3258a7f735da
   sha: sha256:bba7b582a1efcfb870a2aacbceb5036f577fb5bfb9b481b2426177d25c21b595
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
@@ -42,9 +44,11 @@ haproxy/pcre-8.40.tar.gz:
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
 kibana/kibana-7.6.0-linux-x86_64.tar.gz:
   size: 249467327
+  object_id: ade90b92-683a-46ca-5f81-3d9772659bd9
   sha: sha256:3dafefee001da4fe20f8ecf31df59f485c48aabe6814d30089ed253e030a599d
 logstash/logstash-7.6.0.tar.gz:
   size: 165923191
+  object_id: 3c6a0421-6037-4a2d-5546-75b3efb001a6
   sha: sha256:87359a25bd68b51274946d34c30515c141c8c2ba5f0bda0d506d3f3a270043ad
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
