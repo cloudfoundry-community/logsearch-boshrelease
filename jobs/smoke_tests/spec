@@ -1,6 +1,8 @@
 ---
 name: smoke_tests
 
+description: This job runs Smoke tests to make sure the cluster is configured properly
+
 packages: []
 
 templates:

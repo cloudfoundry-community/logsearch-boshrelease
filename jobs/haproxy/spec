@@ -1,6 +1,8 @@
 ---
 name: haproxy
 
+description: This job runs Haproxy which act as a single entry point to the cluster (LB)
+
 packages:
   - haproxy
 

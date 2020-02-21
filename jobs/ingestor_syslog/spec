@@ -1,6 +1,10 @@
 ---
 name: ingestor_syslog
 
+description: |
+  This job runs Logstash process which ingests data by standard Syslog protocol, make some processing,
+  then forward it to Elasticsearch cluster
+
 packages:
 - logstash
 - logsearch-config

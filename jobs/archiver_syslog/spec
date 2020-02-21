@@ -1,6 +1,8 @@
 ---
 name: archiver_syslog
 
+description: This job runs Logstash to forward Syslog data to archive
+
 packages:
 - logstash
 - logsearch-config

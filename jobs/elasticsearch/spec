@@ -1,6 +1,8 @@
 ---
 name: elasticsearch
 
+description: This job runs Elasticsearch node (master or data)
+
 packages:
   - elasticsearch
   - openjdk-8

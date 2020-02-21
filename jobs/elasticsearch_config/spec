@@ -1,6 +1,8 @@
 ---
 name: elasticsearch_config
 
+description: This job loads pre-defined configuration into Elasticsearch cluster
+
 packages:
   - elasticsearch
   - openjdk-8

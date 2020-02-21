@@ -1,6 +1,8 @@
 ---
 name: cerebro
 
+description: This job runs Cerebro - an Admin UI for Elasticsearch cluster
+
 packages:
 - cerebro
 - openjdk-8

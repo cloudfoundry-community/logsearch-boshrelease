@@ -1,6 +1,8 @@
 ---
 name: curator
 
+description: This job runs Curator process to purge outdated info from Elasticsearch cluster
+
 packages:
   - curator
   - python3

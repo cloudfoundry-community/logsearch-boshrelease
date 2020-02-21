@@ -1,6 +1,9 @@
 ---
 name: syslog_forwarder
 
+description: This job forwards Syslog messages from different sources
+
+
 templates:
   config/rsyslog_file_forwarder.conf: config/rsyslog_file_forwarder.conf
   bin/pre-start: bin/pre-start

@@ -1,6 +1,8 @@
 ---
 name: kibana
 
+description: This job runs Kibana UI
+
 packages:
   - kibana
 

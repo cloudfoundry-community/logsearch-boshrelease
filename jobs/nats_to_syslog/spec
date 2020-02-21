@@ -1,6 +1,8 @@
 ---
 name: nats_to_syslog
 
+description: This job forwards NATs messages to Syslog
+
 templates:
   bin/nats_to_syslog_ctl: bin/nats_to_syslog_ctl
   helpers/utils.sh: helpers/utils.sh
