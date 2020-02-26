@@ -5,7 +5,7 @@ description: This job runs Elasticsearch node (master or data)
 
 packages:
   - elasticsearch
-  - openjdk-8
+  - openjdk-11
 
 templates:
   bin/drain.erb: bin/drain

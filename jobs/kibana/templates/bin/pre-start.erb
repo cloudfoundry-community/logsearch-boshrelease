@@ -4,13 +4,5 @@ if ! [[ $(ls -1 /var/vcap/packages/kibana/plugins | wc -l) == 0 ]]; then
   rm -rf /var/vcap/packages/kibana/plugins/*
 fi
 
-<% p("kibana.plugins").each do |plugin| name, path = plugin.first %>
-  <% if path.start_with? '/var/vcap' %>
-    /var/vcap/packages/kibana/bin/kibana-plugin install "file://<%= path %>"
-  <% else %>
-    /var/vcap/packages/kibana/bin/kibana-plugin install "<%= path %>"
-  <% end %>
-<% end %>
-
 cd /var/vcap/packages/kibana
-chown -R vcap:vcap optimize config data
+chown -R vcap:vcap optimize config data plugins

@@ -5,15 +5,14 @@ description: This job loads pre-defined configuration into Elasticsearch cluster
 
 packages:
   - elasticsearch
-  - openjdk-8
+  - openjdk-11
 
 templates:
-  bin/run.erb: bin/upload-config
+  bin/upload-config.erb: bin/upload-config
   bin/job.process: bin/job.process
   bpm.yml.erb: config/bpm.yml
   index-templates/shards-and-replicas.json.erb: index-templates/shards-and-replicas.json
   index-templates/index-settings.json.erb: index-templates/index-settings.json
-  index-templates/index-mappings.json.erb: index-templates/index-mappings.json
 
 consumes:
 - name: elasticsearch

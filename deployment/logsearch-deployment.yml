@@ -4,7 +4,7 @@ update:
   canaries: 1
   canary_watch_time: 30000-1200000
   max_in_flight: 1
-  serial: false
+  serial: true
   update_watch_time: 5000-1200000
 
 instance_groups:
@@ -65,7 +65,6 @@ instance_groups:
         templates:
           - shards-and-replicas: /var/vcap/jobs/elasticsearch_config/index-templates/shards-and-replicas.json
           - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
-          - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
   - name: curator
     release: logsearch
     consumes:

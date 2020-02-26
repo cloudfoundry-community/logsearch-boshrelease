@@ -8,7 +8,7 @@ description: |
 packages:
 - logstash
 - logsearch-config
-- openjdk-8
+- openjdk-11
 
 templates:
   bin/ingestor_syslog: bin/ingestor_syslog.sh
