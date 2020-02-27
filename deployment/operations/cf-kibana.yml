@@ -14,6 +14,7 @@
       cf-kibana:
         app_name: kibana
         app_memory: 4G
+        kibana_index: .cf-kibana
         oauth2_client_secret: "((cf-kibana_client_secret))"
         cloudfoundry:
           uaa_admin_client_secret: "((uaa_admin_client_secret))"
