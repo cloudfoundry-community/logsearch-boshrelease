@@ -13,6 +13,7 @@ templates:
   bpm.yml.erb: config/bpm.yml
   index-templates/shards-and-replicas.json.erb: index-templates/shards-and-replicas.json
   index-templates/index-settings.json.erb: index-templates/index-settings.json
+  index-templates/index-mappings.json.erb: index-templates/index-mappings.json
 
 consumes:
 - name: elasticsearch

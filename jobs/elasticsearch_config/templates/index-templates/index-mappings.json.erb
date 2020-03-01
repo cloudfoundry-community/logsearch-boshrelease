@@ -1,0 +1,53 @@
+{
+  "template": "<%= p('elasticsearch_config.index_prefix') %>*",
+  "order": 102,
+  "settings": {
+    "index": {
+      "query": {
+        "default_field": "@raw"
+      }
+    }
+  },
+  "mappings": {
+    "doc": {
+      "_all": {
+        "enabled": false
+      },
+      "dynamic_templates": [
+        {
+          "string_fields": {
+            "match": "*",
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "keyword",
+              "index": true,
+              "omit_norms": true
+            }
+          }
+        }
+      ],
+      "properties": {
+        "@version": {
+          "type": "keyword",
+          "index": true
+        },
+        "@raw": {
+          "type": "text",
+          "index": true,
+          "norms": {
+            "enabled": false
+          }
+        },
+        "geoip": {
+          "type": "object",
+          "dynamic": true,
+          "properties": {
+            "location": {
+              "type": "geo_point"
+            }
+          }
+        }
+      }
+    }
+  }
+}
