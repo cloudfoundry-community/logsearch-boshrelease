@@ -31,6 +31,21 @@
   value: logs-%{[@metadata][index]}-%{+YYYY.MM.dd}
 
 - type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+    index-mappings-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings.json
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+    index-mappings-app-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-app.json
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch_config/properties/elasticsearch_config/templates/-
+  value:
+    index-mappings-platform-lfc: /var/vcap/jobs/elasticsearch-config-lfc/index-mappings-platform.json
+
+- type: replace
   path: /instance_groups/name=maintenance/jobs/-
   value:
     name: elasticsearch-config-lfc
