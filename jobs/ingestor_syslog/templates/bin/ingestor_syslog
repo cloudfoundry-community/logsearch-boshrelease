@@ -58,12 +58,6 @@ wait_for_template "<%= template %>"
 
 export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$"
 
-<% p("logstash.plugins").each do |plugin| %>
-/var/vcap/packages/logstash/bin/logstash-plugin install \
-  <%= plugin.except("name").map { |key, value| "--#{key}=#{value}" }.join(" ") %> \
-  <%= plugin["name"] %>
-<% end %>
-
 # construct a complete config file from all the fragments
 cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
 

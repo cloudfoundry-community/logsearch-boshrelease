@@ -12,6 +12,7 @@ packages:
 
 templates:
   bin/ingestor_syslog: bin/ingestor_syslog.sh
+  bin/pre-start: bin/pre-start
   config/bpm.yml.erb: config/bpm.yml
   config/input_and_output.conf.erb: config/input_and_output.conf
   config/filters_pre.conf.erb: config/filters_pre.conf

@@ -1,5 +1,7 @@
 processes:
   - name: ingestor_syslog
+    hooks:
+      pre_start: /var/vcap/jobs/ingestor_syslog/bin/pre-start
     executable: /var/vcap/jobs/ingestor_syslog/bin/ingestor_syslog.sh
     ephemeral_disk: true
     persistent_disk: true
