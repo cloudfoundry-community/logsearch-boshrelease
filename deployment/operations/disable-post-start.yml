@@ -1,0 +1,10 @@
+---
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/health?
+  value:
+    disable_post_start: true
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/health?
+  value:
+    disable_post_start: true

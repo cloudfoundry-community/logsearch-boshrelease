@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+#source /var/vcap/jobs/kibana/helpers/ctl_setup.sh 'kibana'
+export JOB_NAME=kibana
+export JOB_DIR=/var/vcap/jobs/$JOB_NAME
+<%
+  elasticsearch_port = nil
+  if_link("elasticsearch") { |elasticsearch_link| elasticsearch_port = elasticsearch_link.p("elasticsearch.port") }
+  unless elasticsearch_port
+    elasticsearch_port = p("kibana.elasticsearch.port")
+  end
+%>
+
+MEMORY_LIMIT=$(($(grep MemTotal /proc/meminfo | awk '{print $2}') * <%= p('kibana.memory_limit') %>/100 / 1024))
+export NODE_OPTIONS="--max-old-space-size=$MEMORY_LIMIT"
+
+<% p("kibana.env").each do |env| %>
+export <%= env.keys[0] %>="<%= env.values[0] %>"
+<% end %>
+
+<% p("kibana.source_files").each do |sf| %>
+source <%= sf %>
+<% end %>
+
+<% p("kibana.plugins").each do |plugin| name, path = plugin.first %>
+    cd /var/vcap/packages/kibana/plugins/
+  <% if path.start_with? '/var/vcap' %>
+    /var/vcap/packages/kibana/bin/kibana-plugin install "file://<%= path %>"
+  <% else %>
+    /var/vcap/packages/kibana/bin/kibana-plugin install "<%= path %>"
+  <% end %>
+<% end %>
+
+/var/vcap/packages/kibana/bin/kibana -c $JOB_DIR/config/kibana.conf

@@ -54,11 +54,12 @@
     syslog_tls_port = link('ingestor').p('logstash_ingestor.syslog_tls.port')
   end
 
+  inputs = []
+  if_link("ingestor_inputs") { |ingestor_inputs| inputs = ingestor_inputs.p("logstash_parser.inputs") }
 %>
 global
     log <%= syslog_forwarder_host %> syslog <%= p('haproxy.log_level') %>
     log-tag ls-router
-    daemon
     user vcap
     group vcap
     maxconn 64000
@@ -134,6 +135,7 @@ backend ingestors-relp
 
 frontend kibana-in
     mode http
+    option httplog
 
     bind :<%= p("haproxy.kibana.inbound_port.http") %>
     <% if properties.haproxy.ssl_pem and properties.haproxy.kibana.enable_ssl == true %>
@@ -156,6 +158,7 @@ backend kibana
 
 frontend cluster_monitor-in
     mode http
+    option httplog
 
     <% if properties.haproxy.ssl_pem %>
     bind :<%= p("haproxy.cluster_monitor.inbound_port") %> ssl crt /var/vcap/jobs/haproxy/config/cert.pem no-sslv3
@@ -176,6 +179,24 @@ backend cluster_monitor
     <% cluster_monitor_hosts.each_with_index do |ip, index| %>
     server kibana<%= index %> <%= ip %>:<%= kibana_port %> check inter 1000
     <% end %>
+
+<% inputs.each do |input| %>
+frontend <%= input["plugin"] %>-in
+    mode tcp
+    balance roundrobin
+
+    bind :<%= input["options"]["port"] %>
+    default_backend <%= input["plugin"] %>
+<% end %>
+<% inputs.each do |input| %>
+backend <%= input["plugin"] %>
+    mode tcp
+    balance roundrobin
+
+    <% ingestor_hosts.each_with_index do |ip, index| %>
+    server ingestor<%= index %> <%= ip %>:<%= input["options"]["port"] %> check inter 1000
+    <% end %>
+<% end %>
 
 <% if p("haproxy.elastic.inbound_port", nil) %>
 frontend elastic-in
@@ -219,4 +240,3 @@ userlist kibana-user
 userlist cluster-monitor-user
     user <%= p('haproxy.cluster_monitor.auth.username') %> insecure-password <%= p('haproxy.cluster_monitor.auth.password') %>
 <% end %>
-

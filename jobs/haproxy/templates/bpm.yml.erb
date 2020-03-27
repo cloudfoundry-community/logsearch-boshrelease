@@ -1,0 +1,7 @@
+processes:
+  - name: haproxy
+    executable: /var/vcap/jobs/haproxy/bin/haproxy.sh
+    limits:
+      open_files: <%= p("haproxy.fd_limit") %>
+    capabilities:
+      - NET_BIND_SERVICE

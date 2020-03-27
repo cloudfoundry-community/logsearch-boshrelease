@@ -1,28 +1,50 @@
 - path: /releases/name=logsearch/url
   type: replace
-  value: https://s3.amazonaws.com/logsearch-deployment-compiled-releases/logsearch-208.0.0-ubuntu-trusty-3445.11-20170920-121357-222407703.tgz
+  value: https://logsearch-compiled.s3.amazonaws.com/logsearch-211.0.2-ubuntu-xenial-621.50-20200319-132840-559699.tgz
 - path: /releases/name=logsearch/version
   type: replace
-  value: 208.0.0
+  value: 211.0.2
 - path: /releases/name=logsearch/sha1
   type: replace
-  value: 0778443aaf94211f286faa1448d4f5f6071a5deb 
+  value: 63b4de68272404207b00069852827e62037f1755
+
+- path: /releases/name=bpm/url
+  type: replace
+  value: https://logsearch-compiled.s3.amazonaws.com/bpm-1.1.6-ubuntu-xenial-621.50-20200227-165245-086386.tgz
+- path: /releases/name=bpm/version
+  type: replace
+  value: 1.1.6
+- path: /releases/name=bpm/sha1
+  type: replace
+  value: e04c21d0794f1783a1c608c3e85445953e1c8552
+
+- path: /releases/name=routing/url
+  type: replace
+  value: https://logsearch-compiled.s3.amazonaws.com/routing-0.188.0-ubuntu-xenial-621.50-20200227-164451-640339.tgz
+- path: /releases/name=routing/version
+  type: replace
+  value: 0.188.0
+- path: /releases/name=routing/sha1
+  type: replace
+  value: dcb142a75a480b19ec9c8895619b703afedfcaf9
+
 - path: /releases/name=logsearch-for-cloudfoundry/url
   type: replace
-  value: https://s3.amazonaws.com/logsearch-deployment-compiled-releases/logsearch-for-cloudfoundry-206.0.0-ubuntu-trusty-3445.11-20170920-121930-977395257.tgz
+  value: https://logsearch-compiled.s3.amazonaws.com/logsearch-for-cloudfoundry-211.0.2-ubuntu-xenial-621.50-20200319-130150-94031.tgz
 - path: /releases/name=logsearch-for-cloudfoundry/version
   type: replace
-  value: 206.0.0
+  value: 211.0.2
 - path: /releases/name=logsearch-for-cloudfoundry/sha1
   type: replace
-  value: 55cc342af1740355a3c3a5a4ca5fce9eca67dd2f
+  value: 07d82169646bd522930a29592b2d61bcaf4590a3
+
 - path: /releases/name=logsearch/stemcell?
   type: replace
   value:
-    os: ubuntu-trusty
-    version: "3445.11"
+    os: ubuntu-xenial
+    version: "621.50"
 - path: /releases/name=logsearch-for-cloudfoundry/stemcell?
   type: replace
   value:
-    os: ubuntu-trusty
-    version: "3445.11"
+    os: ubuntu-xenial
+    version: "621.50"

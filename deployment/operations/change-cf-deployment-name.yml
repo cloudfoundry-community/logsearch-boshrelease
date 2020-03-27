@@ -1,9 +1,5 @@
 ---
 - type: replace
-  path: /instance_groups/name=maintenance/jobs/name=create-uaa-client/consumes/cloud_controller/deployment?
-  value: ((cf_deployment_name))
-
-- type: replace
   path: /instance_groups/name=maintenance/jobs/name=smoke-tests/consumes/cloud_controller/deployment?
   value: ((cf_deployment_name))
 
@@ -21,4 +17,16 @@
 
 - type: replace
   path: /instance_groups/name=ls-router/jobs/name=route_registrar/consumes/nats/deployment?
+  value: ((cf_deployment_name))
+
+# This rule is supposed to be used with autocreate-uaa-client.yml
+# Please remove this rule if you do not use that ops file
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=create-uaa-client/consumes/cloud_controller/deployment?
+  value: ((cf_deployment_name))
+
+# This rule is supposed to be used with cerebro.yml
+# Please remove this rule if you do not use that ops file
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=route_registrar/consumes/nats/deployment?
   value: ((cf_deployment_name))

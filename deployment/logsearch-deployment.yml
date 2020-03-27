@@ -4,7 +4,7 @@ update:
   canaries: 1
   canary_watch_time: 30000-1200000
   max_in_flight: 1
-  serial: false
+  serial: true
   update_watch_time: 5000-1200000
 
 instance_groups:
@@ -23,6 +23,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch
     release: logsearch
     consumes:
@@ -39,87 +41,7 @@ instance_groups:
           xpack.ml.enabled: false
           xpack.security.enabled: false
           xpack.watcher.enabled: false
-  - name: syslog_forwarder
-    release: logsearch
-    consumes:
-      syslog_forwarder: {from: cluster_monitor}
-    properties:
-      syslog_forwarder:
-        config:
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
-          service: cerebro
-        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
-          service: cerebro
-- name: cluster_monitor
-  azs:
-  - z1
-  instances: 1
-  persistent_disk_type: 100GB
-  vm_type: large
-  stemcell: default
-  update:
-    max_in_flight: 1
-    serial: true
-  networks:
-  - name: default
-  jobs:
-  - name: elasticsearch
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_cluster_monitor}
-    provides:
-      elasticsearch: {as: elasticsearch_cluster_monitor}
-    properties:
-      elasticsearch:
-        cluster_name: monitor
-        node:
-          allow_data: true
-          allow_master: true
-  - name: elasticsearch_config
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_cluster_monitor}
-    properties:
-      elasticsearch_config:
-        templates:
-        - shards-and-replicas: '{ "template" : "logstash-*", "order" : 100, "settings"
-            : { "number_of_shards" : 1, "number_of_replicas" : 0 } }'
-        - index-settings: /var/vcap/jobs/elasticsearch_config/index-templates/index-settings.json
-        - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
-  - name: ingestor_syslog
-    release: logsearch
-    consumes:
-      elasticsearch: nil
-    provides:
-      syslog_forwarder: {as: cluster_monitor}
-      ingestor: nil
-    properties:
-      logstash_parser:
-        elasticsearch:
-          data_hosts:
-          - 127.0.0.1
-        filters:
-        - monitor: /var/vcap/packages/logsearch-config/logstash-filters-monitor.conf
-  - name: curator
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_cluster_monitor}
-    properties:
-      curator:
-        purge_logs:
-          retention_period: 7
-  - name: kibana
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_cluster_monitor}
-    properties:
-      kibana:
-        memory_limit: 30
-        wait_for_templates: [shards-and-replicas]
+
 - name: maintenance
   azs:
   - z1
@@ -131,6 +53,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch_config
     release: logsearch
     consumes:
@@ -146,20 +70,12 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
-  - name: syslog_forwarder
-    release: logsearch
-    consumes:
-      syslog_forwarder: {from: cluster_monitor}
-    properties:
-      syslog_forwarder:
-        config:
-        - file: /var/vcap/sys/log/curator/curator.log
-          service: curator
   - name: smoke_tests
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
       ingestor_link: {from: ingestor_syslog}
+
 - name: elasticsearch_data
   azs:
   - z1
@@ -175,6 +91,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch
     release: logsearch
     consumes:
@@ -189,21 +107,7 @@ instance_groups:
           xpack.ml.enabled: false
           xpack.security.enabled: false
           xpack.watcher.enabled: false
-  - name: syslog_forwarder
-    release: logsearch
-    consumes:
-      syslog_forwarder: {from: cluster_monitor}
-    properties:
-      syslog_forwarder:
-        config:
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
-          service: cerebro
-        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
-          service: cerebro
+
 - name: kibana
   azs:
   - z1
@@ -214,6 +118,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch
     release: logsearch
     consumes:
@@ -236,21 +142,7 @@ instance_groups:
           xpack.ml.enabled: false
           xpack.security.enabled: false
           xpack.watcher.enabled: false
-  - name: syslog_forwarder
-    release: logsearch
-    consumes:
-      syslog_forwarder: {from: cluster_monitor}
-    properties:
-      syslog_forwarder:
-        config:
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/cerebro/cerebro.stdout.log
-          service: cerebro
-        - file: /var/vcap/sys/log/cerebro/cerebro.stderr.log
-          service: cerebro
+
 - name: ingestor
   azs:
   - z1
@@ -262,6 +154,8 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: elasticsearch
     release: logsearch
     consumes:
@@ -272,6 +166,7 @@ instance_groups:
       elasticsearch: nil
     provides:
       ingestor: {as: ingestor_link}
+      ingestor_inputs: nil
     properties:
       logstash_parser:
         elasticsearch:
@@ -279,21 +174,7 @@ instance_groups:
           - 127.0.0.1
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
-  - name: syslog_forwarder
-    release: logsearch
-    consumes:
-      syslog_forwarder: {from: cluster_monitor}
-    properties:
-      syslog_forwarder:
-        config:
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stdout.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/elasticsearch/elasticsearch.stderr.log
-          service: elasticsearch
-        - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stdout.log
-          service: ingestor
-        - file: /var/vcap/sys/log/ingestor_syslog/ingestor_syslog.stderr.log
-          service: ingestor
+
 - name: ls-router
   azs:
   - z1
@@ -303,19 +184,26 @@ instance_groups:
   networks:
   - name: default
   jobs:
+  - name: bpm
+    release: bpm
   - name: haproxy
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
       ingestor: {from: ingestor_link}
       kibana: {from: kibana_link}
-      syslog_forwarder: {from: cluster_monitor}
+      syslog_forwarder: nil
 
 releases:
 - name: logsearch
-  url: https://s3.amazonaws.com/logsearch/logsearch-210.3.1.tgz
-  version: 210.3.1
-  sha1: 58b067b3bb064ce80c42be6380f4b2cf51be81ce
+  url: https://s3.amazonaws.com/logsearch/logsearch-211.0.2.tgz
+  version: 211.0.2
+  sha1: 7bf69e57632a493e125f13d878909bf220607c0a
+
+- name: bpm
+  url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.6
+  version: 1.1.6
+  sha1: 5bad6161dbbcf068830a100b6a76056fe3b99bc8
 
 stemcells:
 - alias: default

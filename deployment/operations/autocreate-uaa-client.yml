@@ -1,0 +1,20 @@
+# Use it only if you can't use cf/add-firehose-to-syslog-uaa-clients.yml, which is a recomended way to create the UAA firehose client
+
+---
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: create-uaa-client
+    release: logsearch-for-cloudfoundry
+    consumes:
+      cloud_controller: {from: cloud_controller, deployment: cf}
+    properties:
+      create-uaa-client:
+        cloudfoundry:
+          uaa_admin_client_secret: "((uaa_admin_client_secret))"
+        oauth2_client_secret: "((kibana_oauth2_client_secret))"
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_cloudfoundry-firehose/properties/create-uaa-client?/cloudfoundry?/uaa_admin_client_secret?
+  value: "((uaa_admin_client_secret))"
+

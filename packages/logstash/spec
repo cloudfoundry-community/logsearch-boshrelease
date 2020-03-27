@@ -2,11 +2,12 @@
 name: logstash
 
 dependencies:
-  - openjdk-8
+  - openjdk-11
 
 files:
-  - logstash/logstash-6.8.1.tar.gz
+  - logstash/logstash-7.6.0.tar.gz
   - logstash/logstash-filter-alter-3.0.2.zip
   - logstash/logstash-filter-translate-3.0.3.zip
   - logstash/logstash-input-relp-3.0.2.zip
   - logstash/logstash-input-syslog-3.2.2.zip
+  - logstash/logstash-output-syslog-3.0.5.zip

@@ -1,13 +1,16 @@
 ---
 name: elasticsearch_config
 
+description: This job loads pre-defined configuration into Elasticsearch cluster
+
 packages:
   - elasticsearch
-  - openjdk-8
+  - openjdk-11
 
 templates:
-  bin/run.erb: bin/upload-config
+  bin/upload-config.erb: bin/upload-config
   bin/job.process: bin/job.process
+  bpm.yml.erb: config/bpm.yml
   index-templates/shards-and-replicas.json.erb: index-templates/shards-and-replicas.json
   index-templates/index-settings.json.erb: index-templates/index-settings.json
   index-templates/index-mappings.json.erb: index-templates/index-mappings.json
@@ -25,7 +28,7 @@ properties:
     default: 9200
   elasticsearch_config.index_prefix:
     description: |
-      Name prefix of your log indices that can uniquely distinguish them among other ES indices if apply pattern '*' to it, e.g. 'logs-*'. 
+      Name prefix of your log indices that can uniquely distinguish them among other ES indices if apply pattern '*' to it, e.g. 'logs-*'.
       It is used in the index templates predefined in the job to specify index pattern.
       Make sure the prefix matches `logstash_parser.elasticsearch.index` property set for your parser.
     default: "logstash-"

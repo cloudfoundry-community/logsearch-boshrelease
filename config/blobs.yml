@@ -1,7 +1,7 @@
-cerebro/cerebro-0.8.1.tgz:
-  size: 56517603
-  object_id: 6e70a2d9-e205-4dc3-610c-9337ce7242a9
-  sha: 34f19e3f26d37946e45cad3150cd1815b5abde34
+cerebro/cerebro-0.8.5.tgz:
+  size: 52409310
+  object_id: 1ebc64b1-4f12-460f-43d4-42824b712cae
+  sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
 curator/elasticsearch-curator-v5.4.0.tar.gz:
   size: 293962
   object_id: d31708d2-5ffd-4b51-51aa-addb6d0fc9de
@@ -30,10 +30,10 @@ curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   size: 27677
   object_id: 30fbe47c-eb16-4db8-57ce-f853940769c7
   sha: b5c82285df0610464a9332c567cf8bd06b8786f6
-elasticsearch/elasticsearch-6.8.1.tar.gz:
-  size: 148584086
-  object_id: fb771ca7-96af-4049-6c7b-d60d603145ad
-  sha: sha256:ad33d463884acde2d8682cb46927f03603ea66133b84c12f53dc9edbc02447e3
+elasticsearch/elasticsearch-7.6.0-linux-x86_64.tar.gz:
+  size: 296200685
+  object_id: bf225a26-f847-4dbc-7b6d-3258a7f735da
+  sha: sha256:bba7b582a1efcfb870a2aacbceb5036f577fb5bfb9b481b2426177d25c21b595
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
   object_id: 27004bb4-29f6-493f-80ec-6a4170a955d5
@@ -42,14 +42,14 @@ haproxy/pcre-8.40.tar.gz:
   size: 2065161
   object_id: edf51dad-4c6c-4a3d-8ebb-3a9b9f9641e5
   sha: 10384eb3d411794cc15f55b9d837d3f69e35391e
-kibana/kibana-6.8.1-linux-x86_64.tar.gz:
-  size: 186486884
-  object_id: 50129e46-7644-4084-4ffb-21951f799e11
-  sha: sha256:45cc8c47286f218abbdab04ec502b5de99c86e3da2e8debadaeb99ac79391e02
-logstash/logstash-6.8.1.tar.gz:
-  size: 172031559
-  object_id: 70fb8b71-7b2c-4acc-5ab3-52963e6fba85
-  sha: sha256:7e6b7aeee8fa3293f957fc251e2bd47428bf4f1e67a09e6170eca5bcd215669f
+kibana/kibana-7.6.0-linux-x86_64.tar.gz:
+  size: 249467327
+  object_id: ade90b92-683a-46ca-5f81-3d9772659bd9
+  sha: sha256:3dafefee001da4fe20f8ecf31df59f485c48aabe6814d30089ed253e030a599d
+logstash/logstash-7.6.0.tar.gz:
+  size: 165923191
+  object_id: 3c6a0421-6037-4a2d-5546-75b3efb001a6
+  sha: sha256:87359a25bd68b51274946d34c30515c141c8c2ba5f0bda0d506d3f3a270043ad
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
   object_id: 543e5010-6449-400b-489d-31b82dcb4670
@@ -66,6 +66,10 @@ logstash/logstash-input-syslog-3.2.2.zip:
   size: 10966
   object_id: 88ec3912-4366-492a-752c-25080365790d
   sha: e73dc3326021fc57e8b73ba87b74255870aa69a2
+logstash/logstash-output-syslog-3.0.5.zip:
+  size: 9679
+  object_id: d1c0b0f1-b98b-41b6-4b00-08d3b1bb9467
+  sha: sha256:eaac1ea66848d34dbe41e4126fffac4e221deecb402b310e64fd5bb41e3b870f
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
   size: 2094679
   object_id: 5d5d32dc-946c-4a27-9786-df4689706cdb

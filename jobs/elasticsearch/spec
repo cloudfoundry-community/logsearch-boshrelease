@@ -1,24 +1,22 @@
 ---
 name: elasticsearch
 
+description: This job runs Elasticsearch node (master or data)
+
 packages:
   - elasticsearch
-  - openjdk-8
+  - openjdk-11
 
 templates:
   bin/drain.erb: bin/drain
   bin/post-deploy.erb: bin/post-deploy
   bin/post-start.erb: bin/post-start
-  bin/elasticsearch_ctl: bin/elasticsearch_ctl
-  bin/monit_debugger: bin/monit_debugger
+  bin/pre-start: bin/pre-start
+  bin/elasticsearch: bin/elasticsearch.sh
+  config/bpm.yml.erb: config/bpm.yml
   config/config.yml.erb: config/elasticsearch.yml
   config/jvm.options.erb: config/jvm.options
   config/log4j2.properties.erb: config/log4j2.properties
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  logsearch/metric-collector/elasticsearch/collector: logsearch/metric-collector/elasticsearch/collector
-  logsearch/logs.yml: logsearch/logs.yml
 
 provides:
 - name: elasticsearch

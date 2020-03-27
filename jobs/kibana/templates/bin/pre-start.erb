@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! [[ $(ls -1 /var/vcap/packages/kibana/plugins | wc -l) == 0 ]]; then
+  rm -rf /var/vcap/packages/kibana/plugins/*
+fi
+
+cd /var/vcap/packages/kibana
+chown -R vcap:vcap optimize config data plugins

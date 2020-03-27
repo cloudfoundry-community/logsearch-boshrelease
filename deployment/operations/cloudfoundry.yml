@@ -1,18 +1,5 @@
 ---
 - type: replace
-  path: /instance_groups/name=maintenance/jobs/-
-  value:
-    name: create-uaa-client
-    release: logsearch-for-cloudfoundry
-    consumes:
-      cloud_controller: {from: cloud_controller, deployment: cf}
-    properties:
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
-        oauth2_client_secret: "((kibana_oauth2_client_secret))"
-
-- type: replace
   path: /instance_groups/name=maintenance/jobs/name=smoke_tests
   value:
     name: smoke-tests
@@ -93,21 +80,6 @@
         firehose_client_id: firehose-to-syslog
         firehose_client_secret: "((firehose_client_secret))"
         skip_ssl_validation: true
-      create-uaa-client:
-        cloudfoundry:
-          uaa_admin_client_secret: "((uaa_admin_client_secret))"
-
-- type: replace
-  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
-  value:
-    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stdout.log
-    service: ingestor_cloudfoundry-firehose
-
-- type: replace
-  path: /instance_groups/name=ingestor/jobs/name=syslog_forwarder/properties/syslog_forwarder/config/-
-  value:
-    file: /var/vcap/sys/log/ingestor_cloudfoundry-firehose/ingestor_cloudfoundry-firehose.stderr.log
-    service: ingestor_cloudfoundry-firehose
 
 - type: replace
   path: /instance_groups/name=kibana/jobs/-
@@ -131,12 +103,6 @@
         cloudfoundry:
           client_secret: "((kibana_oauth2_client_secret))"
           skip_ssl_validation: true
-
-- type: replace
-  path: /instance_groups/name=ls-router/jobs/-
-  value:
-    name: bpm
-    release: bpm
 
 - type: replace
   path: /instance_groups/name=ls-router/jobs/-
@@ -166,27 +132,7 @@
   value:
   - /var/vcap/jobs/kibana-auth-plugin/config/config.sh
 
-- type: replace
-  path: /variables/-
-  value:
-   name: kibana_oauth2_client_secret
-   type: password
-
-- type: replace
-  path: /variables/-
-  value:
-    name: firehose_client_secret
-    type: password
-
 # Releases
-- type: replace
-  path: /releases/-
-  value:
-    name: bpm
-    version: 1.0.4
-    url: https://bosh.io/d/github.com/cloudfoundry-incubator/bpm-release?v=1.0.4
-    sha1: 41df19697d6a69d2552bc2c132928157fa91abe0
-
 - type: replace
   path: /releases/-
   value:
@@ -199,6 +145,6 @@
   path: /releases/-
   value:
     name: logsearch-for-cloudfoundry
-    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-210.3.1.tgz
-    version: 210.3.1
-    sha1: 4a45edefe46b9e8a6c8a4df21e8bbeab9d9b5218
+    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-211.0.2.tgz
+    version: 211.0.2
+    sha1: 65b9b401ef9d0001dc394f1def579922eeb9b361

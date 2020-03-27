@@ -1,0 +1,107 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+#source /var/vcap/jobs/ingestor_syslog/helpers/ctl_setup.sh 'ingestor_syslog'
+JOB_NAME=ingestor_syslog
+export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+export STORE_DIR=/var/vcap/store/$JOB_NAME
+export JOB_DIR=/var/vcap/jobs/$JOB_NAME
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
+
+<%
+  es_host = nil
+  if_p("logstash_parser.elasticsearch.data_hosts") { |hosts| es_host = hosts.first }
+  unless es_host
+    es_host =  link("elasticsearch").instances.first.address
+  end
+%>
+
+function wait_for_template {
+  local template_name="$1"
+  local MASTER_URL="<%= es_host %>:9200"
+
+  set +e
+  while true;  do
+    echo "Waiting for index template to be uploaded: $template_name"
+    curl -I -f -i "$MASTER_URL"/_template/$template_name > /dev/null 2>&1
+    [ $? ] && break
+    sleep 5
+  done
+  set -e
+  echo "Found $template_name"
+}
+
+export PORT=${PORT:-5000}
+export LANG=en_US.UTF-8
+<% if 'auto' == p('logstash_parser.workers') %>
+# 1 logstash worker / CPU core
+export LOGSTASH_WORKERS=`grep -c ^processor /proc/cpuinfo`
+<% else %>
+export LOGSTASH_WORKERS=<%= p('logstash_parser.workers') %>
+<% end %>
+export TIMECOP_REJECT_GREATER_THAN_HOURS=<%= p('logstash_parser.timecop.reject_greater_than_hours') %>
+export TIMECOP_REJECT_LESS_THAN_HOURS=<%= p('logstash_parser.timecop.reject_less_than_hours') %>
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * <%= p("logstash.heap_percentage") %> ) / 100 ))K
+<% if_p('logstash.heap_size') do |heap_size| %>
+HEAP_SIZE=<%= heap_size %>
+<% end %>
+<% p("logstash.env").each do |env| %>
+export <%= env.keys[0] %>="<%= env.values[0] %>"
+<% end %>
+
+<% p("logstash_parser.wait_for_templates").each do |template| %>
+wait_for_template "<%= template %>"
+<% end %>
+
+export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$"
+
+# construct a complete config file from all the fragments
+cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
+
+# append deployment dictionary files
+<% p('logstash_parser.deployment_dictionary').each do |dictionary_path| %>
+  cat "<%= dictionary_path %>" >> ${JOB_DIR}/config/deployment_lookup.yml
+<% end %>
+
+echo "filter {" >> ${JOB_DIR}/config/logstash.conf
+
+cat ${JOB_DIR}/config/filters_pre.conf >> ${JOB_DIR}/config/logstash.conf
+cat /var/vcap/packages/logsearch-config/logstash-filters-default.conf >> ${JOB_DIR}/config/logstash.conf
+
+<% if p('logstash_parser.filters').is_a? Array %>
+  <% p('logstash_parser.filters').each do |filter| %>
+    <% if filter.key? 'path' %>
+      cat "<%= filter['path'] %>" >> ${JOB_DIR}/config/logstash.conf
+    <% elsif !filter.key? 'content' %>
+      <% _, path = filter.first %>
+      cat "<%= path %>" >> ${JOB_DIR}/config/logstash.conf
+    <% end %>
+  <% end %>
+<% end %>
+cat ${JOB_DIR}/config/filters_override.conf >> ${JOB_DIR}/config/logstash.conf
+
+cat ${JOB_DIR}/config/filters_post.conf >> ${JOB_DIR}/config/logstash.conf
+<% if p('logstash_parser.enable_json_filter') %>
+  cat /var/vcap/packages/logsearch-config/if_it_looks_like_json.conf >> ${JOB_DIR}/config/logstash.conf
+<% end %>
+cat /var/vcap/packages/logsearch-config/timecop.conf >> ${JOB_DIR}/config/logstash.conf
+cat /var/vcap/packages/logsearch-config/deployment.conf >> ${JOB_DIR}/config/logstash.conf
+
+echo "} #close filters" >> ${JOB_DIR}/config/logstash.conf
+
+# clear persistent queue if the upgrade failed last run
+if cat $LOG_DIR/$JOB_NAME.stdout.log | grep -a 'QueueUpgrade - Logstash was unable to upgrade your persistent queue data' >/dev/null ; then
+  mkdir ${STORE_DIR}/oldqueue.$$
+  mv ${STORE_DIR}/queue ${STORE_DIR}/.lock ${STORE_DIR}/dead_letter_queue ${STORE_DIR}/uuid ${STORE_DIR}/oldqueue.$$
+  mv $LOG_DIR/$JOB_NAME.stdout.log $LOG_DIR/$JOB_NAME.stdout.log.old
+fi
+
+/var/vcap/packages/logstash/bin/logstash \
+    --path.data ${STORE_DIR} \
+    --path.config ${JOB_DIR}/config/logstash.conf \
+    --path.settings ${JOB_DIR}/config \
+    --pipeline.workers ${LOGSTASH_WORKERS} \
+    --log.format=json --log.level=<%= p("logstash.log_level") %>

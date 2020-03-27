@@ -1,19 +1,17 @@
 ---
 name: cerebro
 
+description: This job runs Cerebro - an Admin UI for Elasticsearch cluster
+
 packages:
 - cerebro
-- openjdk-8
+- openjdk-11
 
 
 templates:
-  bin/cerebro_ctl: bin/cerebro_ctl
-  bin/monit_debugger: bin/monit_debugger
+  bin/cerebro: bin/cerebro.sh
+  config/bpm.yml.erb: config/bpm.yml
   config/application.conf.erb: config/application.conf
-  config/logback.xml.erb: config/logback.xml
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 consumes:
  - name: elasticsearch

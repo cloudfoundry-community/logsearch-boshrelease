@@ -27,10 +27,6 @@
           uris:
           - "cerebro.((system_domain))"
 
-- type: replace
-  path: /instance_groups/name=elasticsearch_master/jobs/name=bpm?/release
-  value: bpm
-
 # --- define secrets for cerebro
 - type: replace
   path: /variables/-
