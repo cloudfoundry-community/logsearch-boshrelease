@@ -11,6 +11,7 @@ packages:
 templates:
   bin/archiver_syslog_ctl: bin/archiver_syslog_ctl
   bin/monit_debugger: bin/monit_debugger
+  bin/post-start.erb: bin/post-start
   config/input_and_output.conf.erb: config/input_and_output.conf
   config/syslog_tls.crt.erb: config/syslog_tls.crt
   config/syslog_tls.key.erb: config/syslog_tls.key
@@ -91,6 +92,16 @@ properties:
   logstash_ingestor.syslog.transport:
     description: Transport protocol to use
     default: "tcp"
+
+  logstash_ingestor.health.disable_post_start:
+    description: Skip post-start health checks? (true / false)
+    default: false
+  logstash_ingestor.health.interval:
+    description: Logstash syslog health check interval (seconds)
+    default: 5
+  logstash_ingestor.health.timeout:
+    description: Logstash syslog health check number of attempts (seconds)
+    default: 300
 
   logstash_ingestor.syslog_tls.port:
     description: Port to listen for syslog-TLS messages (omit to disable)
