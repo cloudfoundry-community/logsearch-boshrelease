@@ -1,0 +1,4 @@
+---
+- type: replace
+  path: /instance_groups/name=ls-router/jobs/name=haproxy/properties?/haproxy?/ssl_pem?
+  value: ((ssl_pem))
