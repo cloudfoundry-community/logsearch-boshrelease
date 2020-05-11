@@ -1,5 +1,8 @@
 ---
 name: cerebro
 
+dependencies:
+  - elasticsearch
+
 files:
   - cerebro/cerebro-0.8.5.tgz

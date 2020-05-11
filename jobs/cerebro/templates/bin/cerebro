@@ -22,7 +22,7 @@ do
   fi
 done
 
-source /var/vcap/packages/openjdk-11/bosh/runtime.env
+export JAVA_HOME=/var/vcap/packages/elasticsearch/jdk
 
 /var/vcap/packages/cerebro/bin/cerebro \
  <%= p("cerebro.exec.options", []).join(' ') %> \
