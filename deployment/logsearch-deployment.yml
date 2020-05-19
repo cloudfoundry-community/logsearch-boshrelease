@@ -47,6 +47,7 @@ instance_groups:
   - z1
   instances: 1
   vm_type: medium
+  persistent_disk_type: 5GB
   stemcell: default
   update:
     serial: true
@@ -55,10 +56,20 @@ instance_groups:
   jobs:
   - name: bpm
     release: bpm
-  - name: elasticsearch_config
+  - name: elasticsearch
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
+  - name: elasticsearch_config
+    release: logsearch
     properties:
       elasticsearch_config:
         index_prefix: logs-

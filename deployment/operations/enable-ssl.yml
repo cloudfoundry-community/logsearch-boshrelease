@@ -1,4 +1,5 @@
 ---
+# elasticsearch_master
 - type: replace
   path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/http_host?
   value: 127.0.0.1
@@ -23,6 +24,7 @@
   value: &ssl_plugin
   - opendistro-security: "https://logsearch-tile.s3.amazonaws.com/opendistro_security-1.6.0.0-noauth.zip"
 
+# elasticsearch_data
 - type: replace
   path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/http_host?
   value: 127.0.0.1
@@ -35,6 +37,7 @@
   path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/plugins?
   value: *ssl_plugin
 
+# kibana
 - type: replace
   path: /instance_groups/name=kibana/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
   value: 127.0.0.1
@@ -47,6 +50,7 @@
   path: /instance_groups/name=kibana/jobs/name=elasticsearch/properties/elasticsearch/plugins?
   value: *ssl_plugin
 
+# ingestor
 - type: replace
   path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
   value: 127.0.0.1
@@ -59,6 +63,20 @@
   path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties/elasticsearch/plugins?
   value: *ssl_plugin
 
+# maintenance
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties/elasticsearch/node?/ssl?
+  value: *ssl_properties
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: *ssl_plugin
+
+# variables
 - type: replace
   path: /variables/name=elasticsearch_ca?
   value:
