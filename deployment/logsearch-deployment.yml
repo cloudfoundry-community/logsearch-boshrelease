@@ -124,6 +124,14 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: kibana
     release: logsearch
     provides:
@@ -160,6 +168,14 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options:
+          xpack.monitoring.enabled: false
+          xpack.graph.enabled: false
+          xpack.ml.enabled: false
+          xpack.security.enabled: false
+          xpack.watcher.enabled: false
   - name: ingestor_syslog
     release: logsearch
     consumes:
