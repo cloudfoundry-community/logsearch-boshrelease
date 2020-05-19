@@ -20,7 +20,6 @@
     release: logsearch-for-cloudfoundry
     consumes:
       cloud_controller: {from: cloud_controller, deployment: cf}
-      elasticsearch: {from: elasticsearch_master}
     properties:
       cloudfoundry:
         user: admin
