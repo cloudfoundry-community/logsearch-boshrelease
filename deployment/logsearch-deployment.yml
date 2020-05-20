@@ -200,25 +200,6 @@ instance_groups:
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
 
-- name: ls-router
-  azs:
-  - z1
-  instances: 1
-  vm_type: medium
-  stemcell: default
-  networks:
-  - name: default
-  jobs:
-  - name: bpm
-    release: bpm
-  - name: haproxy
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_master}
-      ingestor: {from: ingestor_link}
-      kibana: {from: kibana_link}
-      syslog_forwarder: nil
-
 releases:
 - name: logsearch
   url: https://s3.amazonaws.com/logsearch/logsearch-211.0.3.tgz

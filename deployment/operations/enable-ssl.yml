@@ -63,6 +63,14 @@
   path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties/elasticsearch/plugins?
   value: *ssl_plugin
 
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=ingestor_syslog/properties?/logstash_ingestor?/syslog_tls?
+  value:
+    port: 6514
+    ssl_cert: ((haproxy-ssl.certificate))
+    ssl_key: ((haproxy-ssl.private_key))
+    skip_ssl_validation: true
+
 # maintenance
 - type: replace
   path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?

@@ -104,7 +104,7 @@
           skip_ssl_validation: true
 
 - type: replace
-  path: /instance_groups/name=ls-router/jobs/-
+  path: /instance_groups/name=kibana/jobs/-
   value:
     name: route_registrar
     release: routing
@@ -116,7 +116,7 @@
       route_registrar:
         routes:
         - name: kibana
-          port: 80
+          port: 5601
           registration_interval: 60s
           uris:
           - "logs.((system_domain))"
