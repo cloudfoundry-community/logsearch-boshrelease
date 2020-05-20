@@ -4,7 +4,7 @@
   value: 1
 - type: replace
   path: /instance_groups/name=elasticsearch_data/instances
-  value: 1
+  value: 2
 - type: replace
   path: /instance_groups/name=ingestor/instances
   value: 1
@@ -18,7 +18,3 @@
 - type: replace
   path: /instance_groups/name=ingestor/azs
   value: [ z1 ]
-
-- type: replace
-  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/node/allow_data?
-  value: true
