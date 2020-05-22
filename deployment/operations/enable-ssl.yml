@@ -7,14 +7,14 @@
 - type: replace
   path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/admin?
   value:
-    dn: CN=admin.elasticsearch.cf.internal
+    dn: CN=admin.elasticsearch.internal
     certificate: ((elasticsearch_admin.certificate))
     private_key: ((elasticsearch_admin.private_key))
 
 - type: replace
   path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/node/ssl?
   value: &ssl_properties
-    dn: "CN=node.elasticsearch*"
+    dn: "CN=node.elasticsearch.internal"
     ca: ((elasticsearch_node.ca))
     certificate: ((elasticsearch_node.certificate)) 
     private_key: ((elasticsearch_node.private_key))
@@ -101,7 +101,7 @@
     type: certificate
     options:
       ca: elasticsearch_ca
-      common_name: node.elasticsearch.cf.internal
+      common_name: node.elasticsearch.internal
       extended_key_usage:
       - server_auth
       - client_auth
@@ -113,7 +113,7 @@
     type: certificate
     options:
       ca: elasticsearch_ca
-      common_name: admin.elasticsearch.cf.internal
+      common_name: admin.elasticsearch.internal
       extended_key_usage:
       - client_auth
 
