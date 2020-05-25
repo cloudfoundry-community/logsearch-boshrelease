@@ -8,8 +8,6 @@
   path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/admin?
   value:
     dn: CN=admin.elasticsearch.internal
-    certificate: ((elasticsearch_admin.certificate))
-    private_key: ((elasticsearch_admin.private_key))
 
 - type: replace
   path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/node/ssl?
@@ -28,6 +26,13 @@
 - type: replace
   path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/http_host?
   value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/admin?
+  value:
+    dn: CN=admin.elasticsearch.internal
+    certificate: ((elasticsearch_admin.certificate))
+    private_key: ((elasticsearch_admin.private_key))
 
 - type: replace
   path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/node/ssl?
