@@ -1,27 +1,72 @@
-#!/bin/bash
+#!/bin/bash -e
 
-set -e
+wait_for_listening() {
+  echo -n "=== Waiting <%= p("elasticsearch.health.connect_timeout") %>s for elasticsearch to accept connections..."
+  elapsed=0
+  until [ $elapsed -ge <%= p("elasticsearch.health.connect_timeout") %> ]
+  do
+    nc -4 -z -v localhost 9200 >/dev/null 2>&1 && break
+    elapsed=$[$elapsed+<%= p("elasticsearch.health.connect_interval") %>]
+    sleep <%= p("elasticsearch.health.connect_interval") %>
+    echo -n .
+  done
+
+  if [ "$elapsed" -ge "<%= p("elasticsearch.health.connect_timeout") %>" ]; then
+     echo "ERROR: Cannot connect to elasticsearch. Exiting..."
+     exit 1
+  fi
+  echo "Done"
+}
+
+wait_for_greenstate() {
+  out=$(mktemp health-XXXXXX)
+  remaining=<%= p("elasticsearch.health.timeout") %>
+  echo "=== Waiting for Green status from Elasticsearch..."
+  until [ "${remaining}" -le 0 ]; do
+    <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+    curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
+    <% else %>
+    curl -sw '\n%{http_code}' localhost:9200/_cluster/health?local=true > ${out}
+    <% end %>
+    body=$(cat ${out} | head -n -1)
+    status=$(cat ${out} | tail -n 1)
+    # echo "body: ${body}"
+    echo -n "[${status}] "
+    <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+    if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
+      echo "Done"
+      break
+    fi
+    <% else %>
+    if [ ${status} = "200" ]; then
+      echo "Done"
+      break
+    fi
+    <% end %>
+    remaining=$((remaining-<%= p("elasticsearch.health.interval") %>))
+    sleep <%= p("elasticsearch.health.interval") %>
+  done
+
+  rm ${out}
+
+  if [ "${remaining}" -le 0 ]; then
+    echo "Node failed to join the cluster"
+    exit 1
+  fi
+}
 
 <% if !p("elasticsearch.health.disable_post_start") %>
+  wait_for_listening
+  wait_for_greenstate
+<% else %>
 
-echo -n "=== Waiting <%= p("elasticsearch.health.connect_timeout") %>s for elasticsearch to accept connections..."
-elapsed=0
-until [ $elapsed -ge <%= p("elasticsearch.health.connect_timeout") %> ]
-do
-  nc -4 -z -v localhost 9200 >/dev/null 2>&1 && break
-  elapsed=$[$elapsed+<%= p("elasticsearch.health.connect_interval") %>]
-  sleep <%= p("elasticsearch.health.connect_interval") %>
-  echo -n .
-done
+echo "Disable post start script property is set to <%= p("elasticsearch.health.disable_post_start") %>. Skipping post-start..."
 
-if [ "$elapsed" -ge "<%= p("elasticsearch.health.connect_timeout") %>" ]; then
-   echo "ERROR: Cannot connect to elasticsearch. Exiting..."
-   exit 1
-fi
-echo "Done"
+<% end %>
 
 <% if_p("elasticsearch.node.ssl.private_key") do %>
-  <% if p("elasticsearch.node.allow_master") %>
+  <% if p("elasticsearch.node.allow_data") %>
+  wait_for_listening
   ES="/var/vcap/packages/elasticsearch"
   export JAVA_HOME=${ES}/jdk/
   ODS="${ES}/plugins/opendistro_security"
@@ -34,46 +79,4 @@ echo "Done"
     -key ${CNF}/ssl/elasticsearch-admin.key \
     -icl -nhnv
   <% end %>
-<% end %>
-
-out=$(mktemp health-XXXXXX)
-remaining=<%= p("elasticsearch.health.timeout") %>
-
-echo "=== Waiting for Green status from Elasticsearch..."
-until [ "${remaining}" -le 0 ]; do
-  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
-  curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
-  <% else %>
-  curl -sw '\n%{http_code}' localhost:9200/_cluster/health?local=true > ${out}
-  <% end %>
-  body=$(cat ${out} | head -n -1)
-  status=$(cat ${out} | tail -n 1)
-  # echo "body: ${body}"
-  echo -n "[${status}] "
-  <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
-  if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
-    echo "Done"
-    break
-  fi
-  <% else %>
-  if [ ${status} = "200" ]; then
-    echo "Done"
-    break
-  fi
-  <% end %>
-  remaining=$((remaining-<%= p("elasticsearch.health.interval") %>))
-  sleep <%= p("elasticsearch.health.interval") %>
-done
-
-rm ${out}
-
-if [ "${remaining}" -le 0 ]; then
-  echo "Node failed to join the cluster"
-  exit 1
-fi
-
-<% else %>
-
-echo "Disable post start script property is set to <%= p("elasticsearch.health.disable_post_start") %>. Skipping post-start..."
-
 <% end %>
