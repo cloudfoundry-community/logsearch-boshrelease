@@ -1,0 +1,118 @@
+---
+# OPS file to enable secure node-to-node communications across Elasticsearch cluster
+# Please mind to disable post-start when you run this OPS first time
+#
+# elasticsearch_master
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/admin?
+  value:
+    dn: CN=admin.elasticsearch.internal
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/node/ssl?
+  value: &tls_properties
+    dn: "CN=node.elasticsearch.internal"
+    ca: ((elasticsearch_node.ca))
+    certificate: ((elasticsearch_node.certificate)) 
+    private_key: ((elasticsearch_node.private_key))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_master/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: &tls_plugin
+  - opendistro-security: "https://logsearch-tile.s3.amazonaws.com/opendistro_security-1.6.0.0-noauth.zip"
+
+# elasticsearch_data
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/admin?
+  value:
+    dn: CN=admin.elasticsearch.internal
+    certificate: ((elasticsearch_admin.certificate))
+    private_key: ((elasticsearch_admin.private_key))
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/node/ssl?
+  value: *tls_properties
+
+- type: replace
+  path: /instance_groups/name=elasticsearch_data/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: *tls_plugin
+
+# kibana
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=elasticsearch/properties/elasticsearch/node?/ssl?
+  value: *tls_properties
+
+- type: replace
+  path: /instance_groups/name=kibana/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: *tls_plugin
+
+# ingestor
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties/elasticsearch/node?/ssl?
+  value: *tls_properties
+
+- type: replace
+  path: /instance_groups/name=ingestor/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: *tls_plugin
+
+# maintenance
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties?/elasticsearch?/http_host?
+  value: 127.0.0.1
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties/elasticsearch/node?/ssl?
+  value: *tls_properties
+
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/name=elasticsearch/properties/elasticsearch/plugins?
+  value: *tls_plugin
+
+# variables
+- type: replace
+  path: /variables/name=elasticsearch_ca?
+  value:
+    name: elasticsearch_ca
+    type: certificate
+    options:
+      is_ca: true
+      common_name: elasticsearch-ca
+
+- type: replace
+  path: /variables/name=elasticsearch_node?
+  value:      
+    name: elasticsearch_node
+    type: certificate
+    options:
+      ca: elasticsearch_ca
+      common_name: node.elasticsearch.internal
+      extended_key_usage:
+      - server_auth
+      - client_auth
+
+- type: replace
+  path: /variables/name=elasticsearch_admin?
+  value:      
+    name: elasticsearch_admin
+    type: certificate
+    options:
+      ca: elasticsearch_ca
+      common_name: admin.elasticsearch.internal
+      extended_key_usage:
+      - client_auth
