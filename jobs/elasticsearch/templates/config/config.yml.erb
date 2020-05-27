@@ -8,6 +8,23 @@ path:
   repo: ["<%= p('elasticsearch.path_repo') %>"]
 <% end %>
 
+<% if_p('elasticsearch.node.ssl.certificate') do %>
+opendistro_security:
+  <% if_p('elasticsearch.admin.dn') do %>
+  authcz:
+    admin_dn:
+    - '<%= p("elasticsearch.admin.dn") %>'
+  <% end %>
+  nodes_dn:
+  - '<%= p("elasticsearch.node.ssl.dn") %>'
+  ssl:
+    transport:
+      enforce_hostname_verification: false
+      pemkey_filepath: ssl/elasticsearch-node.key
+      pemcert_filepath: ssl/elasticsearch-node.crt
+      pemtrustedcas_filepath: ssl/elasticsearch.ca
+<% end %>
+
 <%
   cluster_name = nil
   if_link("elasticsearch") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }

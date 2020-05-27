@@ -5,7 +5,6 @@ description: This job runs Elasticsearch node (master or data)
 
 packages:
   - elasticsearch
-  - openjdk-11
 
 templates:
   bin/drain.erb: bin/drain
@@ -15,6 +14,11 @@ templates:
   bin/elasticsearch: bin/elasticsearch.sh
   config/bpm.yml.erb: config/bpm.yml
   config/config.yml.erb: config/elasticsearch.yml
+  config/ca.erb: config/ssl/elasticsearch.ca
+  config/node-crt.erb: config/ssl/elasticsearch-node.crt
+  config/node-pem.erb: config/ssl/elasticsearch-node.pem
+  config/admin-crt.erb: config/ssl/elasticsearch-admin.crt
+  config/admin-pem.erb: config/ssl/elasticsearch-admin.pem
   config/jvm.options.erb: config/jvm.options
   config/log4j2.properties.erb: config/log4j2.properties
 
@@ -66,6 +70,20 @@ properties:
   elasticsearch.node.allow_ingest:
     description: Allow node to become ingest node? (true / false)
     default: false
+  elasticsearch.node.ssl.ca:
+    description: CA certificate for SSL plugin
+  elasticsearch.node.ssl.certificate:
+    description: Node certificate
+  elasticsearch.node.ssl.private_key:
+    description: Private key for node certificate
+  elasticsearch.node.ssl.dn:
+    description: Nodes DN pattern
+  elasticsearch.admin.certificate:
+    description: Admin certificate to operate SSL plugin
+  elasticsearch.admin.private_key:
+    description: Private key for admin certificate
+  elasticsearch.admin.dn:
+    description: Admin DN to operate SSL plugin
   elasticsearch.health.timeout:
     description: Post-start timeout for node to join cluster (seconds)
     default: 300

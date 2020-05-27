@@ -35,7 +35,7 @@ instance_groups:
       elasticsearch:
         node:
           allow_master: true
-        config_options:
+        config_options: &xpack-options
           xpack.monitoring.enabled: false
           xpack.graph.enabled: false
           xpack.ml.enabled: false
@@ -47,6 +47,7 @@ instance_groups:
   - z1
   instances: 1
   vm_type: medium
+  persistent_disk_type: 5GB
   stemcell: default
   update:
     serial: true
@@ -55,10 +56,15 @@ instance_groups:
   jobs:
   - name: bpm
     release: bpm
-  - name: elasticsearch_config
+  - name: elasticsearch
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options: *xpack-options
+  - name: elasticsearch_config
+    release: logsearch
     properties:
       elasticsearch_config:
         index_prefix: logs-
@@ -68,8 +74,6 @@ instance_groups:
           - index-mappings: /var/vcap/jobs/elasticsearch_config/index-templates/index-mappings.json
   - name: curator
     release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_master}
   - name: smoke_tests
     release: logsearch
     consumes:
@@ -101,12 +105,7 @@ instance_groups:
       elasticsearch:
         node:
           allow_data: true
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
 
 - name: kibana
   azs:
@@ -124,6 +123,9 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options: *xpack-options
   - name: kibana
     release: logsearch
     provides:
@@ -136,12 +138,7 @@ instance_groups:
           timeout: 500
         env:
           - NODE_ENV: production
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
 
 - name: ingestor
   azs:
@@ -160,6 +157,9 @@ instance_groups:
     release: logsearch
     consumes:
       elasticsearch: {from: elasticsearch_master}
+    properties:
+      elasticsearch:
+        config_options: *xpack-options
   - name: ingestor_syslog
     release: logsearch
     consumes:
@@ -174,25 +174,6 @@ instance_groups:
           - 127.0.0.1
         deployment_dictionary:
           - /var/vcap/packages/logsearch-config/deployment_lookup.yml
-
-- name: ls-router
-  azs:
-  - z1
-  instances: 1
-  vm_type: medium
-  stemcell: default
-  networks:
-  - name: default
-  jobs:
-  - name: bpm
-    release: bpm
-  - name: haproxy
-    release: logsearch
-    consumes:
-      elasticsearch: {from: elasticsearch_master}
-      ingestor: {from: ingestor_link}
-      kibana: {from: kibana_link}
-      syslog_forwarder: nil
 
 releases:
 - name: logsearch

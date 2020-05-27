@@ -1,0 +1,46 @@
+---
+- type: replace
+  path: /instance_groups/name=ls-router?
+  value:
+    name: ls-router
+    azs:
+    - z1
+    instances: 1
+    vm_type: medium
+    stemcell: default
+    networks:
+    - name: default
+    jobs:
+    - name: bpm
+      release: bpm
+    - name: haproxy
+      release: logsearch
+      consumes:
+        elasticsearch: {from: elasticsearch_master}
+        ingestor: {from: ingestor_link}
+        kibana: {from: kibana_link}
+        syslog_forwarder: nil
+
+# Uncomment following to relocate route-registrar to ls-router
+# Make sure then this OPS file comes after cloudfoundry.yml 
+
+# - type: remove
+#   path: /instance_groups/name=kibana/jobs/name=route_registrar
+
+# - type: replace
+#   path: /instance_groups/name=ls-router/jobs/-
+#   value:
+#     name: route_registrar
+#     release: routing
+#     consumes:
+#       nats:
+#         from: nats
+#         deployment: cf
+#     properties:
+#       route_registrar:
+#         routes:
+#         - name: kibana
+#           port: 80
+#           registration_interval: 60s
+#           uris:
+#           - "logs.((system_domain))"
