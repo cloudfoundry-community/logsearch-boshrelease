@@ -11,7 +11,7 @@ In v211.1.0 basic cluster security features were implemented using [Securiry](ht
 
 - Additional Elasticsearch job has been colocated on **Maintenance** instance. This allows secure communication over localhost for all singletons also colocated there (all singletons have been unlinked from any remote Elasticsearch cluster, and bound to local one).
 - Since using of Ls-rounter instance is not mandatory - it was moved to separate [ops-file](deployment/operations/enable-router.yml).
-- Secure node-to-node communication has been implemented using [enable-tls](deployment/operations/enable-tls.yml) ops-file.
+- Secure Elasticsearch node-to-node communication has been implemented using [enable-tls](deployment/operations/enable-tls.yml) ops-file.
 - Secure ingesting logs is implemented using [enable-ssl](deployment/operations/enable-ssl.yml) ops-file.
 
 ### Logsearch v210 is based on Elastic stack version 6

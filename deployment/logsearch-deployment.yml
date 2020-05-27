@@ -35,7 +35,7 @@ instance_groups:
       elasticsearch:
         node:
           allow_master: true
-        config_options:
+        config_options: &xpack-options
           xpack.monitoring.enabled: false
           xpack.graph.enabled: false
           xpack.ml.enabled: false
@@ -62,12 +62,7 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
     properties:
       elasticsearch:
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
   - name: elasticsearch_config
     release: logsearch
     properties:
@@ -110,12 +105,7 @@ instance_groups:
       elasticsearch:
         node:
           allow_data: true
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
 
 - name: kibana
   azs:
@@ -135,12 +125,7 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
     properties:
       elasticsearch:
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
   - name: kibana
     release: logsearch
     provides:
@@ -153,12 +138,7 @@ instance_groups:
           timeout: 500
         env:
           - NODE_ENV: production
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
 
 - name: ingestor
   azs:
@@ -179,12 +159,7 @@ instance_groups:
       elasticsearch: {from: elasticsearch_master}
     properties:
       elasticsearch:
-        config_options:
-          xpack.monitoring.enabled: false
-          xpack.graph.enabled: false
-          xpack.ml.enabled: false
-          xpack.security.enabled: false
-          xpack.watcher.enabled: false
+        config_options: *xpack-options
   - name: ingestor_syslog
     release: logsearch
     consumes:
