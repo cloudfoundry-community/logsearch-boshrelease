@@ -7,7 +7,7 @@ A scalable stack of [Elasticsearch](https://www.elastic.co/elasticsearch), [Logs
 ## BREAKING CHANGES
 
 ### Logsearch v211 is based on Elastic stack version 7
-In v211.1.0 basic cluster security features were implemented using [Securiry](https://opendistro.github.io/for-elasticsearch-docs/docs/install/plugins/) plugin from OpenDistro Elasticsearch implementation. For better handling of these features, a following changes was made:
+In v211.1.0 basic cluster security features were implemented using [Security](https://opendistro.github.io/for-elasticsearch-docs/docs/install/plugins/) plugin from OpenDistro Elasticsearch implementation. For better handling of these features, a following changes was made:
 
 - Additional Elasticsearch job has been colocated on **Maintenance** instance. This allows secure communication over localhost for all singletons also colocated there (all singletons have been unlinked from any remote Elasticsearch cluster, and bound to local one).
 - Since using of Ls-rounter instance is not mandatory - it was moved to separate [ops-file](deployment/operations/enable-router.yml).
