@@ -18,3 +18,11 @@ files:
   - curator/vendor/jmespath-0.9.5-py2.py3-none-any.whl
   - curator/vendor/docutils-0.15.2-py3-none-any.whl
   - curator/vendor/python_dateutil-2.8.1-py2.py3-none-any.whl
+  # CLOUD.GOV: DO NOT REMOVE THE ELEMENTS BELOW THIS COMMENT!!!
+  # These files are necessary because we vendor python. The upstream 
+  # release includes these in the python package. 
+  - curator/vendor/Click-7.0-py2.py3-none-any.whl
+  - curator/vendor/PyYAML-5.1.tar.gz
+  - curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl
+  - curator/vendor/elasticsearch-6.3.1-py2.py3-none-any.whl
+  - curator/vendor/urllib3-1.24.1-py2.py3-none-any.whl
