@@ -12,3 +12,9 @@ files:
   - curator/vendor/elasticsearch-6.3.1-py2.py3-none-any.whl
   - curator/vendor/urllib3-1.24.1-py2.py3-none-any.whl
   - curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl
+  - curator/vendor/six-1.14.0-py2.py3-none-any.whl
+  - curator/vendor/botocore-1.15.36-py2.py3-none-any.whl
+  - curator/vendor/s3transfer-0.3.3-py2.py3-none-any.whl
+  - curator/vendor/jmespath-0.9.5-py2.py3-none-any.whl
+  - curator/vendor/docutils-0.15.2-py3-none-any.whl
+  - curator/vendor/python_dateutil-2.8.1-py2.py3-none-any.whl
