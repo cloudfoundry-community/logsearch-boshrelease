@@ -2,18 +2,26 @@ cerebro/cerebro-0.8.5.tgz:
   size: 52409310
   object_id: 1ebc64b1-4f12-460f-43d4-42824b712cae
   sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
-curator/elasticsearch-curator-v5.4.0.tar.gz:
-  size: 293962
-  object_id: d31708d2-5ffd-4b51-51aa-addb6d0fc9de
-  sha: 58c7c3962a176e98b16d19b23712accd334f2291
-curator/vendor/Click-7.0-py2.py3-none-any.whl:
-  size: 81299
-  object_id: 2a4ba8b8-f59e-42a5-6ca8-3f4e03749bc6
-  sha: c5b8267a60ed6a4035eaa575485c2d11d3cf5688
-curator/vendor/PyYAML-5.1.tar.gz:
-  size: 274244
-  object_id: dcd9ec97-c876-4451-5e76-f9aa3f5ab6fd
-  sha: 53fc16036940089ceadd4127381e40fd6106a7ed
+curator/elasticsearch-curator-v5.7.6.tar.gz:
+  size: 223849
+  object_id: 5bc54ecf-cb6d-4252-5542-ae0f1e889554
+  sha: sha256:a48486cacf0b32038358babfc5a8755c9a24992ff5279226b923298b426fe253
+curator/requests-2.21.0-py2.py3-none-any.whl:
+  size: 57987
+  object_id: fc202425-4c46-48c0-4c1f-9e7b7653f7ff
+  sha: sha256:7bf2a778576d825600030a110f3c0e3e8edc51dfaafe1c146e39a2027784957b
+curator/vendor/PyYAML-3.12.zip:
+  size: 375811
+  object_id: 6bab6751-63a5-49bf-4d11-3959e99260e0
+  sha: sha256:5ac82e411044fb129bae5cfbeb3ba626acb2af31a8d17d175004b70862a741a7
+curator/vendor/boto3-1.12.36-py2.py3-none-any.whl:
+  size: 128570
+  object_id: e22ca6d6-3339-4360-6b73-dbafc44e5658
+  sha: sha256:57397f9ad3e9afc17e6100a38c6e631b6545aabc7f8c38b86ff2c6f5931d0ebf
+curator/vendor/botocore-1.15.36-py2.py3-none-any.whl:
+  size: 6066108
+  object_id: d7278e18-38c6-42ee-4e3a-f8a4f82f9ecd
+  sha: sha256:d2233e19b6a60792185b15fe4cd8f92c5579298e5079daf17f66f6e639585e3a
 curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl:
   size: 158601
   object_id: 3954b6d3-5aa1-494f-6e1a-044e7f283359
