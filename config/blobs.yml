@@ -38,6 +38,10 @@ curator/vendor/elasticsearch-7.6.0-py2.py3-none-any.whl:
   size: 88688
   object_id: 1d72fdf7-9a61-4211-482d-ed35f55f86e8
   sha: sha256:f4bb05cfe55cf369bdcb4d86d0129d39d66a91fd9517b13cd4e4231fbfcf5c81
+curator/vendor/idna-2.8-py2.py3-none-any.whl:
+  size: 58594
+  object_id: db377379-7e3e-4f66-5758-4c20facaeb43
+  sha: sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c
 curator/vendor/jmespath-0.9.5-py2.py3-none-any.whl:
   size: 24149
   object_id: 4cd63aac-726b-475c-7bdc-68d4da5f5b70
