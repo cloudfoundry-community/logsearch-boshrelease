@@ -7,7 +7,7 @@ elapsed=0
 until [ $elapsed -ge <%= p("kibana.health.timeout") %> ]
 do
   CODE=`curl -s -o /dev/null -w "%{http_code}" http://<%= p("kibana.host") %>:<%= p("kibana.port") %>`
-  if [[ $CODE == 302 ]]; then
+  if [[ "$CODE" == "302" ]]; then
     echo Done!
     break
   fi
