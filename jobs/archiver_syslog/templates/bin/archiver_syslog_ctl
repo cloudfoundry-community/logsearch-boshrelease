@@ -30,7 +30,7 @@ case $1 in
     # store this processes pid in $PIDFILE, since the exec below doesn't daemonize
     echo $$ > $PIDFILE
 
-    export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$"
+    export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$ -Djava.io.tmpdir=/var/vcap/sys/temp/archiver_syslog"
 
     <% p("logstash.plugins").each do |plugin| %>
     /var/vcap/packages/logstash/bin/logstash-plugin install \
