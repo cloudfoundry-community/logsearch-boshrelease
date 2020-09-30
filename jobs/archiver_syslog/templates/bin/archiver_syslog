@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+set -x # makes debugging a shell script human friendly.
+
+# Setup env vars and folders for the webapp_ctl script
+#source /var/vcap/jobs/ingestor_syslog/helpers/ctl_setup.sh 'ingestor_syslog'
+JOB_NAME=ingestor_syslog
+export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+export STORE_DIR=/var/vcap/store/$JOB_NAME
+export JOB_DIR=/var/vcap/jobs/$JOB_NAME
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
+
+export PORT=${PORT:-5000}
+export LANG=en_US.UTF-8
+<% if 'auto' == p('logstash_ingestor.workers') %>
+# 1 logstash worker / CPU core
+export LOGSTASH_WORKERS=`grep -c ^processor /proc/cpuinfo`
+<% else %>
+export LOGSTASH_WORKERS=<%= p('logstash_ingestor.workers') %>
+<% end %>
+export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' ) * 46 ) / 100 ))K
+<% if_p('logstash.heap_size') do |heap_size| %>
+HEAP_SIZE=<%= heap_size %>
+<% end %>
+<% p("logstash.env").each do |env| %>
+export <%= env.keys[0] %>="<%= env.values[0] %>"
+<% end %>
+
+export LS_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -DPID=$$"
+
+# construct a complete config file from all the fragments
+cat ${JOB_DIR}/config/input_and_output.conf > ${JOB_DIR}/config/logstash.conf
+
+# clear persistent queue if the upgrade failed last run
+if cat $LOG_DIR/$JOB_NAME.stdout.log | grep -a 'QueueUpgrade - Logstash was unable to upgrade your persistent queue data' >/dev/null ; then
+  mkdir ${STORE_DIR}/oldqueue.$$
+  mv ${STORE_DIR}/queue ${STORE_DIR}/.lock ${STORE_DIR}/dead_letter_queue ${STORE_DIR}/uuid ${STORE_DIR}/oldqueue.$$
+  mv $LOG_DIR/$JOB_NAME.stdout.log $LOG_DIR/$JOB_NAME.stdout.log.old
+fi
+
+ulimit -n <%= p("logstash_archiver.files") %>
+
+/var/vcap/packages/logstash/bin/logstash \
+--path.data ${STORE_DIR} \
+--path.config ${JOB_DIR}/config/logstash.conf \
+--path.settings ${JOB_DIR}/config \
+--pipeline.workers ${LOGSTASH_WORKERS} \
+--log.format=json --log.level=<%= p("logstash.log_level") %>

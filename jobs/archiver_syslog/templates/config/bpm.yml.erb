@@ -1,0 +1,13 @@
+processes:
+  - name: archiver_syslog
+    hooks:
+      pre_start: /var/vcap/jobs/archiver_syslog/bin/pre-start
+    executable: /var/vcap/jobs/archiver_syslog/bin/archiver_syslog.sh
+    ephemeral_disk: true
+    persistent_disk: true
+    additional_volumes:
+    - path: /var/vcap/sys/tmp/archiver_syslog
+      writable: true
+      allow_executions: true
+    - path: /var/vcap/jobs/archiver_syslog/config
+      writable: true
