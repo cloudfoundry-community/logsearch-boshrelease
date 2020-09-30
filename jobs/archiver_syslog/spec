@@ -18,9 +18,6 @@ templates:
   config/syslog_tls.key.erb: config/syslog_tls.key
   config/logstash.yml.erb: config/logstash.yml
   config/jvm.options.erb: config/jvm.options
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 provides:
 - name: archiver
