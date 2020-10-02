@@ -5,6 +5,8 @@ processes:
     executable: /var/vcap/jobs/archiver_syslog/bin/archiver_syslog.sh
     ephemeral_disk: true
     persistent_disk: true
+    limits:
+      open_files: <%= p("logstash_archiver.files") %>
     additional_volumes:
     - path: /var/vcap/sys/tmp/archiver_syslog
       writable: true
