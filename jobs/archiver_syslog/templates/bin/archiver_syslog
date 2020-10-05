@@ -42,7 +42,7 @@ fi
 
 /var/vcap/packages/logstash/bin/logstash \
 --path.data ${STORE_DIR} \
---path.config ${JOB_DIR}/config/{logstash.conf,jvm.options} \
+--path.config "${JOB_DIR}/config/{logstash.conf,jvm.options}" \
 --path.settings ${JOB_DIR}/config \
 --pipeline.workers ${LOGSTASH_WORKERS} \
 --log.format=json \
