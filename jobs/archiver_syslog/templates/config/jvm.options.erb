@@ -1,4 +1,0 @@
-# the default /tmp dir is often noexec, so we need to use one that is not.
--Djava.io.tmpdir=/var/vcap/sys/tmp/archiver_syslog
-
-<% p('logstash.jvm_options').each do |opt| %><%= opt %><% end %>

@@ -17,7 +17,6 @@ templates:
   config/syslog_tls.crt.erb: config/syslog_tls.crt
   config/syslog_tls.key.erb: config/syslog_tls.key
   config/logstash.yml.erb: config/logstash.yml
-  config/jvm.options.erb: config/jvm.options
 
 provides:
 - name: archiver
