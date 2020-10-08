@@ -9,7 +9,7 @@ do
   # We have to set and unset the 'e' flag around the curl as a return code of 000 (no network) will result in an error.
   # This return code is valid and therefore we want to ignore this as an error.
   set +e
-  CODE=`curl -s -o /dev/null -w "%{http_code}" http://<%= p("kibana.host") %>:<%= p("kibana.port") %>`
+  CODE=`curl -m 1 -s -o /dev/null -w "%{http_code}" http://<%= p("kibana.host") %>:<%= p("kibana.port") %>`
   set -e
   if [[ "$CODE" == "302" ]]; then
     echo Done!
