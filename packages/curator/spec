@@ -26,4 +26,5 @@ files:
   - curator/vendor/urllib3-1.24.2-py2.py3-none-any.whl
   - curator/vendor/chardet-3.0.4-py2.py3-none-any.whl
   - curator/vendor/idna-2.8-py2.py3-none-any.whl
+  - curator/vendor/pylibyaml-0.1.0-py3-none-any.whl
   
