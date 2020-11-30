@@ -48,6 +48,7 @@ curator/vendor/jmespath-0.9.5-py2.py3-none-any.whl:
   sha: sha256:695cb76fa78a10663425d5b73ddc5714eb711157e52704d69be03b1a02ba4fec
 curator/vendor/pylibyaml-0.1.0-py3-none-any.whl:
   size: 4743
+  object_id: b9b397ef-275f-4955-5bf6-dad81bf00032
   sha: sha256:67e38a1d5bbe994d6b23f539fcdfb9ce605247af24e765af3958c92cb64c306f
 curator/vendor/python_dateutil-2.8.1-py2.py3-none-any.whl:
   size: 227183
