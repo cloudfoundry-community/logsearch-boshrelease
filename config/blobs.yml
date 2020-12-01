@@ -46,10 +46,6 @@ curator/vendor/jmespath-0.9.5-py2.py3-none-any.whl:
   size: 24149
   object_id: 4cd63aac-726b-475c-7bdc-68d4da5f5b70
   sha: sha256:695cb76fa78a10663425d5b73ddc5714eb711157e52704d69be03b1a02ba4fec
-curator/vendor/pylibyaml-0.1.0-py3-none-any.whl:
-  size: 4743
-  object_id: b9b397ef-275f-4955-5bf6-dad81bf00032
-  sha: sha256:67e38a1d5bbe994d6b23f539fcdfb9ce605247af24e765af3958c92cb64c306f
 curator/vendor/python_dateutil-2.8.1-py2.py3-none-any.whl:
   size: 227183
   object_id: a0da919d-2599-410c-6513-9cfdae7aed27
@@ -70,10 +66,10 @@ curator/vendor/six-1.14.0-py2.py3-none-any.whl:
   size: 10938
   object_id: 2bc076f9-931b-480f-5704-a491b74515e2
   sha: sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c
-curator/vendor/urllib3-1.24.2-py2.py3-none-any.whl:
-  size: 131747
-  object_id: 0a7b1677-6763-4d79-5ff3-93ea71079433
-  sha: sha256:4c291ca23bbb55c76518905869ef34bdd5f0e46af7afe6861e8375643ffee1a0
+curator/vendor/urllib3-1.26.2-py2.py3-none-any.whl:
+  size: 136770
+  object_id: bdbfb8b8-6b6c-454e-74df-99a9d3213cf4
+  sha: sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473
 curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   size: 27677
   object_id: 30fbe47c-eb16-4db8-57ce-f853940769c7
