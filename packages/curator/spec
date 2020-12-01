@@ -23,8 +23,8 @@ files:
   # release includes these in the python package. 
   - curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl
   - curator/vendor/requests-2.21.0-py2.py3-none-any.whl
-  - curator/vendor/urllib3-1.24.2-py2.py3-none-any.whl
+  - curator/vendor/urllib3-1.26.2-py2.py3-none-any.whl
   - curator/vendor/chardet-3.0.4-py2.py3-none-any.whl
   - curator/vendor/idna-2.8-py2.py3-none-any.whl
-  - curator/vendor/pylibyaml-0.1.0-py3-none-any.whl
+
   
