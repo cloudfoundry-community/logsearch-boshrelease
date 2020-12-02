@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+sleep 10000
+
 export PATH="/var/vcap/packages/python3/bin:${PATH}" LD_LIBRARY_PATH="/var/vcap/packages/python3/lib:${LD_LIBRARY_PATH}" C_INCLUDE_PATH="/var/vcap/packages/python3/include:${C_INCLUDE_PATH}"
 
 # --no-index prevents contacting pypi to download packages
