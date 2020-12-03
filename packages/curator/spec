@@ -10,7 +10,7 @@ files:
   - curator/vendor/boto3-1.12.36-py2.py3-none-any.whl
   - curator/vendor/requests_aws4auth-0.9-py2.py3-none-any.whl
   - curator/vendor/click-6.7-py2.py3-none-any.whl
-  - curator/vendor/PyYAML-3.13.zip
+  - curator/vendor/PyYAML-3.13.tar.gz
   - curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl
   - curator/vendor/six-1.14.0-py2.py3-none-any.whl
   - curator/vendor/botocore-1.15.36-py2.py3-none-any.whl
@@ -21,7 +21,7 @@ files:
   # CLOUD.GOV: DO NOT REMOVE THE ELEMENTS BELOW THIS COMMENT!!!
   # These files are necessary because we vendor python. The upstream 
   # release includes these in the python package. 
-  - curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl
+  - curator/vendor/certifi-2019.9.11-py2.py3-none-any.whl
   - curator/vendor/requests-2.21.0-py2.py3-none-any.whl
   - curator/vendor/urllib3-1.24.2-py2.py3-none-any.whl
   - curator/vendor/chardet-3.0.4-py2.py3-none-any.whl
