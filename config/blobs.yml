@@ -2,14 +2,14 @@ cerebro/cerebro-0.8.5.tgz:
   size: 52409310
   object_id: 1ebc64b1-4f12-460f-43d4-42824b712cae
   sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
-curator/elasticsearch-curator-v5.7.6.tar.gz:
-  size: 223849
-  object_id: 5bc54ecf-cb6d-4252-5542-ae0f1e889554
-  sha: sha256:a48486cacf0b32038358babfc5a8755c9a24992ff5279226b923298b426fe253
-curator/vendor/PyYAML-3.12.zip:
-  size: 375811
-  object_id: 6bab6751-63a5-49bf-4d11-3959e99260e0
-  sha: sha256:5ac82e411044fb129bae5cfbeb3ba626acb2af31a8d17d175004b70862a741a7
+curator/elasticsearch-curator-5.8.3.tar.gz:
+  size: 239107
+  object_id: e527c8a8-22d8-447d-4d46-99e5554d9161
+  sha: sha256:f3b927dd8a749a34cce809f271ab18f0684b3760284b159654c44bb5f32ac109
+curator/vendor/PyYAML-3.13.tar.gz:
+  size: 270607
+  object_id: f1dbd3b7-8a71-4d1b-7272-596c4cc6bce2
+  sha: sha256:3ef3092145e9b70e3ddd2c7ad59bdd0252a94dfe3949721633e41344de00a6bf
 curator/vendor/boto3-1.12.36-py2.py3-none-any.whl:
   size: 128570
   object_id: e22ca6d6-3339-4360-6b73-dbafc44e5658
@@ -18,10 +18,10 @@ curator/vendor/botocore-1.15.36-py2.py3-none-any.whl:
   size: 6066108
   object_id: d7278e18-38c6-42ee-4e3a-f8a4f82f9ecd
   sha: sha256:d2233e19b6a60792185b15fe4cd8f92c5579298e5079daf17f66f6e639585e3a
-curator/vendor/certifi-2019.3.9-py2.py3-none-any.whl:
-  size: 158601
-  object_id: 4a6d1189-9598-4aba-7db9-8c934d66856d
-  sha: sha256:59b7658e26ca9c7339e00f8f4636cdfe59d34fa37b9b04f6f9e9926b3cece1a5
+curator/vendor/certifi-2019.9.11-py2.py3-none-any.whl:
+  size: 154423
+  object_id: 183cbda6-b098-4f98-42b9-70e23fb885f9
+  sha: sha256:fd7c7c74727ddcf00e9acd26bba8da604ffec95bf1c2144e67aff7a8b50e6cef
 curator/vendor/chardet-3.0.4-py2.py3-none-any.whl:
   size: 133356
   object_id: b33bdd53-f533-481f-4bb4-0665839d1509
@@ -34,10 +34,10 @@ curator/vendor/docutils-0.15.2-py3-none-any.whl:
   size: 547604
   object_id: 59ee43e2-4d79-4cfc-5a0b-424e669b6a68
   sha: sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0
-curator/vendor/elasticsearch-7.6.0-py2.py3-none-any.whl:
-  size: 88688
-  object_id: 1d72fdf7-9a61-4211-482d-ed35f55f86e8
-  sha: sha256:f4bb05cfe55cf369bdcb4d86d0129d39d66a91fd9517b13cd4e4231fbfcf5c81
+curator/vendor/elasticsearch-7.1.0-py2.py3-none-any.whl:
+  size: 83002
+  object_id: 2685cec5-5479-439e-5614-917c8e23e8f6
+  sha: sha256:283a6afa5dc08c21016c295b5237fbd9c74895b0b297ceb97c879ec7d67a5f47
 curator/vendor/idna-2.8-py2.py3-none-any.whl:
   size: 58594
   object_id: db377379-7e3e-4f66-5758-4c20facaeb43
@@ -66,10 +66,10 @@ curator/vendor/six-1.14.0-py2.py3-none-any.whl:
   size: 10938
   object_id: 2bc076f9-931b-480f-5704-a491b74515e2
   sha: sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c
-curator/vendor/urllib3-1.26.2-py2.py3-none-any.whl:
-  size: 136770
-  object_id: bdbfb8b8-6b6c-454e-74df-99a9d3213cf4
-  sha: sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473
+curator/vendor/urllib3-1.24.2-py2.py3-none-any.whl:
+  size: 131747
+  object_id: 1c3add7c-58ee-4076-4dfe-e4ee289a8d31
+  sha: sha256:4c291ca23bbb55c76518905869ef34bdd5f0e46af7afe6861e8375643ffee1a0
 curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   size: 27677
   object_id: 30fbe47c-eb16-4db8-57ce-f853940769c7
