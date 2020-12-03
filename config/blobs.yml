@@ -4,7 +4,7 @@ cerebro/cerebro-0.8.5.tgz:
   sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
 curator/elasticsearch-curator-5.8.3.tar.gz:
   size: 239107
-  object_id: e527c8a8-22d8-447d-4d46-99e5554d9161
+  object_id: e33a7297-0166-46ea-6dd0-5519dc3c3469
   sha: sha256:f3b927dd8a749a34cce809f271ab18f0684b3760284b159654c44bb5f32ac109
 curator/vendor/PyYAML-3.13.tar.gz:
   size: 270607
