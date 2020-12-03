@@ -5,7 +5,7 @@ dependencies:
   - python3
 
 files:
-  - curator/elasticsearch-curator-v5.8.3.tar.gz
+  - curator/elasticsearch-curator-5.8.3.tar.gz
   - curator/vendor/elasticsearch-7.1.0-py2.py3-none-any.whl
   - curator/vendor/boto3-1.12.36-py2.py3-none-any.whl
   - curator/vendor/requests_aws4auth-0.9-py2.py3-none-any.whl
