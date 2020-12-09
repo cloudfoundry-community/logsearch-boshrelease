@@ -5,7 +5,7 @@ dependencies:
   - openjdk-11
 
 files:
-  - logstash/logstash-7.6.0.tar.gz
+  - logstash/logstash-7.9.3.tar.gz
   - logstash/logstash-filter-alter-3.0.2.zip
   - logstash/logstash-filter-translate-3.0.3.zip
   - logstash/logstash-input-relp-3.0.2.zip

@@ -5,7 +5,7 @@ set -e -u
 # shellcheck disable=1091
 source /var/vcap/packages/openjdk-11/bosh/compile.env
 
-tar xzf logstash/logstash-7.6.0.tar.gz -C "${BOSH_INSTALL_TARGET}" --strip-components 1
+tar xzf logstash/logstash-7.9.3.tar.gz -C "${BOSH_INSTALL_TARGET}" --strip-components 1
 
 export PATH="${BOSH_INSTALL_TARGET}/bin:${PATH}"
 
