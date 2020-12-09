@@ -74,12 +74,9 @@ curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl:
   size: 27677
   object_id: 6889d3b8-07e8-4e17-49a0-474405676494
   sha: sha256:303542b3fc07fb52ec3d7a1c614b329cdbee13a9d681935353d8ea56a7bfa9f1
-elasticsearch/elasticsearch-7.6.1-linux-x86_64.tar.gz:
-  size: 296454172
-  object_id: 342f78ab-8c75-4ce5-72b2-7fd0541c3dad
-  sha: sha256:25583ddd44a99437958f7f9410cd9746c8230b367d570cdf69e96824a583748a
 elasticsearch/elasticsearch-7.9.3-linux-x86_64.tar.gz:
   size: 306436527
+  object_id: b2475aef-c383-4a5e-597f-669699394a8d
   sha: sha256:ae815dca86b0a567185f3f6d4fad047b2f8b6f38c1eee424291cc527261c1c5c
 haproxy/haproxy-1.7.5.tar.gz:
   size: 1743979
@@ -89,19 +86,13 @@ haproxy/pcre-8.40.tar.gz:
   size: 2065161
   object_id: 28786a5b-7b76-45af-578f-af8bd85ef90a
   sha: sha256:1d75ce90ea3f81ee080cdc04e68c9c25a9fb984861a0618be7bbf676b18eda3e
-kibana/kibana-7.6.1-linux-x86_64.tar.gz:
-  size: 249498863
-  object_id: 50a70286-23e8-4c3f-7749-f10404a058bc
-  sha: sha256:da636529511e707bbbc621dc131ff2ed18f50fe0df30821c375d16c5ba4248f6
 kibana/kibana-7.9.3-linux-x86_64.tar.gz:
   size: 295755102
+  object_id: 74b514c5-0669-4b75-71f0-9b1f81240e97
   sha: sha256:20106e084f717270ce38290d1d3908db7de09b16233688ce0ec41e1d0dffddd6
-logstash/logstash-7.6.1.tar.gz:
-  size: 172679481
-  object_id: 6301a0c6-e294-4bd3-4b6a-306a7d66d0a8
-  sha: sha256:6b16f3158829ad820463c7f3ca4cfec433d12d0eafa25be203c92d12ca91da10
 logstash/logstash-7.9.3.tar.gz:
   size: 158711139
+  object_id: fa0b0d96-a19a-402e-777b-be7d86f8b3d5
   sha: sha256:60cd7bfcbaac30b1f5e58669fb4a6a6c4533980702529230593ee8f8c24dd501
 logstash/logstash-filter-alter-3.0.2.zip:
   size: 7425
