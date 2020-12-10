@@ -5,7 +5,7 @@ if [ -d /var/vcap/jobs/elasticsearch/config/ssl ]; then
 	chown vcap  /var/vcap/jobs/elasticsearch/config/ssl
 fi
 if [ -d /var/vcap/packages/elasticsearch/jdk ]; then
-	chown vcap:  /var/vcap/packages/elasticsearch/jdk
+	chown -R vcap:  /var/vcap/packages/elasticsearch/jdk
 fi
 
 # install plugins
