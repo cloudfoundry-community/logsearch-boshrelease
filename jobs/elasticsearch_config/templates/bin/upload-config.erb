@@ -107,7 +107,7 @@ echo "--- Component Templates"
 <%= put_to_es('_component_template', p('elasticsearch_config.component_templates')) %>
 
 echo "--- Index Templates"
-<%= put_to_es('_index_template', p('elasticsearch_config.templates')) %>
+<%= put_to_es('_index_template', p('elasticsearch_config.index_templates')) %>
 
 
 echo "--- Documents"
