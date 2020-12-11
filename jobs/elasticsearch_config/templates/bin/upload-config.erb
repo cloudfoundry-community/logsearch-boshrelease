@@ -103,8 +103,12 @@ end
 
 until curl -sf 'http://<%= elasticsearch_host %>:<%= elasticsearch_port %>/_cluster/health?wait_for_status=yellow&timeout=10m'; do :; done
 
-echo "--- Templates"
+echo "--- Component Templates"
+<%= put_to_es('_component_template', p('elasticsearch_config.component_templates')) %>
+
+echo "--- Index Templates"
 <%= put_to_es('_index_template', p('elasticsearch_config.templates')) %>
+
 
 echo "--- Documents"
 <%= put_to_es('', p('elasticsearch_config.docs')) %>
