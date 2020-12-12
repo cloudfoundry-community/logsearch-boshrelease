@@ -19,8 +19,10 @@ export DATA_DIR=/var/vcap/data/elasticsearch_config
 # Delete existing templates before uploading
 URL=http://<%= elasticsearch_host %>:<%= elasticsearch_port %>
 for template in $(curl -s ${URL}/_cat/templates | awk '{print $1}'); do
-  if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.templates').map { |template| template.keys.first }.join(' ') %>"); then
+  if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.index_templates').map { |template| template.keys.first }.join(' ') %>"); then
+    # hit template and index_template so we can try for legacy and component templates
     curl -s -XDELETE ${URL}/_template/${template}
+    curl -s -XDELETE ${URL}/_index_template/${template}
   fi
 done
 
