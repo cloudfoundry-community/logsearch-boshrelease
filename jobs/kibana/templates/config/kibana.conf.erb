@@ -89,6 +89,22 @@ elasticsearch.shardTimeout: <%= p('kibana.shard_timeout') %>
 
 # Configure development console
 console.enabled: <%= p("kibana.console_enabled") %>
+xpack.searchprofiler.enabled: <%= p("kibana.searchprofiler_enabled") %>
+xpack.grokdebugger.enabled: <%= p("kibana.grokdebugger_enabled") %>
+
+# configure apm
+xpack.apm.ui.enabled: <%= p("kibana.apm_enabled") %>
+
+# set reporting key for load balanced scenarios
+xpack.reporting.encryptionKey: <%= p("kibana.reporting_key") %>
+
+# disable x-pack
+xpack.monitoring.enabled: false
+xpack.graph.enabled: false
+xpack.ml.enabled: false
+xpack.security.enabled: false
+xpack.watcher.enabled: false
+xpack.spaces.disabled: false
 
 <% if_p('kibana.config_options') do p("kibana.config_options", {}).each do | k, v | %>
 <%= k %>: <%= v %><% end %>
