@@ -104,7 +104,7 @@ xpack.graph.enabled: false
 xpack.ml.enabled: false
 xpack.security.enabled: false
 xpack.watcher.enabled: false
-xpack.spaces.disabled: false
+xpack.spaces.enabled: false
 
 <% if_p('kibana.config_options') do p("kibana.config_options", {}).each do | k, v | %>
 <%= k %>: <%= v %><% end %>
