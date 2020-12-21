@@ -76,9 +76,10 @@
       ingestor: {from: ingestor_link}
     properties:
       cloudfoundry:
-        firehose_client_id: firehose-to-syslog
+        firehose_client_id: "((firehose_client_id))"
         firehose_client_secret: "((firehose_client_secret))"
         skip_ssl_validation: true
+        firehose_subscription_id: "((firehose_client_id))"
 
 - type: replace
   path: /instance_groups/name=kibana/jobs/-
@@ -100,6 +101,7 @@
     properties:
       kibana-auth:
         cloudfoundry:
+          client_id: "((kibana_oauth2_client_id))"
           client_secret: "((kibana_oauth2_client_secret))"
           skip_ssl_validation: true
 
@@ -119,7 +121,7 @@
           port: 5601
           registration_interval: 60s
           uris:
-          - "logs.((system_domain))"
+          - "((kibana_hostname)).((system_domain))"
 
 - type: replace
   path: /instance_groups/name=kibana/jobs/name=kibana/properties/kibana/plugins?
