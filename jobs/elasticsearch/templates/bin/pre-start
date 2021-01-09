@@ -4,6 +4,10 @@ mkdir -p /var/vcap/packages/elasticsearch/plugins
 if [ -d /var/vcap/jobs/elasticsearch/config/ssl ]; then
 	chown vcap  /var/vcap/jobs/elasticsearch/config/ssl
 fi
+if [ -d /var/vcap/packages/elasticsearch/jdk ]; then
+	chown -R vcap:  /var/vcap/packages/elasticsearch/jdk
+fi
+
 
 # install plugins
 rm -rf /var/vcap/packages/elasticsearch/plugins/*
@@ -19,3 +23,4 @@ rm -rf /var/vcap/packages/elasticsearch/plugins/*
     /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install -b "<%= path %>"
   <% end %>
 <% end %>
+

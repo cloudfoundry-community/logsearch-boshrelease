@@ -5,12 +5,12 @@ dependencies:
   - python3
 
 files:
-  - curator/elasticsearch-curator-v5.7.6.tar.gz
-  - curator/vendor/elasticsearch-7.6.0-py2.py3-none-any.whl
+  - curator/elasticsearch-curator-5.8.3.tar.gz
+  - curator/vendor/elasticsearch-7.1.0-py2.py3-none-any.whl
   - curator/vendor/boto3-1.12.36-py2.py3-none-any.whl
   - curator/vendor/requests_aws4auth-0.9-py2.py3-none-any.whl
   - curator/vendor/click-6.7-py2.py3-none-any.whl
-  - curator/vendor/PyYAML-3.12.zip
+  - curator/vendor/PyYAML-3.13.tar.gz
   - curator/vendor/voluptuous-0.11.5-py2.py3-none-any.whl
   - curator/vendor/six-1.14.0-py2.py3-none-any.whl
   - curator/vendor/botocore-1.15.36-py2.py3-none-any.whl
