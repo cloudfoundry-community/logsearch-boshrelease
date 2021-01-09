@@ -20,7 +20,6 @@
     release: logsearch-for-cloudfoundry
     consumes:
       cloud_controller: {from: cloud_controller, deployment: cf}
-      elasticsearch: {from: elasticsearch_master}
     properties:
       cloudfoundry:
         user: admin
@@ -105,7 +104,7 @@
           skip_ssl_validation: true
 
 - type: replace
-  path: /instance_groups/name=ls-router/jobs/-
+  path: /instance_groups/name=kibana/jobs/-
   value:
     name: route_registrar
     release: routing
@@ -117,7 +116,7 @@
       route_registrar:
         routes:
         - name: kibana
-          port: 80
+          port: 5601
           registration_interval: 60s
           uris:
           - "logs.((system_domain))"
@@ -145,6 +144,6 @@
   path: /releases/-
   value:
     name: logsearch-for-cloudfoundry
-    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-211.0.2.tgz
-    version: 211.0.2
-    sha1: 65b9b401ef9d0001dc394f1def579922eeb9b361
+    url: https://s3.amazonaws.com/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-211.1.0.tgz
+    version: 211.1.0
+    sha1: 72f1cb12f753f05f143526dc38c2c551b5c3097b

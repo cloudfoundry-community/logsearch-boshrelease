@@ -13,11 +13,6 @@ templates:
   config/actions.yml.erb: config/actions.yml
   config/config.yml.erb: config/config.yml
 
-consumes:
- - name: elasticsearch
-   type: elasticsearch
-   optional: true
-
 properties:
   elasticsearch.snapshots.repository:
     description: Repository name for automatic snapshots

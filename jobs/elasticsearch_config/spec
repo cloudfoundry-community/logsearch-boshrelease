@@ -3,10 +3,6 @@ name: elasticsearch_config
 
 description: This job loads pre-defined configuration into Elasticsearch cluster
 
-packages:
-  - elasticsearch
-  - openjdk-11
-
 templates:
   bin/upload-config.erb: bin/upload-config
   bin/job.process: bin/job.process
@@ -15,14 +11,10 @@ templates:
   index-templates/index-settings.json.erb: index-templates/index-settings.json
   index-templates/index-mappings.json.erb: index-templates/index-mappings.json
 
-consumes:
-- name: elasticsearch
-  type: elasticsearch
-  optional: true
-
 properties:
   elasticsearch_config.elasticsearch.host:
     description: "The elasticsearch master node hostname"
+    default: 127.0.0.1
   elasticsearch_config.elasticsearch.port:
     description: "the elasticsearch master node port"
     default: 9200

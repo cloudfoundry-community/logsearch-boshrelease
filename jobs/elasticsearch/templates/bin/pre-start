@@ -8,6 +8,7 @@ if [ -d /var/vcap/packages/elasticsearch/jdk ]; then
 	chown -R vcap:  /var/vcap/packages/elasticsearch/jdk
 fi
 
+
 # install plugins
 rm -rf /var/vcap/packages/elasticsearch/plugins/*
 <% if_p('elasticsearch.cloud.aws.access_key', 'elasticsearch.cloud.aws.secret_key') do %>
@@ -22,3 +23,4 @@ rm -rf /var/vcap/packages/elasticsearch/plugins/*
     /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install -b "<%= path %>"
   <% end %>
 <% end %>
+

@@ -1,0 +1,140 @@
+name: logsearch
+version: 211.0.3
+commit_hash: 03b1ebc
+uncommitted_changes: false
+jobs:
+- name: archiver_syslog
+  version: 90806766a6e31f4a5f38abd8f8952feae6e25105bc7e031366390ad5dd258303
+  fingerprint: 90806766a6e31f4a5f38abd8f8952feae6e25105bc7e031366390ad5dd258303
+  sha1: sha256:a0272d4fbc55ab8b8272e139e099b9440750ae4628e15693e9182b3a3ec08d3e
+  packages:
+  - logstash
+  - logsearch-config
+  - openjdk-11
+- name: cerebro
+  version: abeb56a140e8a464554693fdfb65a8eb8d7c581cbbd767f47d39ffc40db38c11
+  fingerprint: abeb56a140e8a464554693fdfb65a8eb8d7c581cbbd767f47d39ffc40db38c11
+  sha1: sha256:c712f436ca21c94901e3d5f0b27cec0c3938639487d39ef84a767bca53513c3b
+  packages:
+  - cerebro
+  - openjdk-11
+- name: curator
+  version: c454b92f5f0175e175da1ea109e0d9db8f72b7d4f339a94d6694486032bc3280
+  fingerprint: c454b92f5f0175e175da1ea109e0d9db8f72b7d4f339a94d6694486032bc3280
+  sha1: sha256:3ac2fc9bc29b606c18c8d6b2f4e7af4f539c60b7094695095c55f5ef9b523b40
+  packages:
+  - curator
+  - python3
+- name: elasticsearch
+  version: e64218d88de88b9c959af663759b162d500e905269f3e663934dd486e5eeaf71
+  fingerprint: e64218d88de88b9c959af663759b162d500e905269f3e663934dd486e5eeaf71
+  sha1: sha256:db8ae418e672199da60c3a094c575427289ed7783cca204f71899956f15460bd
+  packages:
+  - elasticsearch
+  - openjdk-11
+- name: elasticsearch_config
+  version: 3c3eb827202d1cd5abc5525f81e658e1fedf9a3cd20bff17d9b7867fc68751c6
+  fingerprint: 3c3eb827202d1cd5abc5525f81e658e1fedf9a3cd20bff17d9b7867fc68751c6
+  sha1: sha256:17e47bcd503e4879522d94bcd49f318491c2dc88a964e4fa8571518fdb8f8fd9
+  packages:
+  - elasticsearch
+  - openjdk-11
+- name: haproxy
+  version: ca1e79dccbb51267db1b6ab2f8bc5be8fd3f6c727525410664d197eab418f14d
+  fingerprint: ca1e79dccbb51267db1b6ab2f8bc5be8fd3f6c727525410664d197eab418f14d
+  sha1: sha256:c38e7ecc4ad8b2954a7a051aae2618b4bbcfa78cf8c5dfd625f366a0a092af46
+  packages:
+  - haproxy
+- name: ingestor_syslog
+  version: f0dd573a6653cc72494a0de84e275556ba64bd38662f167f4ae88803f4449a62
+  fingerprint: f0dd573a6653cc72494a0de84e275556ba64bd38662f167f4ae88803f4449a62
+  sha1: sha256:7d54f54b770f04e66ddc5ef09c877b3ee6d2ca2d848374526e774171f6e57c52
+  packages:
+  - logstash
+  - logsearch-config
+  - openjdk-11
+- name: kibana
+  version: 02e39b7f2a4335af94055bff0caf38eac296b94dea2d4c37ec42f8691c73929c
+  fingerprint: 02e39b7f2a4335af94055bff0caf38eac296b94dea2d4c37ec42f8691c73929c
+  sha1: sha256:a81d773f0caab752ccabc969c033f4e0946d5771801aef76f5193d4d42fdb757
+  packages:
+  - kibana
+- name: nats_to_syslog
+  version: 2522c49c24258d1b90b207883c611615e829ee603a1a8392329a5f818251c4ef
+  fingerprint: 2522c49c24258d1b90b207883c611615e829ee603a1a8392329a5f818251c4ef
+  sha1: sha256:66bb9f21985c6438a13223b8558fa8e409ca6ee5c2eee7f19fa06f3134683747
+  packages:
+  - nats_to_syslog
+- name: smoke_tests
+  version: 06a3dad3eb2bd31144b60444aa5b9be5592af0a16039baa847c6b964be03808f
+  fingerprint: 06a3dad3eb2bd31144b60444aa5b9be5592af0a16039baa847c6b964be03808f
+  sha1: sha256:024d106347d57cf3ea40a9a1ac6accbd0c526e74710a38bb6c59412590684cd8
+  packages: []
+- name: syslog_forwarder
+  version: 98347115fa091edbf39183ac0505388bde8fb21b10db69957ba680b00dc8e27c
+  fingerprint: 98347115fa091edbf39183ac0505388bde8fb21b10db69957ba680b00dc8e27c
+  sha1: sha256:8ac6144b740ab9dbf4ddd51dbbbbf158dee60803399068ba6e590c1c00421954
+  packages: []
+packages:
+- name: cerebro
+  version: b858b6898313a62170e133aa4fc33e9852bd5c8f11afb84201b7d057b8eb3aa7
+  fingerprint: b858b6898313a62170e133aa4fc33e9852bd5c8f11afb84201b7d057b8eb3aa7
+  sha1: sha256:af147c15ebfa25276642872fefe07bf993e410e935cf5759e2eac1097af5228c
+  dependencies: []
+- name: curator
+  version: e71a264f0d72f9cf9cf8dbe02a9fad3b54ab8c447a6a6125db69c50e7dba1917
+  fingerprint: e71a264f0d72f9cf9cf8dbe02a9fad3b54ab8c447a6a6125db69c50e7dba1917
+  sha1: sha256:5e1a9cf34ae054443834f88d7b8e67929fad30fba648096fa00b5c2a1a2615d8
+  dependencies:
+  - python3
+- name: elasticsearch
+  version: 05cf1ba740b62d8ce3980c55c81e911cafe8c4364aac6939da8d8b267e51f4c5
+  fingerprint: 05cf1ba740b62d8ce3980c55c81e911cafe8c4364aac6939da8d8b267e51f4c5
+  sha1: sha256:568617b4b746f0071e5631f51bedac2bf335f1042089f529dccbcb2e9bdb61f8
+  dependencies: []
+- name: haproxy
+  version: b9189484ff6f4d87259e299f9771998abe4d0ffd0a7dd21d941c6c7cc7d8b58a
+  fingerprint: b9189484ff6f4d87259e299f9771998abe4d0ffd0a7dd21d941c6c7cc7d8b58a
+  sha1: sha256:b0d344ae781133b10b392fa0eabd11e6c6b1603b7bf3cdbddc0a336a9cf32e30
+  dependencies: []
+- name: kibana
+  version: a5fba455a51a52e410d0515f7af7a94f99ac0fdbad8fd1694a9fb3c46f3b5d9e
+  fingerprint: a5fba455a51a52e410d0515f7af7a94f99ac0fdbad8fd1694a9fb3c46f3b5d9e
+  sha1: sha256:1f9e9991ebf6532e08481c80be5f076c281d27361e26d809924328aa63311b54
+  dependencies: []
+- name: logsearch-config
+  version: 93530992686c09913d327d27ddd420c95b78e264a2f2d5fbe9d1fede1d87cabb
+  fingerprint: 93530992686c09913d327d27ddd420c95b78e264a2f2d5fbe9d1fede1d87cabb
+  sha1: sha256:891ddcc80717762edc2a20ba7574d6caaf97a085f57bc2c9d619e1b1bd2d4e56
+  dependencies:
+  - ruby-2.4-r5
+- name: logstash
+  version: ac6bcbd30b26d6c45329a7f2ec9d7c1ace5ed60eeb669dad8698db9ba0dc3a9b
+  fingerprint: ac6bcbd30b26d6c45329a7f2ec9d7c1ace5ed60eeb669dad8698db9ba0dc3a9b
+  sha1: sha256:b3c9604a2772f34d7826ee36dd827ebc763b23a81b67a7059baea41ac1093a19
+  dependencies:
+  - openjdk-11
+- name: nats_to_syslog
+  version: 87900e9a2c72f55d7ab346d7819184e21338f2d9b5ff285bcdfb8210b303bbe1
+  fingerprint: 87900e9a2c72f55d7ab346d7819184e21338f2d9b5ff285bcdfb8210b303bbe1
+  sha1: sha256:65d55addd7aa5a479cbf1e48ccd4cc03aaf0d82477497107eecab569ddf40115
+  dependencies: []
+- name: openjdk-11
+  version: 1b2aca50b3a14a3fdf4e92b9b9dcee3359995915f0cedc2d1be78c54b6ac82dc
+  fingerprint: 1b2aca50b3a14a3fdf4e92b9b9dcee3359995915f0cedc2d1be78c54b6ac82dc
+  sha1: sha256:9734ac4ab5b8951df5f01fa3b9492d65e781dbf9f32c703b611202f526c40029
+  dependencies: []
+- name: python3
+  version: 850f5cf587498a0d127464f069b8599593b42ee4fdf381efb62cc309ed19760a
+  fingerprint: 850f5cf587498a0d127464f069b8599593b42ee4fdf381efb62cc309ed19760a
+  sha1: sha256:154272da05fae241a02284c16c98280446f3f8897770c72132a11d2b25b608dd
+  dependencies: []
+- name: ruby-2.4-r5
+  version: 726cbb2214e138b576700db6a30698edb2b994e2
+  fingerprint: 726cbb2214e138b576700db6a30698edb2b994e2
+  sha1: 6addce325a193d9f2c326dbd926ab42dc023f132
+  dependencies: []
+license:
+  version: 8910375e1e02230324d26e31e72d340b121830d0dbd7071dce92fbe27e97a779
+  fingerprint: 8910375e1e02230324d26e31e72d340b121830d0dbd7071dce92fbe27e97a779
+  sha1: sha256:dec582b855538894e263d430fe548182687082ecc17a9275a003e88fdeb3a2f6
