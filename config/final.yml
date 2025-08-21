@@ -2,6 +2,5 @@
 blobstore:
   provider: s3
   options:
-    bucket_name: cloud-gov-release-blobstore
-    region: us-gov-west-1
+    bucket_name: logsearch-boshrelease
 final_name: logsearch
