@@ -27,6 +27,8 @@
       - name: archiver_syslog
         release: logsearch
         properties:
+          logstash_archiver:
+            files: 16384
           logstash_ingestor:
             outputs:
               - plugin: s3

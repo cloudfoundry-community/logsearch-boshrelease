@@ -10,8 +10,7 @@ blobs/*
 .vagrant
 .idea
 .DS_Store
-.final_builds/jobs/**/*.tgz
-.final_builds/packages/**/*.tgz
+.final_builds
 *.swp
 *~
 *#
@@ -25,3 +24,5 @@ version
 /logsearch-config
 /logsearch-config.tgz
 deployment/ci/logsearch-vars.yml
+final-builds-dir-logsearch.tgz
+releases-dir-logsearch.tgz

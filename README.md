@@ -7,6 +7,7 @@ A scalable stack of [Elasticsearch](https://www.elastic.co/elasticsearch), [Logs
 ## BREAKING CHANGES
 
 ### Logsearch v211 is based on Elastic stack version 7
+
 In v211.1.0 basic cluster security features were implemented using [Security](https://opendistro.github.io/for-elasticsearch-docs/docs/install/plugins/) plugin from OpenDistro Elasticsearch implementation. For better handling of these features, a following changes was made:
 
 - Additional Elasticsearch job has been colocated on **Maintenance** instance. This allows secure communication over localhost for all singletons also colocated there (all singletons have been unlinked from any remote Elasticsearch cluster, and bound to local one).
@@ -17,13 +18,15 @@ In v211.1.0 basic cluster security features were implemented using [Security](ht
 ### Logsearch v210 is based on Elastic stack version 6
 
 - Elasticsearch 6.x can use indices created in Elasticsearch 5.x, but not those created in Elasticsearch 2.x or before.
-- **Important**: After upgrading running 5.x cluster to 6.x all existing indicies will be available for reading data. However, writing to these indicies is not possible. In order to write data immediatelly after upgrade you have to [change index naming convention](https://github.com/cloudfoundry-community/logsearch-boshrelease/commit/2f83b41ee14dbe3141e21cc0c40df340d50e0169). As long as index names are usually based on current date, this change can be safely reverted in a day or so.
+- **Important**: After upgrading running 5.x cluster to 6.x all existing indicies will be available for reading data. However, writing to these indicies is not possible. In order to write data immediately after upgrade you have to [change index naming convention](https://github.com/cloudfoundry-community/logsearch-boshrelease/commit/2f83b41ee14dbe3141e21cc0c40df340d50e0169). As long as index names are usually based on current date, this change can be safely reverted in a day or so.
 
 ### Logsearch v204 is based on Elastic stack version 5.
+
 - For upgrade procedure from Elasticsearch 2.x please refer to [v205.0.0 release notes](https://github.com/cloudfoundry-community/logsearch-boshrelease/releases/tag/v205.0.0#component-updates).
 
 ### Logsearch v200 is based on Elasticsearch 2.x and Kibana 4.
-- There is NO upgrade path from Elasticsearch 1.x to 2.x.  Sorry :(
+
+- There is NO upgrade path from Elasticsearch 1.x to 2.x. Sorry :(
 
 ### Logsearch < v23 was based on Elasticsearch 1.x and Kibana 3.
 
@@ -32,11 +35,10 @@ In v211.1.0 basic cluster security features were implemented using [Security](ht
 This repo contains Logsearch Core; which deploys an ELK cluster that can receive and parse logs via syslog that contain JSON.
 
 Most users will want to combine Logsearch Core with a Logsearch Addon to customise their cluster for a
-particular type of logs.  Its likely you want to be following an Addon installation guides - see below
+particular type of logs. Its likely you want to be following an Addon installation guides - see below
 for a list of the common Addons:
 
-  * [Logsearch for CloudFoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
-
+- [Logsearch for CloudFoundry](https://github.com/cloud-gov/logsearch-for-cloudfoundry)
 
 ## Installing Logsearch Core
 
@@ -46,6 +48,7 @@ Before starting deployment, make sure your BOSH environment is ready, and all `B
 $ cd deployment
 $ bosh -d logsearch deploy logsearch-deployment.yml
 ```
+
 ## Common customisations:
 
 Adding new parsing rules:
@@ -58,14 +61,12 @@ Adding new parsing rules:
                 remove_field => ["@message"]
              }
 
-
 ### Release Channels
 
- * The latest stable, final release will be soon available on [bosh.io](http://bosh.io/releases)
- * **develop** - The develop branch in this repo is deployed to our test environments.  It is occasionally broken - use with care!
+- The latest stable, final release will be soon available on [bosh.io](http://bosh.io/releases)
+- **develop** - The develop branch in this repo is deployed to our test environments. It is occasionally broken - use with care!
 
 ## Known issues
-
 
 ## License
 

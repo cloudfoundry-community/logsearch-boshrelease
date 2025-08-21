@@ -1,8 +1,8 @@
 {
-  "template": "<%= p('elasticsearch_config.index_prefix') %>*",
-  "order": 100,
-  "settings": { 
-    "number_of_shards": 5,
-    "number_of_replicas" : 1    
+  "template": {
+    "settings": { 
+      "number_of_shards": 5,
+      "number_of_replicas" : 1
+    }
   }
 }

@@ -13,6 +13,10 @@ templates:
   config/actions.yml.erb: config/actions.yml
   config/config.yml.erb: config/config.yml
 
+provides:
+- name: curator
+  type: curator
+
 properties:
   elasticsearch.snapshots.repository:
     description: Repository name for automatic snapshots

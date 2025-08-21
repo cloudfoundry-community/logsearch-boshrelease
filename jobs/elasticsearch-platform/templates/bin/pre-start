@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+sysctl -q -w vm.max_map_count=262144
+mkdir -p /var/vcap/packages/elasticsearch-platform/plugins
+if [ -d /var/vcap/jobs/elasticsearch-platform/config/ssl ]; then
+	chown vcap  /var/vcap/jobs/elasticsearch-platform/config/ssl
+fi
+
+# install plugins
+rm -rf /var/vcap/packages/elasticsearch-platform/plugins/*
+<% if_p('elasticsearch.cloud.aws.access_key', 'elasticsearch.cloud.aws.secret_key') do %>
+  /var/vcap/packages/elasticsearch-platform/bin/elasticsearch-plugin install -b repository-s3
+<% end %>
+<% p("elasticsearch.plugins").each do |plugin| name, path = plugin.first %>
+  <% if path.start_with? '/var/vcap' %>
+    /var/vcap/packages/elasticsearch-platform/bin/elasticsearch-plugin install -b "file://<%= path %>"
+  <% elsif path.start_with? 'http' %>
+    /var/vcap/packages/elasticsearch-platform/bin/elasticsearch-plugin install -b "<%= path %>"
+  <% else %>
+    /var/vcap/packages/elasticsearch-platform/bin/elasticsearch-plugin install -b "<%= path %>"
+  <% end %>
+<% end %>
+
+cp -p /var/vcap/packages/elasticsearch-platform/config/jvm.options /var/vcap/jobs/elasticsearch-platform/config/jvm.options
+chown root:vcap /var/vcap/jobs/elasticsearch-platform/config/jvm.options
+
+log_dir=/var/vcap/packages/elasticsearch-platform/logs
+
+if [[ -d ${log_dir} ]]; then
+  # rmdir fails on a symlink
+  rmdir ${log_dir} || rm ${log_dir}
+fi
+
+if [[ ! -a ${log_dir} ]]; then
+  ln -s /var/vcap/sys/log/elasticsearch-platform ${log_dir}
+fi
+
+<% if p("elasticsearch.migrate_data") %>
+if [[ -d /var/vcap/store/elasticsearch ]]; then
+  mkdir /var/vcap/store/elasticsearch-platform || true
+  rsync -au /var/vcap/store/elasticsearch/nodes /var/vcap/store/elasticsearch-platform
+fi
+<% end %>
+
+<% if p("elasticsearch.delete_migrated_data") %>
+if [[ -d /var/vcap/store/elasticsearch && -d /var/vcap/store/elasticsearch-platform ]]; then
+  if cat /var/vcap/jobs/elasticsearch-platform/config/elasticsearch.yml | grep -q 'data: "/var/vcap/store/elasticsearch-platform"'; then
+    rm -rf /var/vcap/store/elasticsearch
+  fi
+fi
+<% end %>

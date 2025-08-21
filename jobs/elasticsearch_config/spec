@@ -24,8 +24,11 @@ properties:
       It is used in the index templates predefined in the job to specify index pattern.
       Make sure the prefix matches `logstash_parser.elasticsearch.index` property set for your parser.
     default: "logstash-"
-  elasticsearch_config.templates:
-    description: "An array with key-value hashes; keys being template name, value being template content"
+  elasticsearch_config.component_templates:
+    description: "An array of key-value hashes; keys being component template name, value being template path or content"
+    default: []
+  elasticsearch_config.index_templates:
+    description: "An array with key-value hashes; keys being template name, value being template path or content"
     default: []
   elasticsearch_config.docs:
     description: "An array with key-value hashes; keys being doc path, value being doc source"

@@ -1,0 +1,75 @@
+bootstrap:
+  memory_lock: true
+
+path:
+  logs: "/var/vcap/sys/log/elasticsearch-platform"
+  data: "/var/vcap/store/elasticsearch-platform"
+<% if p('elasticsearch.path_repo') != '' %>
+  repo: ["<%= p('elasticsearch.path_repo') %>"]
+<% end %>
+
+<% if_p('elasticsearch.node.ssl.certificate') do %>
+opendistro_security:
+  <% if_p('elasticsearch.admin.dn') do %>
+  authcz:
+    admin_dn:
+    - '<%= p("elasticsearch.admin.dn") %>'
+  <% end %>
+  nodes_dn:
+  - '<%= p("elasticsearch.node.ssl.dn") %>'
+  ssl:
+    transport:
+      enforce_hostname_verification: false
+      pemkey_filepath: ssl/elasticsearch-node.key
+      pemcert_filepath: ssl/elasticsearch-node.crt
+      pemtrustedcas_filepath: ssl/elasticsearch.ca
+<% end %>
+
+<%
+  cluster_name = nil
+  if_link("elasticsearch-platform") { |elasticsearch_link| cluster_name = elasticsearch_link.p("elasticsearch.cluster_name") }
+  unless cluster_name
+    cluster_name = p("elasticsearch.cluster_name")
+  end
+  master_hosts = nil
+  if_link("elasticsearch-platform") { |elasticsearch_link| master_hosts = elasticsearch_link.instances.map {|e| e.address }.join(',') }
+  unless master_hosts
+    master_hosts = p("elasticsearch.master_hosts").join(',')
+  end
+%>
+cluster:
+  name: "<%= cluster_name %>"
+  initial_master_nodes: "<%= master_hosts %>"
+
+# For backward compatibility with v6 clustes
+# Shoud be removed in v8
+discovery.zen.ping.unicast.hosts: "<%= master_hosts %>"
+
+node:
+  name: "<%= name %>/<%= index %>"
+<% p("elasticsearch.node.tags", {}).each do | k, v | %>
+  attr.<%= k %>: "<%= v %>"
+<% end %>
+<% if not p('elasticsearch.node.roles') == 'maintenance' and not p('elasticsearch.node.roles') == 'kibana' %>
+  roles: [ <%= p('elasticsearch.node.roles') %> ]
+<% end %>
+network:
+  host: "0.0.0.0"
+http:
+  host: <%= p("elasticsearch.http_host") %>
+
+
+
+<% if_p('elasticsearch.cloud.aws.access_key', 'elasticsearch.cloud.aws.secret_key') do %>
+cloud:
+  aws:
+    protocol: <%= p('elasticsearch.cloud.aws.protocol') %>
+    read_timeout: <%= p('elasticsearch.cloud.aws.read_timeout') %>
+    access_key: <%= p('elasticsearch.cloud.aws.access_key') %>
+    secret_key: <%= p('elasticsearch.cloud.aws.secret_key') %>
+    <% if_p('elasticsearch.cloud.aws.region') do |region| %>region: <%= region %><% end %>
+<% end %>
+
+<% if_p('elasticsearch.config_options') do p("elasticsearch.config_options", {}).each do | k, v | %>
+<%= k %>: <%= v %><% end %>
+<% end %>

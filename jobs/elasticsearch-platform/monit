@@ -1,0 +1,11 @@
+check process elasticsearch-platform
+  with pidfile /var/vcap/sys/run/bpm/elasticsearch-platform/elasticsearch-platform.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start elasticsearch-platform"
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop elasticsearch-platform"
+  group vcap
+
+check device es-ephemeral_disk with path /var/vcap/data
+  if SPACE usage > 80% then alert
+
+check device es-persistent_disk with path /var/vcap/store
+  if SPACE usage > 80% then alert

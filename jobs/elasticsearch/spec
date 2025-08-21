@@ -5,6 +5,7 @@ description: This job runs Elasticsearch node (master or data)
 
 packages:
   - elasticsearch
+  - openjdk-11
 
 templates:
   bin/drain.erb: bin/drain
@@ -19,7 +20,7 @@ templates:
   config/node-pem.erb: config/ssl/elasticsearch-node.pem
   config/admin-crt.erb: config/ssl/elasticsearch-admin.crt
   config/admin-pem.erb: config/ssl/elasticsearch-admin.pem
-  config/jvm.options.erb: config/jvm.options
+  config/jvm.options.erb: config/jvm.options.d/custom
   config/log4j2.properties.erb: config/log4j2.properties
 
 provides:
@@ -61,15 +62,6 @@ properties:
       necessary to mount the same shared filesystem to the same location
       on all master and data nodes.
     default: ''
-  elasticsearch.node.allow_master:
-    description: Allow node to become master? (true / false)
-    default: false
-  elasticsearch.node.allow_data:
-    description: Allow node to store data? (true / false)
-    default: false
-  elasticsearch.node.allow_ingest:
-    description: Allow node to become ingest node? (true / false)
-    default: false
   elasticsearch.node.ssl.ca:
     description: CA certificate for SSL plugin
   elasticsearch.node.ssl.certificate:

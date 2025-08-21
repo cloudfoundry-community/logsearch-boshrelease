@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+<% if !!(p("elasticsearch.node.roles") =~ /data/) %>
+# disable allocations before bringing down data nodes
+
+curl -s -X PUT localhost:9200/_all/_settings \
+  -H 'Content-Type: application/json' \
+  -d '{"settings": {"index.unassigned.node_left.delayed_timeout": "<%= p("elasticsearch.recovery.delay_allocation_restart") %>"}}' \
+  > /dev/null
+
+<% end %>
+
+<% if p('elasticsearch.cloud.aws.bucket') != '' and p('elasticsearch.node.roles') == 'master' and spec.bootstrap %>
+curl -X DELETE -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> > /dev/null
+<% end %>
+
+<% if p('elasticsearch.path_repo') != '' and p('elasticsearch.node.allow_roles') == 'master' and spec.bootstrap %>
+curl -X DELETE -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> > /dev/null
+<% end %>
+
+return_code=$?
+echo 0
+exit ${return_code}

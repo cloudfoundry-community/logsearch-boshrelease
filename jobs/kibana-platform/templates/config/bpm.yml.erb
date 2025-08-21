@@ -1,0 +1,13 @@
+processes:
+  - name: kibana-platform
+    hooks:
+      pre_start: /var/vcap/jobs/kibana-platform/bin/pre-start
+    executable: /var/vcap/jobs/kibana-platform/bin/kibana.sh
+    ephemeral_disk: true
+    additional_volumes:
+    <% p("kibana.source_files").each do |sf| %>
+    - path:  <%= sf %>
+    <% end %>
+    - path: /var/vcap/data/packages/kibana-platform
+      writable: true
+      allow_executions: true

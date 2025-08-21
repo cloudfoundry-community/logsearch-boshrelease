@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -x
+
+<% if p('elasticsearch.cloud.aws.bucket') != '' and p('elasticsearch.node.roles') == 'master' and spec.bootstrap %>
+curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> \
+  -H 'Content-Type: application/json' \
+  -d '{"type": "s3", "settings": {"bucket": "<%= p('elasticsearch.cloud.aws.bucket') %>"}}'
+<% end %>
+
+<% if p('elasticsearch.path_repo') != '' and p('elasticsearch.node.roles') == 'master' and spec.bootstrap %>
+curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> \
+  -H 'Content-Type: application/json' \
+  -d '{"type": "fs", "settings": {"location": "<%= p('elasticsearch.path_repo') %>/<%= p('elasticsearch.snapshots.repository') %>", "compress": true}}'
+<% end %>

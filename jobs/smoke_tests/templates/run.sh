@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 <%
   ingestor_host = nil
   if_link("ingestor") { |ingestor_link| ingestor_host = ingestor_link.instances.first.address }
@@ -36,13 +38,34 @@ LOG="<13>$(date -u +"%Y-%m-%dT%H:%M:%SZ") 0.0.0.0 smoke-test-errand [job=smoke_t
 <% if p('smoke_tests.use_tls') %>
 INGEST="openssl s_client -connect $INGESTOR_HOST:$INGESTOR_PORT"
 <% else %>
-INGEST="nc $INGESTOR_HOST $INGESTOR_PORT"
+INGEST="nc -q 5 $INGESTOR_HOST $INGESTOR_PORT"
+<% end %>
+
+<% if p('smoke_tests.count_test.run') %>
+
+MIN=<%= p('smoke_tests.count_test.minimum') %> 
+url="$MASTER_URL/<%= p('smoke_tests.count_test.index_pattern') %>/_count?pretty"
+query_body='{ "query": {
+  "range": {
+    "<%= p('smoke_tests.count_test.time_field') %>": {
+      "gte": "now-<%= p('smoke_tests.count_test.time_interval') %>",
+      "lt": "now"
+      }
+    }
+  }
+}'
+result=$(curl -s $url -H "content-type: application/json" -d "$query_body" | grep count | cut -d: -f2 | sed 's/,//' )
+
+if [[ ${result} -lt ${MIN} ]]; then 
+  echo "ERROR: expected at least ${MIN} documents, only got ${result}"
+  exit 1
+fi
 <% end %>
 
 echo "SENDING $LOG"
 echo "$LOG" | $INGEST > /dev/null
 
-TRIES=${1:-600}
+TRIES=${1:-300}
 SLEEP=5
 
 echo -n "Polling for $TRIES seconds"

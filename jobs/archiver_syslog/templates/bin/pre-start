@@ -1,0 +1,8 @@
+#!/bin/bash
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
+
+<% p("logstash.plugins").each do |plugin| %>
+/var/vcap/packages/logstash/bin/logstash-plugin install \
+  <%= plugin.except("name").map { |key, value| "--#{key}=#{value}" }.join(" ") %> \
+  <%= plugin["name"] %>
+<% end %>

@@ -1,0 +1,151 @@
+---
+name: elasticsearch-platform
+
+description: This job runs Elasticsearch node (master or data)
+
+packages:
+  - elasticsearch-platform
+  - openjdk-11
+
+templates:
+  bin/drain.erb: bin/drain
+  bin/post-deploy.erb: bin/post-deploy
+  bin/post-start.erb: bin/post-start
+  bin/pre-start: bin/pre-start
+  bin/elasticsearch: bin/elasticsearch.sh
+  config/bpm.yml.erb: config/bpm.yml
+  config/config.yml.erb: config/elasticsearch.yml
+  config/ca.erb: config/ssl/elasticsearch.ca
+  config/node-crt.erb: config/ssl/elasticsearch-node.crt
+  config/node-pem.erb: config/ssl/elasticsearch-node.pem
+  config/admin-crt.erb: config/ssl/elasticsearch-admin.crt
+  config/admin-pem.erb: config/ssl/elasticsearch-admin.pem
+  config/jvm.options.erb: config/jvm.options.d/custom
+  config/log4j2.properties.erb: config/log4j2.properties
+
+provides:
+- name: elasticsearch-platform
+  type: elasticsearch
+  properties:
+  - elasticsearch.port
+  - elasticsearch.cluster_name
+
+consumes:
+- name: elasticsearch-platform
+  type: elasticsearch
+  optional: true
+
+properties:
+  elasticsearch.master_hosts:
+    description: The list of elasticsearch master node IPs
+  elasticsearch.port:
+    description: Port address of elasticsearch host to proxy requests for
+    default: 9200
+  elasticsearch.cluster_name:
+    description: The name of the elastic search cluster
+    default: "logsearch"
+  elasticsearch.log_level:
+    description: The default logging level (e.g. WARN, DEBUG, INFO)
+    default: INFO
+  elasticsearch.jvm_options:
+    description: Additional Java Virtual Machine options
+    default: []
+  elasticsearch.heap_size:
+    description: sets jvm heap sized
+  elasticsearch.heap_percentage:
+    description: The percentage value used in the calculation to set the heap size.
+    default: 46
+  elasticsearch.path_repo:
+    description: |
+      Shared file system to store snapshots.
+      In order to register the shared file system repository it is
+      necessary to mount the same shared filesystem to the same location
+      on all master and data nodes.
+    default: ''
+  elasticsearch.node.roles:
+    description: Roles for the data nodes (data / data_content / data_hot / data_warm)
+  elasticsearch.node.ssl.ca:
+    description: CA certificate for SSL plugin
+  elasticsearch.node.ssl.certificate:
+    description: Node certificate
+  elasticsearch.node.ssl.private_key:
+    description: Private key for node certificate
+  elasticsearch.node.ssl.dn:
+    description: Nodes DN pattern
+  elasticsearch.admin.certificate:
+    description: Admin certificate to operate SSL plugin
+  elasticsearch.admin.private_key:
+    description: Private key for admin certificate
+  elasticsearch.admin.dn:
+    description: Admin DN to operate SSL plugin
+  elasticsearch.health.timeout:
+    description: Post-start timeout for node to join cluster (seconds)
+    default: 300
+  elasticsearch.health.interval:
+    description: Post-start interval for node to join cluster (seconds)
+    default: 15
+  elasticsearch.health.connect_timeout:
+    description: Post-start timeout for node to become available (seconds)
+    default: 60
+  elasticsearch.health.connect_interval:
+    description: Post-start interval for node to become available (seconds)
+    default: 5
+  elasticsearch.node.tags:
+    description: A hash of additional tags for the node
+  elasticsearch.exec.environment:
+    description: A hash of additional environment variables for the process
+  elasticsearch.exec.options:
+    description: An array of additional options to pass when starting elasticsearch
+    default: []
+  elasticsearch.limits.fd:
+    description: Maximum file descriptors
+    default: 65536
+  elasticsearch.recovery.delay_allocation:
+    description: Delay allocation interval
+    default: "1m"
+  elasticsearch.recovery.delay_allocation_restart:
+    description: Delay allocation interval during restart
+    default: "5m"
+  elasticsearch.discovery.minimum_master_nodes:
+    description: The minimum number of master eligible nodes a node should "see" in order to operate within the cluster. Recommended to set it to a higher value than 1 when running more than 2 nodes in the cluster.
+    default: "auto"
+  elasticsearch.config_options:
+    description: "Additional options to append to elasticsearch's config.yml (YAML format)."
+    default: ~
+  elasticsearch.logging_options:
+    description: "Additional options to append to elasticsearch's logging.yml (YAML format)."
+    default: ~
+  elasticsearch.plugins:
+    description: "Plugins to run elasticsearch with (array[] = { plugin-name: install-source }; e.g. [ { kopf: 'lmenezes/elasticsearch-kopf' } ])"
+    default: []
+  elasticsearch.http_host:
+    description: "The host address to bind the elasticsearch HTTP service to and to publish for HTTP clients to connect to"
+    default: 0.0.0.0
+  elasticsearch.health.disable_post_start:
+    description: Allow node to run post-start script? (true / false)
+    default: false
+
+  elasticsearch.cloud.aws.access_key:
+    description: Access key ID for AWS account
+  elasticsearch.cloud.aws.secret_key:
+    description: Secret access key for AWS account
+  elasticsearch.cloud.aws.region:
+    description: Specify the AWS region to use
+  elasticsearch.cloud.aws.protocol:
+    description: Protocol to use for all API calls to AWS endpoints
+    default: "https"
+  elasticsearch.cloud.aws.read_timeout:
+    description: The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out
+    default: 50s
+  elasticsearch.cloud.aws.bucket:
+    description: Bucket name on S3 where to keep snapshots
+    default: ''
+  elasticsearch.snapshots.repository:
+    description: Repository name for automatic snapshots
+    default: ''
+  elasticsearch.migrate_data:
+    description: migrate data from /var/vcap/store/elasticsearch to /var/vcap/store/elasticsearch-platform
+    default: false
+  elasticsearch.delete_migrated_data:
+    description: delete /var/vcap/store/elasticsearch
+    default: false

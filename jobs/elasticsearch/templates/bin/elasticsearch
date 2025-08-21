@@ -9,6 +9,7 @@ export LANG=en_US.UTF-8
 export TMP_DIR=/var/vcap/sys/tmp/$JOB_NAME
 export JOB_DIR=/var/vcap/jobs/$JOB_NAME
 export LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+source /var/vcap/packages/openjdk-11/bosh/runtime.env
 
 <% p("elasticsearch.exec.environment", {}).each do |k, v| %>
 export <%= k %>=<%= v %>
@@ -19,7 +20,8 @@ export HEAP_SIZE=$((( $( cat /proc/meminfo | grep MemTotal | awk '{ print $2 }' 
   HEAP_SIZE=<%= heap_size %>
 <% end %>
 
-export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE -Djava.io.tmpdir=$TMP_DIR"
+export ES_JAVA_OPTS="-Xms$HEAP_SIZE -Xmx$HEAP_SIZE"
+export ES_TMPDIR="$TMP_DIR"
 export ES_PATH_CONF=${JOB_DIR}/config
 
 export MAX_OPEN_FILES=<%= p("elasticsearch.limits.fd") %>

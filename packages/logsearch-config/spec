@@ -2,7 +2,7 @@
 name: logsearch-config
 
 dependencies:
-  - ruby-2.4-r5
+  - ruby-3.1
 
 files:
   - logsearch-config/**/*

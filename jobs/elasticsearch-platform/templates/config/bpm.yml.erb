@@ -1,0 +1,15 @@
+processes:
+  - name: elasticsearch-platform
+    hooks:
+      pre_start: /var/vcap/jobs/elasticsearch-platform/bin/pre-start
+    executable: /var/vcap/jobs/elasticsearch-platform/bin/elasticsearch.sh
+    persistent_disk: true
+    ephemeral_disk: true
+    additional_volumes:
+    - path: /var/vcap/sys/tmp/elasticsearch-platform
+      writable: true
+      allow_executions: true
+    - path: /var/vcap/jobs/elasticsearch-platform/config
+      writable: true
+    capabilities:
+    - SYS_RESOURCE

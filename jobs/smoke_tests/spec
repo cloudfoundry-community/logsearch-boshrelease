@@ -30,3 +30,14 @@ properties:
   smoke_tests.use_tls:
     description: Set it to true if the ingestor or the ls-router expects TCP-TLS traffic
     default: false
+  smoke_tests.count_test.run:
+    description: Whether to run the count test
+    default: false
+  smoke_tests.count_test.index_pattern:
+    description: Index pattern to run the count test against (e.g. logs-* )
+  smoke_tests.count_test.time_field:
+    description: Name of the time field in your index
+  smoke_tests.count_test.minimum:
+    description: Minimum expected documents in the given time window
+  smoke_tests.count_test.time_interval:
+    description: 'How far back to look in time for the count. e.g. "15m", "1h", "2d" see https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math for more'

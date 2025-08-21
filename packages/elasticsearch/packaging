@@ -1,3 +1,6 @@
 set -e
 
-tar xzf elasticsearch/elasticsearch-7.6.1-linux-x86_64.tar.gz -C $BOSH_INSTALL_TARGET --strip-components 1
+tar xzf elasticsearch/elasticsearch-7.9.3-no-jdk-linux-x86_64.tar.gz -C $BOSH_INSTALL_TARGET --strip-components 1
+
+# For log4j 2.14 or older. Remove after we update Elasticsearch to 7.16.2 or higher.
+/bin/rm -f "${BOSH_INSTALL_TARGET}/bin/elasticsearch-sql-cli-7.9.3.jar"

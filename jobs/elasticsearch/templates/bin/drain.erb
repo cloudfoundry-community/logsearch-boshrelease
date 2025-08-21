@@ -2,7 +2,7 @@
 
 set -e
 
-<% if p('elasticsearch.node.allow_data') %>
+<% if p("elasticsearch.node.roles") == 'data' or p("elasticsearch.node.roles") == 'data_warm' %>
 # disable allocations before bringing down data nodes
 
 curl -s -X PUT localhost:9200/_all/_settings \

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 <% if p('elasticsearch.cloud.aws.bucket') != '' and p('elasticsearch.node.allow_master') and spec.bootstrap %>
 curl -X PUT -s localhost:9200/_snapshot/<%= p('elasticsearch.snapshots.repository') %> \

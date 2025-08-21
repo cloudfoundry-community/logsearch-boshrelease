@@ -19,3 +19,16 @@ rm -rf /var/vcap/packages/elasticsearch/plugins/*
     /var/vcap/packages/elasticsearch/bin/elasticsearch-plugin install -b "<%= path %>"
   <% end %>
 <% end %>
+
+cp -p /var/vcap/packages/elasticsearch/config/jvm.options /var/vcap/jobs/elasticsearch/config/jvm.options
+chown root:vcap /var/vcap/jobs/elasticsearch/config/jvm.options
+
+log_dir=/var/vcap/packages/elasticsearch/logs
+
+if [[ -d ${log_dir} ]]; then
+  rmdir ${log_dir}
+fi
+
+if [[ ! -a ${log_dir} ]]; then
+  ln -s /var/vcap/sys/log/elasticsearch ${log_dir}
+fi

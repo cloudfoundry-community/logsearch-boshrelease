@@ -112,7 +112,7 @@ properties:
     default: 5
   logstash_ingestor.health.timeout:
     description: Logstash syslog health check number of attempts (seconds)
-    default: 300
+    default: 450
 
   logstash_ingestor.syslog_tls.port:
     description: Port to listen for syslog-TLS messages (omit to disable)

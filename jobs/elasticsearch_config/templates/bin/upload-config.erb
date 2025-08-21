@@ -10,8 +10,10 @@ elasticsearch_port = p("elasticsearch_config.elasticsearch.port")
 # Delete existing templates before uploading
 URL=http://<%= elasticsearch_host %>:<%= elasticsearch_port %>
 for template in $(curl -s ${URL}/_cat/templates | awk '{print $1}'); do
-  if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.templates').map { |template| template.keys.first }.join(' ') %>"); then
+  if ! grep -qw ${template} <(echo "<%= p('elasticsearch_config.index_templates').map { |template| template.keys.first }.join(' ') %>"); then
+    # hit template and index_template so we can try for legacy and component templates
     curl -s -XDELETE ${URL}/_template/${template}
+    curl -s -XDELETE ${URL}/_index_template/${template}
   fi
 done
 
@@ -85,8 +87,12 @@ end
 
 until curl -sf 'http://<%= elasticsearch_host %>:<%= elasticsearch_port %>/_cluster/health?wait_for_status=yellow&timeout=10m'; do :; done
 
-echo "--- Templates"
-<%= put_to_es('_template', p('elasticsearch_config.templates')) %>
+echo "--- Component Templates"
+<%= put_to_es('_component_template', p('elasticsearch_config.component_templates')) %>
+
+echo "--- Index Templates"
+<%= put_to_es('_index_template', p('elasticsearch_config.index_templates')) %>
+
 
 echo "--- Documents"
 <%= put_to_es('', p('elasticsearch_config.docs')) %>

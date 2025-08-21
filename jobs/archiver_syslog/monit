@@ -1,5 +1,5 @@
 check process archiver_syslog
-  with pidfile /var/vcap/sys/run/archiver_syslog/archiver_syslog.pid
-  start program "/var/vcap/jobs/archiver_syslog/bin/monit_debugger archiver_syslog_ctl '/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_ctl start'"  with timeout 120 seconds
-  stop program "/var/vcap/jobs/archiver_syslog/bin/monit_debugger archiver_syslog_ctl '/var/vcap/jobs/archiver_syslog/bin/archiver_syslog_ctl stop'"
+  with pidfile /var/vcap/sys/run/bpm/archiver_syslog/archiver_syslog.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start archiver_syslog"
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop archiver_syslog"
   group vcap

@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+set -e
+set -x
 wait_for_listening() {
   echo -n "=== Waiting <%= p("elasticsearch.health.connect_timeout") %>s for elasticsearch to accept connections..."
   elapsed=0
@@ -23,7 +25,7 @@ wait_for_greenstate() {
   remaining=<%= p("elasticsearch.health.timeout") %>
   echo "=== Waiting for Green status from Elasticsearch..."
   until [ "${remaining}" -le 0 ]; do
-    <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+    <% if p("elasticsearch.node.roles") == 'data' or p("elasticsearch.node.roles") == 'data_warm' %>
     curl -sw '\n%{http_code}' localhost:9200/_cluster/health > ${out}
     <% else %>
     curl -sw '\n%{http_code}' localhost:9200/_cluster/health?local=true > ${out}
@@ -32,7 +34,7 @@ wait_for_greenstate() {
     status=$(cat ${out} | tail -n 1)
     # echo "body: ${body}"
     echo -n "[${status}] "
-    <% if p("elasticsearch.node.allow_data") and not p("elasticsearch.node.allow_master") %>
+    <% if p("elasticsearch.node.roles") == 'data' or p("elasticsearch.node.roles") == 'data_warm' %>
     if [ ${status} = "200" ] && echo ${body} | grep '"status":"green"'; then
       echo "Done"
       break
@@ -65,7 +67,7 @@ echo "Disable post start script property is set to <%= p("elasticsearch.health.d
 <% end %>
 
 <% if_p("elasticsearch.node.ssl.private_key") do %>
-  <% if p("elasticsearch.node.allow_data") %>
+  <% if p("elasticsearch.node.roles") == 'data' or p("elasticsearch.node.roles") == 'data_warm' %>
   wait_for_listening
   ES="/var/vcap/packages/elasticsearch"
   export JAVA_HOME=${ES}/jdk/
