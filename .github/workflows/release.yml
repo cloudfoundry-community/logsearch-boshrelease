@@ -1,0 +1,115 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  RELEASE_NAME: logsearch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract version from tag
+      id: version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Setup BOSH CLI
+      run: |
+        # Get the latest BOSH CLI version dynamically
+        BOSH_VERSION=$(curl -s https://api.github.com/repos/cloudfoundry/bosh-cli/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+        curl -Lo bosh https://github.com/cloudfoundry/bosh-cli/releases/download/v${BOSH_VERSION}/bosh-cli-${BOSH_VERSION}-linux-amd64
+        chmod +x bosh
+        sudo mv bosh /usr/local/bin/
+        bosh --version
+
+    - name: Configure AWS credentials for blobstore
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        cat > config/private.yml <<EOF
+        ---
+        blobstore:
+          provider: s3
+          options:
+            access_key_id: ${AWS_ACCESS_KEY_ID}
+            secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+        EOF
+
+    - name: Create BOSH release
+      run: |
+        bosh -n create-release --final --version "${{ steps.version.outputs.version }}"
+        bosh -n create-release releases/$RELEASE_NAME/$RELEASE_NAME-${{ steps.version.outputs.version }}.yml \
+                      --tarball releases/$RELEASE_NAME/$RELEASE_NAME-${{ steps.version.outputs.version }}.tgz
+
+    - name: Generate SHA256 checksum
+      id: checksum
+      run: |
+        cd releases/$RELEASE_NAME
+        sha256sum $RELEASE_NAME-${{ steps.version.outputs.version }}.tgz > $RELEASE_NAME-${{ steps.version.outputs.version }}.tgz.sha256
+        SHA256=$(sha256sum $RELEASE_NAME-${{ steps.version.outputs.version }}.tgz | awk '{print $1}')
+        echo "sha256=$SHA256" >> $GITHUB_OUTPUT
+
+    - name: Prepare release notes
+      run: |
+        VERSION=${{ steps.version.outputs.version }}
+        SHA256=${{ steps.checksum.outputs.sha256 }}
+        
+        # Start with existing release notes if they exist
+        if [[ -f ci/release_notes.md ]]; then
+          cp ci/release_notes.md release_notes.md
+        else
+          echo "# Logsearch v${VERSION}" > release_notes.md
+          echo "" >> release_notes.md
+          echo "Release of Logsearch BOSH Release v${VERSION}" >> release_notes.md
+        fi
+        
+        # Add deployment section with YAML stanza
+        cat >> release_notes.md <<EOF
+
+        ### Deployment
+
+        \`\`\`yaml
+        releases:
+        - name:    $RELEASE_NAME
+          version: $VERSION
+          url:     https://github.com/cloudfoundry-community/logsearch-boshrelease/releases/download/v${VERSION}/${RELEASE_NAME}-${VERSION}.tgz
+          sha1:    sha256:${SHA256}
+        \`\`\`
+        EOF
+
+    - name: Commit release files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add releases/$RELEASE_NAME/$RELEASE_NAME-${{ steps.version.outputs.version }}.yml
+        git add releases/$RELEASE_NAME/index.yml
+        git commit -m "release v${{ steps.version.outputs.version }}" || echo "No changes to commit"
+        git push origin HEAD:develop
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.version.outputs.tag }}
+        name: "Logsearch v${{ steps.version.outputs.version }}"
+        body_path: release_notes.md
+        files: |
+          releases/${{ env.RELEASE_NAME }}/${{ env.RELEASE_NAME }}-${{ steps.version.outputs.version }}.tgz
+          releases/${{ env.RELEASE_NAME }}/${{ env.RELEASE_NAME }}-${{ steps.version.outputs.version }}.tgz.sha256
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
