@@ -3,9 +3,9 @@ cerebro/cerebro-0.8.5.tgz:
   object_id: 9901885a-b222-4d33-769c-5de9048b62fe
   sha: sha256:97cdba6c0054f505c6ac72ca5ae010612c86385ac0f7f760cf512e5705a00a27
 curator/elasticsearch-curator-5.8.3.tar.gz:
-  size: 239107
+  size: 229876
   object_id: e33a7297-0166-46ea-6dd0-5519dc3c3469
-  sha: sha256:f3b927dd8a749a34cce809f271ab18f0684b3760284b159654c44bb5f32ac109
+  sha: sha256:7f37115dc46eed0e0f8153ceb7a3e761b996e02c7fc0bcc2e926cec41098adda
 curator/vendor/PyYAML-3.13.tar.gz:
   size: 270607
   object_id: f1dbd3b7-8a71-4d1b-7272-596c4cc6bce2
@@ -111,29 +111,29 @@ logstash/logstash-7.17.8-linux-x86_64.tar.gz:
   object_id: 47211553-01c9-4156-6cc6-833d70f8d260
   sha: sha256:f964de7111e6fb04f92469e4d2432aa9a26042ab1490eaae18c80d230233132b
 logstash/logstash-filter-alter-3.0.2.zip:
-  size: 7425
+  size: 10240
   object_id: c91d4188-e46c-4de9-70c8-5c087b26e134
-  sha: sha256:35912163f4e1ad0960d7efe3283877236cf6462702e7dcb17a143568330e29a6
+  sha: sha256:3dba903bc1953fc97da0d7dec184cb26167554e42a4b7d221826d9dc991c7cc3
 logstash/logstash-filter-translate-3.0.3.zip:
-  size: 10677
+  size: 13312
   object_id: dec19668-4409-46e5-4a8b-f89935ad4e52
-  sha: sha256:743c100c51c63fe17a55487254b140a2a9c3fb5f532d7bc570f84e902839fe5b
+  sha: sha256:9cc10ba03b92cf56baaf4c8eff15f6e430e63232cb9f61cdab2bbb00ea940c33
 logstash/logstash-input-relp-3.0.2.zip:
-  size: 12616
+  size: 15360
   object_id: 261563e0-02ab-4d28-6e6f-2731edef10f3
-  sha: sha256:98fae22f18468c7abea0969b2d714e853ac47686f537c5223b1ff12150b3eedb
+  sha: sha256:a5b5f2e453f2aafc81c91d4da708e2b742d28647bb119bf4d9a44ae0ade6accd
 logstash/logstash-input-syslog-3.2.2.zip:
-  size: 10966
+  size: 13824
   object_id: 7fd274c2-8b00-48c1-4e73-f64b5cb6f50b
-  sha: sha256:4a799a41b507ff2f4d8b819df509937e24248760b7092f58814ba564fbb976ee
+  sha: sha256:efc4d9418662b2f9b5fa142da66843787114270995e220fd4f2875b2af996c96
 logstash/logstash-output-syslog-3.0.5.zip:
-  size: 9679
+  size: 12288
   object_id: 24e857cd-0865-41fb-706d-768690a82a50
-  sha: sha256:eaac1ea66848d34dbe41e4126fffac4e221deecb402b310e64fd5bb41e3b870f
+  sha: sha256:e184dec723bc9482d4a1f85f2d7b1675fad45ca89bd4131e0df655b145dc1b72
 nats_to_syslog/nats_to_syslog_linux_amd64.tar.gz:
-  size: 2094679
+  size: 4951591
   object_id: 51e95b33-7375-492e-7ce6-c861579dd2dd
-  sha: sha256:17da6f37f28006a98ac3697acdf0c901316f2a59cfcae1145586fa01e4fb7d6f
+  sha: sha256:2074b70810cb7c29e894ba9f5ff37c9494357f264026dc6590442044c2fa8333
 ruby/rake-12.3.2.gem:
   size: 87040
   object_id: f3da806d-51e4-4ca6-5ba3-6a846f08269e
