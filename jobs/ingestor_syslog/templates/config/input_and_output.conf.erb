@@ -86,7 +86,11 @@ output {
             %>
         <% end %>
         <% output['options'].each do | k, v | %>
-          <%= k %> => <%= v.inspect %>
+          <% if k == 'codec' %>
+            <%= k %> => <%= v %>
+          <% else %>
+            <%= k %> => <%= v.inspect %>
+          <% end %>
         <% end %>
         }
     <% end %>
